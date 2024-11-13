@@ -1,0 +1,17 @@
+/* Empty cells */
+.empty-value {
+  fill: #161D29; /* Apply your desired color for empty cells */
+}
+
+/* Non-empty cells (all counts get the same color) */
+.color-scale-1,
+.color-scale-2,
+.color-scale-3,
+.color-scale-4 {
+  fill: #fad645; /* Yellow for non-empty cells */
+}
+
+/* Adjust spacing between cells */
+.react-calendar-heatmap .day {
+  margin: 10px; /* Space between cells */
+}
