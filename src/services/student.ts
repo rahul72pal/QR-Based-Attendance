@@ -1,8 +1,13 @@
 import toast from "react-hot-toast";
 import { apiConnector } from "./axios";
 
-// const URL = process.env.REACT_APP_API_URL;
-const URL = "http://localhost:8000";
+let URL = '';
+
+if(import.meta.env.VITE_NODE_ENV === 'development'){
+    URL = import.meta.env.VITE_LOCALHOST_URL
+}else{
+    URL = import.meta.env.VITE_API_URL
+}
 
 // Define the structure of the student data if known
 interface Student {

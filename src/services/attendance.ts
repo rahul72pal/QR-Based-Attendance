@@ -1,6 +1,13 @@
 import toast from "react-hot-toast";
 import { apiConnector } from "./axios";
-const URL = "http://localhost:8000";
+let URL = '';
+
+if(import.meta.env.VITE_NODE_ENV === 'development'){
+    URL = import.meta.env.VITE_LOCALHOST_URL
+}else{
+    URL = import.meta.env.VITE_API_URL
+}
+
 
 interface AttendanceData{
     class_id: string,
