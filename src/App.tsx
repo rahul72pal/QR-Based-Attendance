@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 // import QRScanner from "./components/QRScanner";
 import TakeAttendance from "./components/attendance/TakeAttendance";
 import StudentAttendance from "./pages/StudentAttendance";
+import ViewStudentList from "./pages/ViewStudentList";
 
 
 const App: React.FC = () => {
@@ -20,6 +21,7 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           {/* <Route path="/QR" element={<QRScanner onClose={()=>void} />} /> */}
           <Route path="/takeattendance" element={<TakeAttendance />} />
+          <Route path="/viewStudentList" element={<ViewStudentList />} />
           <Route path="/student" element={<StudentAttendance />} />
         </Routes>
       </div>

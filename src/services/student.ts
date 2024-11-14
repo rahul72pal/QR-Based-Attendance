@@ -13,6 +13,7 @@ if(import.meta.env.VITE_NODE_ENV === 'development'){
 interface Student {
     id: string;
     name: string;
+    roll_number: number;
     // Add other properties as needed
 }
 

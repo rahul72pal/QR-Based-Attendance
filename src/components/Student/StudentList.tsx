@@ -174,11 +174,11 @@ import {
 // ];
 
 interface Student {
-  student_id: string;
+  student_id: string | undefined;
   name: string;
-  class_name: string;
+  class_name: string | undefined;
   roll_number: number;
-  present: boolean;
+  present: boolean | undefined;
 }
 
 interface StudentListProps {
@@ -193,14 +193,14 @@ const StudentList: React.FC<StudentListProps> = ({ students, title }) => {
         <p className="text-center sm:text-lg my-auto py-5 text-2xl font-semibold">
           {title}
         </p>
-        <Table className="w-[75%] sm:w-[99%] mx-auto overflow-x-auto m-6 sm:m-2 border-2 p-3">
+        <Table className="w-[75%] sm:w-[99%] pb-4 mx-auto overflow-x-auto m-6 sm:m-2 border-2 p-3">
           <TableHeader>
             <TableRow>
               {/* <TableHead className="w-[10px]">check</TableHead> */}
               {/* Increase the width of the Name column here */}
-              <TableHead className=" w-[150px] text-start">Name</TableHead>
-              <TableHead className="text-start">Class</TableHead>
-              <TableHead className="text-center">Present</TableHead>
+              <TableHead className=" w-[150px] text-start text-[#FFD52A]">Name</TableHead>
+              <TableHead className="text-start text-[#FFD52A]">Class</TableHead>
+              <TableHead className="text-center text-[#FFD52A]">Present</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody className="h-[10px]">
@@ -210,8 +210,8 @@ const StudentList: React.FC<StudentListProps> = ({ students, title }) => {
                   <Checkbox className="sm:h-[20px] border border-white text-start sm:w-[20px]" checked={false} />
                 </TableCell> */}
                 {/* Increase the width of the Name cell here as well */}
-                <TableCell className="w-[150px] sm:text-xs">{row.name}</TableCell>
-                <TableCell className="w-[150px] text-xs">{row.class_name}</TableCell>
+                <TableCell className="w-[150px] sm:text-xs text-start">{row.name}</TableCell>
+                <TableCell className="w-[150px] text-xs text-start">{row.class_name}</TableCell>
                 <TableCell className="h-[10px] text-center">
                 <Checkbox className={`sm:h-[20px]  bg-white border ${row.present ? "bg-yellow-400":"bg-transparent"} border-white text-start sm:w-[20px]`} checked={row.present} />
                 </TableCell>

@@ -12,6 +12,7 @@ import {
 import QRScanner from "../QRScanner";
 import { getAttdance } from "@/services/attendance";
 import StudentList from "../Student/StudentList";
+import { getAllClass } from "@/services/class";
 
 // Define the structure of the student data if known
 interface Student {
@@ -22,27 +23,33 @@ interface Student {
   present: boolean;
 }
 
+interface Class{
+  _id: string,
+  name: string
+}
+
 const TakeAttendance: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+  const [selectedStudent, setSelectedStudent] = useState<Class | null>(null);
   const class_id = "67360c3c4d7e24fe5b08fe9b";
   const [students, setStudents] = useState<Student[]>([]);
   const [showStudentList, setShowStudentList] = useState<boolean>(false);
+  const [classList, setClassList] = useState<Class[]>()
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
-  // const fetchStudentList = async () => {
-  //   try {
-  //     const result = await getAllStudents(class_id);
-  //     console.log(result);
-  //     if (result) {
-  //       setStudents(result);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const fetchAllClasses = async () => {
+    try {
+      const result = await getAllClass();
+      console.log("All classes = ",result?.classes);
+      if (result) {
+        setClassList(result?.classes);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const attendance = async () => {
     try {
@@ -64,13 +71,13 @@ const TakeAttendance: React.FC = () => {
   };
 
   useEffect(() => {
-    // fetchStudentList();
+    fetchAllClasses();
     attendance();
   }, []);
 
-  const handleStudentSelect = (student: Student) => {
-    setSelectedStudent(student);
-    console.log("Selected Student: ", student);
+  const handleStudentSelect = (classobj: Class) => {
+    setSelectedStudent(classobj);
+    console.log("Selected Student: ", classobj);
   };
 
   console.log(students);
@@ -82,21 +89,21 @@ const TakeAttendance: React.FC = () => {
         <div className="flex justify-between items-center py-3 gap-2">
           <div className="flex flex-col p-4 w-[50%] text-center gap-1">
             <DropdownMenu>
-              <DropdownMenuTrigger className="bg-slate-700 w-[150px] mb-1 py-2 rounded-3xl">
-                {selectedStudent ? selectedStudent.name : "Select Student"}
+              <DropdownMenuTrigger className="bg-[#161D29] border-2 border-white w-[150px] mb-1 py-2 rounded-xl">
+                {selectedStudent ? selectedStudent.name : "Select Class"}
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-[150px]  flex flex-col ">
+              <DropdownMenuContent className="w-[150px] mt-2  flex flex-col ">
                 {/* <DropdownMenuLabel>Select a Student</DropdownMenuLabel> */}
                 <DropdownMenuSeparator />
-                {students !== undefined &&
-                  students.length > 0 &&
-                  students.map((student) => (
+                {classList !== undefined &&
+                  classList.length > 0 &&
+                  classList.map((classobj) => (
                     <DropdownMenuItem
-                      key={student.student_id}
-                      className="bg-slate-500 py-1 border-2 border-black cursor-pointer "
-                      onClick={() => handleStudentSelect(student)}
+                      key={classobj._id}
+                      className="bg-[#161D29] py-2 border border-white mb-1 rounded-lg cursor-pointer "
+                      onClick={() => handleStudentSelect(classobj)}
                     >
-                      {student.name}
+                      {classobj.name}
                     </DropdownMenuItem>
                   ))}
               </DropdownMenuContent>
@@ -119,6 +126,9 @@ const TakeAttendance: React.FC = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
+        </div>
+        <div>
+
         </div>
 
         <div className="bg-[#000814] py-3">
