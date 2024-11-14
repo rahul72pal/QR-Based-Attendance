@@ -1,4 +1,4 @@
-import StudentList from "../Student/StudentList"
+// import StudentList from "../Student/StudentList"
 
 
 const Class = () => {
