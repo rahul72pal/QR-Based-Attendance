@@ -4,7 +4,7 @@ import StudentList from "../Student/StudentList"
 const Class = () => {
   return (
     <div>
-        <StudentList/>
+        {/* <StudentList/> */}
     </div>
   )
 }
