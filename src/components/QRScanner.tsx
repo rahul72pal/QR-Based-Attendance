@@ -7,8 +7,8 @@ const sampleQrImage = './sampleQR.png'
 
 interface QRCodeResult {
   name: string;
-  rollNo: string;
-  class: string;
+  roll_number: number;
+  class_id: string;
 }
 
 interface QRScannerProps {
@@ -23,7 +23,8 @@ const QRScanner: React.FC<QRScannerProps> = ({ onClose, attendance }) => {
   const [qrOn, setQrOn] = useState<boolean>(true);
   const [scannedResult, setScannedResult] = useState<QRCodeResult[]>([]);
   const [startScan, setStartScan] = useState<boolean>(false);
-  const scannedRollNumbers = useRef<Set<string>>(new Set());
+  const scannedRollNumbers = useRef<Set<number>>(new Set());
+  const class_id = "67360c3c4d7e24fe5b08fe9b";
 
   const onScanSuccess = useCallback((data: any) => {
     let newResult: QRCodeResult;
@@ -33,8 +34,13 @@ const QRScanner: React.FC<QRScannerProps> = ({ onClose, attendance }) => {
       newResult = JSON.parse(data?.data) as QRCodeResult;
       console.log("newResult =", newResult, data);
 
-      if (!newResult.name || !newResult.rollNo || !newResult.class) {
+      if (!newResult.name || !newResult.roll_number || !newResult.class_id) {
         toast.error("Invalid QR format");
+        return;
+      }
+
+      if(newResult.class_id !== class_id){
+        toast.error("Class Not Match");
         return;
       }
     } catch (error) {
@@ -43,13 +49,13 @@ const QRScanner: React.FC<QRScannerProps> = ({ onClose, attendance }) => {
       return;
     }
 
-    const newRollNo = newResult.rollNo;
+    const newRollNo:number = newResult.roll_number;
 
     if (!scannedRollNumbers.current.has(newRollNo)) {
       console.log("New QR Code scanned:", newResult);
       scannedRollNumbers.current.add(newRollNo);
       setScannedResult((prev) => [...prev, newResult]);
-      toast.success("QR Code Scanned!");
+      toast.success(`QR Code Scanned! ${newResult.name}`);
     }
   }, []);
 
@@ -95,8 +101,8 @@ const QRScanner: React.FC<QRScannerProps> = ({ onClose, attendance }) => {
   const handleSaveAttendance = async()=>{
     try {
       const attenanceData = {
-        class_id: "67304d7a224119e1b628b855",
-        date: "2024-11-12",
+        class_id: class_id,
+        date: "2024-11-9",
         attendance_data: scannedResult
       }
       const result = await saveAttdance(attenanceData);

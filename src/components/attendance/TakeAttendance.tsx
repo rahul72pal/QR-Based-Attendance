@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllStudents } from "../../services/student";
+// import { getAllStudents } from "../../services/student";
 import Modal from "../modal/modal";
 import {
   DropdownMenu,
@@ -15,42 +15,46 @@ import StudentList from "../Student/StudentList";
 
 // Define the structure of the student data if known
 interface Student {
-  id: string;
+  student_id: string;
   name: string;
+  class_name: string;
+  roll_number: number;
+  present: boolean;
 }
 
 const TakeAttendance: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
-  const class_id = "67304d7a224119e1b628b855";
+  const class_id = "67360c3c4d7e24fe5b08fe9b";
   const [students, setStudents] = useState<Student[]>([]);
   const [showStudentList, setShowStudentList] = useState<boolean>(false);
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
-  const fetchStudentList = async () => {
-    try {
-      const result = await getAllStudents(class_id);
-      console.log(result);
-      if (result) {
-        setStudents(result);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchStudentList = async () => {
+  //   try {
+  //     const result = await getAllStudents(class_id);
+  //     console.log(result);
+  //     if (result) {
+  //       setStudents(result);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const attendance = async () => {
     try {
       const data = {
-        class_id: "67304d7a224119e1b628b855",
-        date: "2024-11-12",
+        class_id: class_id,
+        date: "2024-11-9",
       };
       if (data) {
         const attendance = await getAttdance(data);
-        console.log(attendance);
+        console.log(attendance?.attendance);
         if (attendance) {
+          setStudents(attendance?.attendance);
           setShowStudentList(true);
         }
       }
@@ -60,14 +64,16 @@ const TakeAttendance: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchStudentList();
-    // attendance();
+    // fetchStudentList();
+    attendance();
   }, []);
 
   const handleStudentSelect = (student: Student) => {
     setSelectedStudent(student);
     console.log("Selected Student: ", student);
   };
+
+  console.log(students);
 
   return (
     <div className="bg-[#000814]">
@@ -82,15 +88,17 @@ const TakeAttendance: React.FC = () => {
               <DropdownMenuContent className="w-[150px]  flex flex-col ">
                 {/* <DropdownMenuLabel>Select a Student</DropdownMenuLabel> */}
                 <DropdownMenuSeparator />
-                {students.map((student) => (
-                  <DropdownMenuItem
-                    key={student.id}
-                    className="bg-slate-500 py-1 border-2 border-black cursor-pointer "
-                    onClick={() => handleStudentSelect(student)}
-                  >
-                    {student.name}
-                  </DropdownMenuItem>
-                ))}
+                {students !== undefined &&
+                  students.length > 0 &&
+                  students.map((student) => (
+                    <DropdownMenuItem
+                      key={student.student_id}
+                      className="bg-slate-500 py-1 border-2 border-black cursor-pointer "
+                      onClick={() => handleStudentSelect(student)}
+                    >
+                      {student.name}
+                    </DropdownMenuItem>
+                  ))}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -113,7 +121,11 @@ const TakeAttendance: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-[#000814] py-3">{showStudentList && <StudentList />}</div>
+        <div className="bg-[#000814] py-3">
+          {showStudentList && students && students.length > 0 && (
+            <StudentList students={students} title={`Student Attendance ${'2024-11-09'}`} />
+          )}
+        </div>
 
         {!isModalOpen && (
           <div className="w-[75%] bg-[#000814] inset-10 mx-auto text-center">
