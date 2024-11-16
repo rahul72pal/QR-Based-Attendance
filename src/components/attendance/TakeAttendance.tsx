@@ -1,150 +1,104 @@
 import React, { useEffect, useState } from "react";
 // import { getAllStudents } from "../../services/student";
 import Modal from "../modal/modal";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
+
 import QRScanner from "../QRScanner";
-import { getAttdance } from "@/services/attendance";
-import StudentList from "../Student/StudentList";
-import { getAllClass } from "@/services/class";
+// import { getAttdance } from "@/services/attendance";
+import { useNavigate } from "react-router-dom";
+import { Button } from "../ui/button";
+import { useSelector } from "react-redux";
+import { RootState } from "@/slices/store";
+import {  CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { Calendar } from "../ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+// import toast from "react-hot-toast";
 
 // Define the structure of the student data if known
-interface Student {
-  student_id: string;
-  name: string;
-  class_name: string;
-  roll_number: number;
-  present: boolean;
-}
 
-interface Class{
-  _id: string,
-  name: string
+
+function cn(...classes:any) {
+  return classes.filter(Boolean).join(' ');
 }
 
 const TakeAttendance: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  const [selectedStudent, setSelectedStudent] = useState<Class | null>(null);
-  const class_id = "67360c3c4d7e24fe5b08fe9b";
-  const [students, setStudents] = useState<Student[]>([]);
-  const [showStudentList, setShowStudentList] = useState<boolean>(false);
-  const [classList, setClassList] = useState<Class[]>()
+  const router = useNavigate();
+  // const classobj = useSelector((state: RootState)=> state.class);
+  // const
+  // const class_id = classObj ? classobj._id : "";
+  const classObj = useSelector((state: RootState) => state.class);
+  const [date, setDate] = useState<Date | undefined>(undefined);
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
-  const fetchAllClasses = async () => {
-    try {
-      const result = await getAllClass();
-      console.log("All classes = ",result?.classes);
-      if (result) {
-        setClassList(result?.classes);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const attendance = async () => {
-    try {
-      const data = {
-        class_id: class_id,
-        date: "2024-11-9",
-      };
-      if (data) {
-        const attendance = await getAttdance(data);
-        console.log(attendance?.attendance);
-        if (attendance) {
-          setStudents(attendance?.attendance);
-          setShowStudentList(true);
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  
 
   useEffect(() => {
-    fetchAllClasses();
-    attendance();
+    // attendance();
   }, []);
 
-  const handleStudentSelect = (classobj: Class) => {
-    setSelectedStudent(classobj);
-    console.log("Selected Student: ", classobj);
+  const formatDate = (date: Date | undefined): string => {
+    if (!date) {
+      // toast.error("Error in Date");
+      return "Invalid date"; // Handle the undefined case as needed
+    }
+  
+    return format(date, 'yyyy-MM-dd');
   };
 
-  console.log(students);
+  // console.log(classObj);
+  console.log(classObj, date, formatDate(date).toString());
 
   return (
     <div className="bg-[#000814]">
-      <div className="text-white bg-[#000814] min-h-[85vh] mt-5 text-center px-1 flex flex-col justify-between">
+      <Button onClick={() => router(-1)} className="p-5 mt-6 ml-6">
+        Back
+      </Button>
+
+      <p className="text-center py-6 text-xl">{classObj.name}</p>
+      <div className="text-white bg-[#000814] min-h-[70vh] text-center flex flex-col justify-between">
         {/* Choose class */}
-        <div className="flex justify-between items-center py-3 gap-2">
-          <div className="flex flex-col p-4 w-[50%] text-center gap-1">
-            <DropdownMenu>
-              <DropdownMenuTrigger className="bg-[#161D29] border-2 border-white w-[150px] mb-1 py-2 rounded-xl">
-                {selectedStudent ? selectedStudent.name : "Select Class"}
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-[150px] mt-2  flex flex-col ">
-                {/* <DropdownMenuLabel>Select a Student</DropdownMenuLabel> */}
-                <DropdownMenuSeparator />
-                {classList !== undefined &&
-                  classList.length > 0 &&
-                  classList.map((classobj) => (
-                    <DropdownMenuItem
-                      key={classobj._id}
-                      className="bg-[#161D29] py-2 border border-white mb-1 rounded-lg cursor-pointer "
-                      onClick={() => handleStudentSelect(classobj)}
-                    >
-                      {classobj.name}
-                    </DropdownMenuItem>
-                  ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-          <div className="flex flex-col p-4 w-[50%] text-center gap-">
-            {/* DatePicker can go here */}
-            <DropdownMenu>
-              <DropdownMenuTrigger>Open Menu</DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Account Settings</DropdownMenuLabel>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Billing</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel>Team Management</DropdownMenuLabel>
-                <DropdownMenuItem>Team Members</DropdownMenuItem>
-                <DropdownMenuItem>Roles</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Logout</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-        <div>
-
-        </div>
-
-        <div className="bg-[#000814] py-3">
+        {/* <div className="bg-[#000814] py-3">
           {showStudentList && students && students.length > 0 && (
             <StudentList students={students} title={`Student Attendance ${'2024-11-09'}`} />
           )}
+        </div> */}
+
+        <div>
+          <Popover >
+            <PopoverTrigger className="text-white bg-[#161D29]" asChild>
+              <Button
+                variant={"outline"}
+                className={cn(
+                  "w-[280px] justify-start text-left font-normal hover:text-white hover:bg-[#161D29] text-white bg-[#161D29]",
+                  !date && "text-muted-foreground text-white bg-[#161D29] "
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {date ? format(date, "PPP") : <span>Pick a date</span>}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0 text-white bg-[#161D29]">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
         </div>
 
         {!isModalOpen && (
-          <div className="w-[75%] bg-[#000814] inset-10 mx-auto text-center">
+          <div className="w-[75%] bg-[#000814] inset-8 mx-auto text-center">
             <button
+            disabled={!date}
               onClick={openModal}
-              className="
-              text-black bg-[#FFD52A] 
+              className={`text-black bg-[#FFD52A] 
               py-2 rounded-xl font-semibold
-               text-4xl w-full mx-auto"
+               text-4xl w-full mx-auto ${date ? "opacity-95": "opacity-15"}`}
             >
               Take
             </button>
@@ -154,7 +108,7 @@ const TakeAttendance: React.FC = () => {
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <div>
-          <QRScanner attendance={attendance} onClose={closeModal} />
+          <QRScanner class_id={classObj._id ? classObj._id : ""} date={formatDate(date).toString()} onClose={closeModal} />
         </div>
       </Modal>
     </div>

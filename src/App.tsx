@@ -6,6 +6,8 @@ import Home from "./pages/Home";
 import TakeAttendance from "./components/attendance/TakeAttendance";
 import StudentAttendance from "./pages/StudentAttendance";
 import ViewStudentList from "./pages/ViewStudentList";
+import Class from "./pages/Class";
+import ClassAttendance from "./components/class/ClassAttendance";
 
 
 const App: React.FC = () => {
@@ -21,8 +23,10 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           {/* <Route path="/QR" element={<QRScanner onClose={()=>void} />} /> */}
           <Route path="/takeattendance" element={<TakeAttendance />} />
+          <Route path="/class" element={<Class />} />
+          <Route path="/classAttendance" element={<ClassAttendance />} />
           <Route path="/viewStudentList" element={<ViewStudentList />} />
-          <Route path="/student" element={<StudentAttendance />} />
+          <Route path="/student/:id/:name" element={<StudentAttendance />} />
         </Routes>
       </div>
     </div>

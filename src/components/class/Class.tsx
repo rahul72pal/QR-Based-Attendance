@@ -4,7 +4,7 @@
 const Class = () => {
   return (
     <div>
-        {/* <StudentList/> */}
+        this is class 
     </div>
   )
 }

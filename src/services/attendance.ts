@@ -20,6 +20,11 @@ interface getAttdanceData{
     date: string
 }
 
+interface getStudentAttendance{
+    class_id: string,
+    student_id?: string
+}
+
 
 export const saveAttdance = async (data: AttendanceData ) => {
     const toastId = toast.loading("Wait..");
@@ -64,3 +69,22 @@ export const getAttdance = async (data: getAttdanceData) => {
         toast.dismiss(toastId);
     }
 };
+
+export const getStudentAttendance = async(data: getStudentAttendance)=>{
+    const toastId = toast.loading("Wait..");
+    try {
+        const response = await apiConnector("POST", `${URL}/attendance/getStudent`, data);
+
+        if(!response){
+            toast.error("Error in Student Attendance!");
+            return undefined; 
+        }
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        toast.error("An error occurred while save Attendance.");
+        return undefined
+    }finally {
+        toast.dismiss(toastId);
+    }
+}

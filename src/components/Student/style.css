@@ -1,17 +1,23 @@
 /* Empty cells */
 .empty-value {
-  fill: #161D29; /* Apply your desired color for empty cells */
+  fill: #5c6575; /* Apply your desired color for empty cells */
 }
 
 /* Non-empty cells (all counts get the same color) */
+.color-scale-0 {
+  fill: rgb(239, 18, 18); /* Use fill instead of color if necessary */
+}
 .color-scale-1,
-.color-scale-2,
 .color-scale-3,
 .color-scale-4 {
-  fill: #fad645; /* Yellow for non-empty cells */
+  fill: #63cb44; /* Yellow for non-empty cells */
 }
 
 /* Adjust spacing between cells */
 .react-calendar-heatmap .day {
   margin: 10px; /* Space between cells */
+}
+
+.react-calendar-heatmap .month{
+  color: beige;
 }

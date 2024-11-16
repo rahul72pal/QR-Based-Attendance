@@ -13,10 +13,11 @@ interface QRCodeResult {
 
 interface QRScannerProps {
   onClose: () => void;
-  attendance: () => void;
+  date: string;
+  class_id: string;
 }
 
-const QRScanner: React.FC<QRScannerProps> = ({ onClose, attendance }) => {
+const QRScanner: React.FC<QRScannerProps> = ({ onClose, date, class_id}) => {
   const scanner = useRef<QrScanner | null>(null);
   const videoEl = useRef<HTMLVideoElement | null>(null);
   const qrBoxEl = useRef<HTMLDivElement | null>(null);
@@ -24,7 +25,7 @@ const QRScanner: React.FC<QRScannerProps> = ({ onClose, attendance }) => {
   const [scannedResult, setScannedResult] = useState<QRCodeResult[]>([]);
   const [startScan, setStartScan] = useState<boolean>(false);
   const scannedRollNumbers = useRef<Set<number>>(new Set());
-  const class_id = "67360c3c4d7e24fe5b08fe9b";
+  // const class_id = "67360c3c4d7e24fe5b08fe9b";
 
   const onScanSuccess = useCallback((data: any) => {
     let newResult: QRCodeResult;
@@ -102,13 +103,13 @@ const QRScanner: React.FC<QRScannerProps> = ({ onClose, attendance }) => {
     try {
       const attenanceData = {
         class_id: class_id,
-        date: "2024-11-9",
+        date: date,
         attendance_data: scannedResult
       }
       const result = await saveAttdance(attenanceData);
       console.log(result)
       if(result){
-        attendance();
+        // attendance();
       }
     } catch (error) {
       console.log(error);
@@ -118,7 +119,7 @@ const QRScanner: React.FC<QRScannerProps> = ({ onClose, attendance }) => {
     }
   }
 
-  console.log("scannedResult =", scannedResult);
+  console.log("scannedResult =", scannedResult, class_id, date);
 
   return (
     <>
@@ -132,13 +133,13 @@ const QRScanner: React.FC<QRScannerProps> = ({ onClose, attendance }) => {
 
         <div
           ref={qrBoxEl}
-          className="w-64 h-64 absolute text-center flex flex-col gap-4 top-10 border-4 sm:mt-10 border-dashed border-yellow-500"
+          className="w-64 h-64 absolute text-center flex flex-col gap-4 top-10 border-4  border-dashed border-yellow-500"
         >
           {!videoEl.current && !startScan && (
             <img
               src={sampleQrImage}
               alt="QR Frame"
-              className="w-full h-full object-cover opacity-70"
+              className="w-full h-full object-cover opacity-70 "
               width={356}
               height={356}
             />
@@ -149,7 +150,7 @@ const QRScanner: React.FC<QRScannerProps> = ({ onClose, attendance }) => {
           <h3>Number of Scanned Results: {scannedResult.length}</h3>
 
           <button
-            className="px-8 mt-4 py-2 text-[23px] bg-gray-500 text-white rounded-md"
+            className="px-8 mt-4 py-2 text-[23px] bg-gray-700 text-white rounded-md"
             onClick={() => setStartScan(!startScan)}
           >
             {startScan ? "Stop Scanning" : "Start Scanning"}

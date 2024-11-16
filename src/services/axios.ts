@@ -13,7 +13,7 @@ export const apiConnector = async (
     headers?: Record<string, string>, // Optional headers
     params?: Record<string, any> // Optional query parameters
 ): Promise<AxiosResponse<any>> => {
-    console.log("API CONNECTOR = ",url,bodydata)
+    // console.log("API CONNECTOR = ",url,bodydata)
     return axiosInstance({
         method,
         url,

@@ -17,7 +17,7 @@ interface Student {
     // Add other properties as needed
 }
 
-export const getAllStudents = async (class_id: string): Promise<Student[] | undefined> => {
+export const getAllStudents = async (class_id: string | null): Promise<Student[] | undefined> => {
     const toastId = toast.loading("Wait..");
     try {
         // console.log(process.env.REACT_APP_API_URL);
