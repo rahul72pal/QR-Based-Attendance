@@ -8,6 +8,7 @@ import StudentAttendance from "./pages/StudentAttendance";
 import ViewStudentList from "./pages/ViewStudentList";
 import Class from "./pages/Class";
 import ClassAttendance from "./components/class/ClassAttendance";
+import ClassIdComponent from "./utils/ClassIdComponent";
 
 
 const App: React.FC = () => {
@@ -22,11 +23,27 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/QR" element={<QRScanner onClose={()=>void} />} /> */}
-          <Route path="/takeattendance" element={<TakeAttendance />} />
+          <Route path="/takeattendance" element={
+            <ClassIdComponent>
+            <TakeAttendance />
+            </ClassIdComponent>
+            } />
           <Route path="/class" element={<Class />} />
-          <Route path="/classAttendance" element={<ClassAttendance />} />
-          <Route path="/viewStudentList" element={<ViewStudentList />} />
-          <Route path="/student/:id/:name" element={<StudentAttendance />} />
+          <Route path="/classAttendance" element={
+            <ClassIdComponent>
+            <ClassAttendance />
+            </ClassIdComponent>
+            } />
+          <Route path="/viewStudentList" element={
+             <ClassIdComponent>
+            <ViewStudentList />
+            </ClassIdComponent>
+            } />
+          <Route path="/student/:id/:name" element={
+             <ClassIdComponent>
+            <StudentAttendance />
+            </ClassIdComponent>
+            } />
         </Routes>
       </div>
     </div>

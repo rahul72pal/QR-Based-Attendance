@@ -9,6 +9,7 @@ import { RootState } from "@/slices/store";
 import { useNavigate } from "react-router-dom";
 import { getAttdance } from "@/services/attendance";
 import StudentList from "../Student/StudentList";
+import { IoArrowBackSharp } from "react-icons/io5";
 
 function cn(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -58,16 +59,19 @@ const ClassAttendance = () => {
 
   useEffect(() => {
     if (date) {
-      attendance(); 
+      attendance();
     }
   }, [date]);
 
   return (
     <div>
       <Button onClick={() => router(-1)} className="p-5 mt-6 ml-6">
+        <IoArrowBackSharp />
         Back
       </Button>
-      <p className="text-center py-6">{classobj.name ? classobj.name : "No class selected"}</p>
+      <p className="text-center py-6">
+        {classobj.name ? classobj.name : "No class selected"}
+      </p>
       <div className="mx-auto flex items-center justify-center py-2">
         <Popover>
           <PopoverTrigger className="text-white bg-[#161D29]" asChild>
@@ -99,12 +103,13 @@ const ClassAttendance = () => {
             students={students}
             title={`Student Attendance ${formatDate(date).toString()}`}
           />
-        )
-        :
-        (
-            <div className="text-center py-7">No Attendance Found for this date</div>
-        )
-    }
+        ) : date ? (
+          <div className="text-center py-7">
+            No Attendance Found for this date
+          </div>
+        ) : (
+          <div className="text-center py-7">Please select a date</div>
+        )}
       </div>
     </div>
   );

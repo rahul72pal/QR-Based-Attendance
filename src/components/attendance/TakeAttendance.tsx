@@ -12,6 +12,7 @@ import {  CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { Calendar } from "../ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { IoArrowBackSharp } from "react-icons/io5";
 // import toast from "react-hot-toast";
 
 // Define the structure of the student data if known
@@ -54,6 +55,7 @@ const TakeAttendance: React.FC = () => {
   return (
     <div className="bg-[#000814]">
       <Button onClick={() => router(-1)} className="p-5 mt-6 ml-6">
+        <IoArrowBackSharp/>
         Back
       </Button>
 

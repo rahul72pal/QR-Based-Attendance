@@ -6,14 +6,15 @@ import { getStudentAttendance } from "@/services/attendance";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../ui/button";
 import { CircularProgress } from "../ui/progress";
+import { IoArrowBackSharp } from "react-icons/io5";
+import { useSelector } from "react-redux";
+import { RootState } from "@/slices/store";
 
 interface StudentHeatmapInterface {
   startDate?: string;
   endDate?: string;
   data: any;
 }
-
-const class_id = "67360c3c4d7e24fe5b08fe9b";
 // const student_id = "67360c534d7e24fe5b08fe9e";
 
 interface attendance {
@@ -30,6 +31,7 @@ const StudentHeatMap: FC<StudentHeatmapInterface> = ({
   console.log(data);
   const [attendance, setAttendance] = useState<attendance[]>([]);
   const [percentage, Setpercentage] = useState<number | undefined>();
+  const classobj = useSelector((state: RootState)=> state.class);
 
   const { id: student_id } = useParams();
   const { name: student_name } = useParams();
@@ -100,7 +102,7 @@ const StudentHeatMap: FC<StudentHeatmapInterface> = ({
   const getAllstudentAttendance = async () => {
     try {
       const data = {
-        class_id: class_id,
+        class_id: classobj._id ? classobj._id : "",
         student_id: student_id?.toString(),
       };
       const result = await getStudentAttendance(data);
@@ -126,6 +128,7 @@ const StudentHeatMap: FC<StudentHeatmapInterface> = ({
     <div className="w-[100vw] ">
       <div>
         <Button onClick={() => router(-1)} className="p-5 m-4">
+          <IoArrowBackSharp/>
           Back
         </Button>
       </div>

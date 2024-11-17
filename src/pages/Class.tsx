@@ -12,6 +12,12 @@ import {
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { FaClipboardList } from "react-icons/fa";
+import { ImBooks } from "react-icons/im";
+import { LuScrollText } from "react-icons/lu";
+import { FaGraduationCap } from "react-icons/fa6";
+import { FaUser } from "react-icons/fa6";
+import { IoArrowBackSharp } from "react-icons/io5";
 interface Class {
   _id: string | null;
   name: string | null;
@@ -51,6 +57,7 @@ const Class = () => {
   return (
     <div>
       <Button className="p-5 mt-6 ml-6" onClick={() => router(-1)}>
+        <IoArrowBackSharp/>
         Back
       </Button>
       <div className="flex justify-between items-center py-3 gap-2">
@@ -88,11 +95,20 @@ const Class = () => {
         selectedClass?._id 
         &&
         (<div className="flex flex-col w-[300px] mx-auto gap-4 ">
-          <Button onClick={()=>router('/takeattendance')} className="shadow-sm shadow-white">Take Attendance</Button>
-          <Button onClick={()=>router('/classAttendance')} className="shadow-sm shadow-white">Class Attendance</Button>
-          <Button onClick={()=>router('/viewStudentList')} className="shadow-sm shadow-white">Student Attendance</Button>
-          <Button className="shadow-sm shadow-white">Student List</Button>
-          <Button className="shadow-sm shadow-white">Add Student</Button>
+          <Button onClick={()=>router('/takeattendance')} className="shadow-sm shadow-white">
+            <FaClipboardList/>
+            Take Attendance
+            </Button>
+          <Button onClick={()=>router('/classAttendance')} className="shadow-sm shadow-white">
+            <ImBooks/>
+            Class Attendance
+            </Button>
+          <Button onClick={()=>router('/viewStudentList')} className="shadow-sm shadow-white">
+            <FaGraduationCap/>
+            Student Attendance
+            </Button>
+          <Button className="shadow-sm shadow-white"><LuScrollText/> Student List</Button>
+          <Button className="shadow-sm shadow-white"><FaUser /> Add Student</Button>
         </div>)
       }
     </div>

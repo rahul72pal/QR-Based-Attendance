@@ -12,6 +12,7 @@ import { RootState } from "@/slices/store";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { IoArrowBackSharp } from "react-icons/io5";
 
 // Define the Student interface
 interface Student {
@@ -45,6 +46,7 @@ const ViewStudentList = () => {
   return (
     <div className="">
       <Button onClick={() => router(-1)} className="p-5 mt-6 ml-6">
+        <IoArrowBackSharp/>
         Back
       </Button>
       <div className="mt-8">
