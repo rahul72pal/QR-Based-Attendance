@@ -9,6 +9,9 @@ import ViewStudentList from "./pages/ViewStudentList";
 import Class from "./pages/Class";
 import ClassAttendance from "./components/class/ClassAttendance";
 import ClassIdComponent from "./utils/ClassIdComponent";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import CreateStudents from "./components/Student/CreateStudents";
 
 
 const App: React.FC = () => {
@@ -44,6 +47,13 @@ const App: React.FC = () => {
             <StudentAttendance />
             </ClassIdComponent>
             } />
+          <Route path="/student/add" element={
+             <ClassIdComponent>
+            <CreateStudents />
+            </ClassIdComponent>
+            } />
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/signup" element={<Signup/>}/>
         </Routes>
       </div>
     </div>

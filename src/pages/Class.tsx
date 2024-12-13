@@ -25,7 +25,7 @@ interface Class {
 
 const Class = () => {
   const [classList, setClassList] = useState<Class[]>();
-  const classObj = useSelector((state: RootState) => state.class)
+  const classObj = useSelector((state: RootState) => state.class);
   const [selectedClass, setSelectedClass] = useState<Class | null>(classObj);
   const dispatch = useDispatch();
   const router = useNavigate();
@@ -56,15 +56,15 @@ const Class = () => {
 
   return (
     <div>
-      <Button className="p-5 mt-6 ml-6" onClick={() => router(-1)}>
-        <IoArrowBackSharp/>
+      <Button className="p-5 mt-6 ml-6 sm:text-xs" onClick={() => router(-1)}>
+        <IoArrowBackSharp />
         Back
       </Button>
       <div className="flex justify-between items-center py-3 gap-2">
-        <div className="flex flex-col p-4 w-[50%] text-center gap-1 mx-auto">
+        <div className="flex flex-col sm:text-xs p-4 w-[50%] text-center gap-1 mx-auto">
           <p className="text-xs text-center">Choose Class</p>
           <DropdownMenu>
-            <DropdownMenuTrigger className="bg-[#161D29] border text-sm border-white w-[150px] mb-1 py-2 rounded-xl">
+            <DropdownMenuTrigger className="bg-[#161D29] sm:text-xs border text-sm border-white w-[150px] mb-1 py-2 rounded-xl">
               {selectedClass?.name ? selectedClass.name : "Select Class"}
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-[150px] mt-2  flex flex-col ">
@@ -91,26 +91,40 @@ const Class = () => {
           </DropdownMenu>
         </div>
       </div>
-      {
-        selectedClass?._id 
-        &&
-        (<div className="flex flex-col w-[300px] mx-auto gap-4 ">
-          <Button onClick={()=>router('/takeattendance')} className="shadow-sm shadow-white">
-            <FaClipboardList/>
+      {selectedClass?._id && (
+        <div className="flex flex-col w-[300px] mx-auto gap-4 ">
+          <Button
+            onClick={() => router("/takeattendance")}
+            className="shadow-sm shadow-white sm:text-xs"
+          >
+            <FaClipboardList />
             Take Attendance
-            </Button>
-          <Button onClick={()=>router('/classAttendance')} className="shadow-sm shadow-white">
-            <ImBooks/>
+          </Button>
+          <Button
+            onClick={() => router("/classAttendance")}
+            className="shadow-sm shadow-white sm:text-xs"
+          >
+            <ImBooks />
             Class Attendance
-            </Button>
-          <Button onClick={()=>router('/viewStudentList')} className="shadow-sm shadow-white">
-            <FaGraduationCap/>
+          </Button>
+          <Button
+            onClick={() => router("/viewStudentList")}
+            className="shadow-sm shadow-white sm:text-xs"
+          >
+            <FaGraduationCap />
             Student Attendance
-            </Button>
-          <Button className="shadow-sm shadow-white"><LuScrollText/> Student List</Button>
-          <Button className="shadow-sm shadow-white"><FaUser /> Add Student</Button>
-        </div>)
-      }
+          </Button>
+          <Button className="shadow-sm shadow-white">
+            <LuScrollText /> Student List
+          </Button>
+          <Button
+            onClick={() => router("/student/add")}
+            className="shadow-sm shadow-white sm:text-xs"
+          >
+            <FaUser /> Add Student
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

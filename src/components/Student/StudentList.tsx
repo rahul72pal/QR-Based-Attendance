@@ -25,11 +25,11 @@ interface StudentListProps {
 const StudentList: React.FC<StudentListProps> = ({ students, title }) => {
   return (
 
-      <div className="bg-[#000814]">
+      <div className="bg-[#000814] ">
         <p className="text-center sm:text-xs my-auto py-5 text-2xl ">
           {title}
         </p>
-        <Table className="w-[75%] sm:w-[99%] pb-4 mx-auto overflow-x-auto m-6 sm:m-2 border-2 p-3">
+        <Table className="w-[75%] sm:text-xs sm:w-[99%] pb-4 mx-auto overflow-x-auto m-6 sm:m-2 border-2 p-3">
           <TableHeader>
             <TableRow>
               {/* <TableHead className="w-[10px]">check</TableHead> */}
@@ -49,7 +49,7 @@ const StudentList: React.FC<StudentListProps> = ({ students, title }) => {
                 <TableCell className="w-[150px] sm:text-xs text-start">{row.name}</TableCell>
                 <TableCell className="text-xs text-start">{row.roll_number}</TableCell>
                 <TableCell className="h-[10px] text-center ">
-                <Checkbox className={`sm:h-[20px]  bg-white border ${row.present ? "bg-yellow-400":"bg-transparent"} border-white text-start sm:w-[20px]`} checked={row.present} />
+                <Checkbox className={`sm:h-[20px]  bg-white border ${row.present ? "bg-white":"bg-transparent"} border-white text-start sm:w-[20px]`} checked={row.present} />
                 </TableCell>
               </TableRow>
             ))}

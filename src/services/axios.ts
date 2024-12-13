@@ -1,7 +1,9 @@
 import axios, {  AxiosResponse } from 'axios';
 
 // Create an Axios instance
-const axiosInstance = axios.create({});
+const axiosInstance = axios.create({
+    withCredentials: true
+});
 
 // Define the type for the request method
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';

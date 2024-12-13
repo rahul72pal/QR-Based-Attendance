@@ -64,17 +64,17 @@ const ClassAttendance = () => {
   }, [date]);
 
   return (
-    <div>
-      <Button onClick={() => router(-1)} className="p-5 mt-6 ml-6">
+    <div className="sm:text-xs">
+      <Button onClick={() => router(-1)} className="p-4 mt-6 ml-6 sm:text-xs">
         <IoArrowBackSharp />
         Back
       </Button>
-      <p className="text-center py-6">
+      <p className="text-center py-6 sm:text-lg">
         {classobj.name ? classobj.name : "No class selected"}
       </p>
       <div className="mx-auto flex items-center justify-center py-2">
         <Popover>
-          <PopoverTrigger className="text-white bg-[#161D29]" asChild>
+          <PopoverTrigger className="text-white bg-[#161D29] sm:text-xs sm:w-fit" asChild>
             <Button
               variant={"outline"}
               className={cn(
@@ -82,7 +82,7 @@ const ClassAttendance = () => {
                 !date && "text-muted-foreground text-white bg-[#161D29] "
               )}
             >
-              <CalendarIcon className="mr-2 h-4 w-4" />
+              <CalendarIcon className="mr-2 h-4 w-4 sm:text-xs" />
               {date ? format(date, "PPP") : <span>Pick a date</span>}
             </Button>
           </PopoverTrigger>
@@ -97,7 +97,7 @@ const ClassAttendance = () => {
         </Popover>
       </div>
 
-      <div className="bg-[#000814] py-3">
+      <div className="bg-[#000814] py-3 sm:text-xs">
         {students && students.length > 0 ? (
           <StudentList
             students={students}

@@ -157,7 +157,7 @@ const QRScanner: React.FC<QRScannerProps> = ({ onClose, date, class_id}) => {
           </button>
         </div>
 
-        <button onClick={onClose}></button>
+        {/* <button onClick={onClose}></button> */}
 
         <div className="sm:mt-16 w-full lg:absolute lg:bottom-0 pb-8 text-center flex flex-col">
           <button

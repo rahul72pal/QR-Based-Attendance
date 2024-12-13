@@ -29,6 +29,8 @@ const StudentHeatMap: FC<StudentHeatmapInterface> = ({
   data,
 }) => {
   console.log(data);
+  console.log(startDate);
+  console.log(endDate);
   const [attendance, setAttendance] = useState<attendance[]>([]);
   const [percentage, Setpercentage] = useState<number | undefined>();
   const classobj = useSelector((state: RootState)=> state.class);
@@ -120,9 +122,9 @@ const StudentHeatMap: FC<StudentHeatmapInterface> = ({
     getAllstudentAttendance();
   }, []);
 
-  console.log(attendance,percentage);
-  console.log(startDate);
-  console.log(endDate);
+  // console.log(attendance,percentage);
+  // console.log(startDate);
+  // console.log(endDate);
 
   return (
     <div className="w-[100vw] ">
@@ -138,11 +140,11 @@ const StudentHeatMap: FC<StudentHeatmapInterface> = ({
         <span className="text-xs">(2024-09-01 to 2025-10-13)</span>
       </h1>
       <div className="rounded-full mx-auto w-fit p-6">
-      <CircularProgress value={percentage}  />
+      <CircularProgress value={percentage && Math.floor(percentage)}  />
       </div>
       <div className="flex flex-col w-full pr-5 my-8 overflow-x-auto">
-        <div className="calendar-container bg-[#161D29] ">
-          <div className="min-w-[1100px] overflow-x-auto bg-[#161D29] pt-7 pr-6">
+        <div className="calendar-container bg-[#161D29] w-fit mx-auto rounded-md">
+          <div className="sm:min-w-[1100px] w-[900px] sm:w-[1200px] overflow-x-auto bg-[#161D29] pt-7 pr-6">
             <CalendarHeatmap
               startDate={"2024-09-01"}
               endDate={"2025-10-13"}

@@ -25,9 +25,9 @@ export const getAllClass = async () => {
         console.log(response);
         
         return response.data; // Cast response.data to Student[]
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
-        toast.error("An error occurred while save Attendance."); // Optional: Display an error toast
+        toast.error(error?.response.data.message); // Optional: Display an error toast
         return undefined; // Return undefined in case of an error
     } finally {
         toast.dismiss(toastId);

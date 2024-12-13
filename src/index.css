@@ -9,3 +9,9 @@
     --radius: 0.5rem; /* Ensure there's a semicolon here */
   }
 }
+
+@layer utilities {
+  .clip-polygon {
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 15%);
+  }
+}

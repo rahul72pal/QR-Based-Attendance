@@ -54,12 +54,12 @@ const TakeAttendance: React.FC = () => {
 
   return (
     <div className="bg-[#000814]">
-      <Button onClick={() => router(-1)} className="p-5 mt-6 ml-6">
+      <Button onClick={() => router(-1)} className="p-4 mt-6 ml-6 sm:text-xs">
         <IoArrowBackSharp/>
         Back
       </Button>
 
-      <p className="text-center py-6 text-xl">{classObj.name}</p>
+      <p className="text-center py-6 text-xl sm:text-lg">{classObj.name}</p>
       <div className="text-white bg-[#000814] min-h-[70vh] text-center flex flex-col justify-between">
         {/* Choose class */}
         {/* <div className="bg-[#000814] py-3">
@@ -70,15 +70,15 @@ const TakeAttendance: React.FC = () => {
 
         <div>
           <Popover >
-            <PopoverTrigger className="text-white bg-[#161D29]" asChild>
+            <PopoverTrigger className="text-white bg-[#161D29] sm:w-fit" asChild>
               <Button
                 variant={"outline"}
                 className={cn(
-                  "w-[280px] justify-start text-left font-normal hover:text-white hover:bg-[#161D29] text-white bg-[#161D29]",
+                  "w-[280px] justify-start sm:text-xs text-left font-normal hover:text-white hover:bg-[#161D29] text-white bg-[#161D29]",
                   !date && "text-muted-foreground text-white bg-[#161D29] "
                 )}
               >
-                <CalendarIcon className="mr-2 h-4 w-4" />
+                <CalendarIcon className="mr-2 h-4 w-4 sm:w-2 sm:h-2" />
                 {date ? format(date, "PPP") : <span>Pick a date</span>}
               </Button>
             </PopoverTrigger>
@@ -99,7 +99,7 @@ const TakeAttendance: React.FC = () => {
             disabled={!date}
               onClick={openModal}
               className={`text-black bg-[#FFD52A] 
-              py-2 rounded-xl font-semibold
+              py-2 rounded-xl font-semibold sm:text-xl
                text-4xl w-full mx-auto ${date ? "opacity-95": "opacity-15"}`}
             >
               Take
