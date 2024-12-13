@@ -24,6 +24,7 @@ export const apiConnector = async (
             'Content-Type': 'application/json',
             ...headers, 
         },
-        params
+        params,
+        withCredentials: true,
     });
 };
