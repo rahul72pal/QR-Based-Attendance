@@ -67,7 +67,7 @@ export async function generatePDF(
     console.log(content);
     tempElement.innerHTML = content;
     tempElement.style.position = "absolute";
-    tempElement.style.left = "-9999px"; // Hide the element offscreen
+    tempElement.style.left = "-6999px"; // Hide the element offscreen
     document.body.appendChild(tempElement);
 
     // Generate the canvas

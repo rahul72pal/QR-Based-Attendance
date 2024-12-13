@@ -54,7 +54,7 @@ let html_string = `<!DOCTYPE html>
             height: 100%;
             background-color: #ffd700;
             z-index: 1;
-            transform: rotate(50deg);
+            transform: rotate(55deg);
             transform-origin: top right;
    
         }
@@ -126,12 +126,12 @@ let html_string = `<!DOCTYPE html>
         }
         .signature div {
             width: 150px;
-            height: 50px;
+            height: 30px;
             background-color: white;
         }
         .footer {
             font-size: 12px;
-            margin-top: 30px;
+            margin-top: 20px;
             border-top: 1px solid white;
             padding-top: 10px;
             z-index: 2;
@@ -140,6 +140,7 @@ let html_string = `<!DOCTYPE html>
         .name{
         font-size: 30px;
         font-weight: bold;
+        z-index: 5;
         }
     </style>
 </head>
