@@ -33,3 +33,26 @@ export const getAllClass = async () => {
         toast.dismiss(toastId);
     }
 };
+
+export const getClassAllAttendance = async (class_id: string)=>{
+    const toastId = toast.loading("Wait..");
+    try {
+        // console.log(process.env.REACT_APP_API_URL);
+        const response = await apiConnector('GET', `${URL}/class/allAttendance/${class_id}`);
+        
+        if (!response) {
+            toast.error("Error in Attendance!");
+            return undefined; // Return undefined if response is not valid
+        }
+        console.log(response);
+        toast.success("Attendance")
+        return response.data; // Cast response.data to Student[]
+    } catch (error: any) {
+        console.log(error);
+        toast.error(error?.response.data.message); // Optional: Display an error toast
+        return undefined; // Return undefined in case of an error
+    } finally {
+        toast.dismiss(toastId);
+    }
+}
+

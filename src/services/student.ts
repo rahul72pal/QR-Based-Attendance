@@ -14,13 +14,22 @@ interface Student {
   id: string;
   name: string;
   roll_number: number;
-  attendance_percentage: number
+  attendance_percentage: number;
   // Add other properties as needed
 }
 
 interface CreateStudentResponse {
   message: string;
   data: Student; // The data field should be of type Student
+}
+
+interface StudentDeatils {
+  createdAt: string;
+  name: string;
+  roll_number: number;
+  updatedAt: string;
+  __v: number;
+  _id: number;
 }
 
 export const getAllStudents = async (
@@ -75,6 +84,39 @@ export const createStudents = async (
     //       "class_id": "67360c3c4d7e24fe5b08fe9b"
     //     }
     //   }
+  } catch (error) {
+    console.log(error);
+    toast.error("An error occurred while Adding students."); // Optional: Display an error toast
+    return undefined; // Return undefined in case of an error
+  } finally {
+    toast.dismiss(toastId);
+  }
+};
+
+export const parentAttendance = async (
+  class_id: string | null,
+  name: string,
+  roll_no: number
+): Promise<StudentDeatils | undefined> => {
+  const toastId = toast.loading("Wait..");
+  try {
+    // console.log(process.env.REACT_APP_API_URL);
+    const response = await apiConnector(
+      "POST",
+      `${URL}/students/parentAttendance`,
+      {
+        name,
+        class_id,
+        roll_no,
+      }
+    );
+
+    if (!response) {
+      toast.error("Error in Add Students!");
+      return undefined; // Return undefined if response is not valid
+    }
+    toast.success("Attendance!");
+    return response.data; // Cast response.data to Student[]
   } catch (error) {
     console.log(error);
     toast.error("An error occurred while Adding students."); // Optional: Display an error toast

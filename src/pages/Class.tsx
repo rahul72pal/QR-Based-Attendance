@@ -18,6 +18,8 @@ import { LuScrollText } from "react-icons/lu";
 import { FaGraduationCap } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa6";
 import { IoArrowBackSharp } from "react-icons/io5";
+import { MdAssignment } from "react-icons/md";
+import toast from "react-hot-toast";
 interface Class {
   _id: string | null;
   name: string | null;
@@ -50,6 +52,23 @@ const Class = () => {
     setSelectedClass(classobj);
     dispatch(setClassId(classobj._id));
     dispatch(setClassName(classobj.name));
+  };
+
+  const copyParentAttendanceLink = () => {
+    try {
+      const baseUrl = window.location.origin;
+      const attendanceLink = `${baseUrl}/${classObj._id}/${classObj.name}`;
+
+      console.log("Copy Link =", attendanceLink);
+
+      // Copy the link to the clipboard
+      navigator.clipboard.writeText(attendanceLink).then(() => {
+        toast.success("Link copied to clipboard!"); // Show success feedback
+      });
+    } catch (error) {
+      console.error("Failed to copy link:", error);
+      toast.error("Failed to copy the link. Please try again."); // Show error feedback
+    }
   };
 
   console.log("Selected Student: ", selectedClass);
@@ -122,6 +141,20 @@ const Class = () => {
             className="shadow-sm shadow-white sm:text-xs"
           >
             <FaUser /> Add Student
+          </Button>
+          <Button
+            onClick={() => router("/classOverall")}
+            className="shadow-sm shadow-white sm:text-xs"
+          >
+            <MdAssignment />
+            Overall Attendance
+          </Button>
+          <Button
+            onClick={copyParentAttendanceLink}
+            className="shadow-sm shadow-white sm:text-xs"
+          >
+            <MdAssignment />
+            Parent Attendance
           </Button>
         </div>
       )}

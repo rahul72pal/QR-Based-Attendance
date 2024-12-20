@@ -307,7 +307,7 @@ export function useColumns() {
         return (
           <div className="text-center">
             <Button
-              onClick={() => navigate(`/student/${person.id}/${person.name}`)}
+              onClick={() => navigate(`/student/${person.id}/${person.name}/${classObj._id}`)}
               className="bg-white text-black hover:text-white sm:text-xs px-2 h-[35px] mx-auto "
             >
               {attendance}%
@@ -332,7 +332,7 @@ export function useColumns() {
           roll_number: person.roll_number,
           class_id: classObj._id,
         };
-        console.log("Person Actions =", studentObj);
+        // console.log("Person Actions =", studentObj);
         return (
           <div className="text-center w-[100px]">
             <DropdownMenu>

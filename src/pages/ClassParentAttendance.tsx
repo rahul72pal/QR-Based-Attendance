@@ -1,9 +1,11 @@
-"use client";
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import QrScanner from "qr-scanner";
 import toast from "react-hot-toast";
-import { saveAttdance } from "@/services/attendance";
-const sampleQrImage = './sampleQR.png'
+// import { useSelector } from "react-redux";
+// import { RootState } from "@/slices/store";
+import { parentAttendance } from "@/services/student";
+import { useNavigate, useParams } from "react-router-dom";
+const sampleQrImage = '../../public/sampleQR.png'
 
 interface QRCodeResult {
   name: string;
@@ -11,42 +13,42 @@ interface QRCodeResult {
   class_id: string;
 }
 
-interface QRScannerProps {
-  onClose: () => void;
-  date: string;
-  class_id: string;
-}
 
-const QRScanner: React.FC<QRScannerProps> = ({ onClose, date, class_id}) => {
+const ClassParentAttendance = () => {
   const scanner = useRef<QrScanner | null>(null);
   const videoEl = useRef<HTMLVideoElement | null>(null);
   const qrBoxEl = useRef<HTMLDivElement | null>(null);
   const [qrOn, setQrOn] = useState<boolean>(true);
-  const [scannedResult, setScannedResult] = useState<QRCodeResult[]>([]);
+//   const [scannedResult, setScannedResult] = useState<QRCodeResult[]>([]);
   const [startScan, setStartScan] = useState<boolean>(false);
   const scannedRollNumbers = useRef<Set<number>>(new Set());
   const [isUserInteracted, setIsUserInteracted] = useState(false);
-
-  // Function to play the beep
-  function playBeep() {
-    const audio = new Audio(
-      'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3'
-    );
-    audio.play().catch((error) => {
-      console.error('Audio playback failed:', error);
-    });
-  }
+  const { classId: classId, className: className } = useParams();
+  const router = useNavigate();
 
   const handleUserInteraction = () => {
     // This function is invoked by any user interaction like a button click
     setStartScan(!startScan)
     setIsUserInteracted(true);
   };
-  // const class_id = "67360c3c4d7e24fe5b08fe9b";
+  
+  const fetchStudentAttendance = async(name: string, roll_no: number) =>{
+    try {
+       const toastId =  toast.loading("Wait..");
+        const studentData = await parentAttendance(classId? classId: "", name, roll_no);
+        console.log("Parent response", studentData);
+        if(studentData){
+            router(`/student/${studentData._id}/${studentData.name}/${classId}`)
+        }
+        toast.dismiss(toastId);
+    } catch (error) {
+        console.log(error);
+    }
+  }
 
   const onScanSuccess = useCallback((data: any) => {
     let newResult: QRCodeResult;
-    console.log("newResult =", data);
+    // console.log("newResult =", data);
 
     try {
       newResult = JSON.parse(data?.data) as QRCodeResult;
@@ -57,7 +59,8 @@ const QRScanner: React.FC<QRScannerProps> = ({ onClose, date, class_id}) => {
         return;
       }
 
-      if(newResult.class_id !== class_id){
+      console.log(newResult.class_id , classId)
+      if(newResult.class_id !== classId){
         toast.error("Class Not Match");
         return;
       }
@@ -72,12 +75,10 @@ const QRScanner: React.FC<QRScannerProps> = ({ onClose, date, class_id}) => {
     if (isUserInteracted && !scannedRollNumbers.current.has(newRollNo)) {
       console.log("New QR Code scanned:", newResult);
       scannedRollNumbers.current.add(newRollNo);
-      setScannedResult((prev) => [...prev, newResult]);
-
-      // Play a short beep after user interaction
-      playBeep();
-
+    //   setScannedResult((prev) => [...prev, newResult]);
+      fetchStudentAttendance(newResult.name, newResult.roll_number);
       toast.success(`QR Code Scanned! ${newResult.name}`);
+      setStartScan(false);
     }
   }, [isUserInteracted]);
 
@@ -120,31 +121,11 @@ const QRScanner: React.FC<QRScannerProps> = ({ onClose, date, class_id}) => {
     }
   }, [qrOn]);
 
-  const handleSaveAttendance = async()=>{
-    try {
-      const attenanceData = {
-        class_id: class_id,
-        date: date,
-        attendance_data: scannedResult
-      }
-      const result = await saveAttdance(attenanceData);
-      console.log(result)
-      if(result){
-        // attendance();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-    finally{
-      onClose();
-    }
-  }
-
-  console.log("scannedResult =", scannedResult, class_id, date);
+  console.log("classId =", classId);
 
   return (
-    <>
-      <div className="relative sm:w-[100vw] flex flex-col items-center lg:w-[100%] mx-auto justify-center h-screen bg-gray-600 bg-opacity-50">
+    <div>
+        <div className="relative sm:w-[100vw] flex flex-col items-center lg:w-[100%] mx-auto justify-center h-screen bg-gray-600 bg-opacity-50">
         {startScan && (
           <video
             ref={videoEl}
@@ -167,8 +148,8 @@ const QRScanner: React.FC<QRScannerProps> = ({ onClose, date, class_id}) => {
           )}
         </div>
 
-        <div className="mt-[200px] text-center">
-          <h3>Number of Scanned Results: {scannedResult.length}</h3>
+        <div className="mt-[0px] text-center">
+          <h3>Student of {className}</h3>
 
           <button
             className="px-8 mt-4 py-2 text-[23px] bg-gray-700 text-white rounded-md"
@@ -180,17 +161,17 @@ const QRScanner: React.FC<QRScannerProps> = ({ onClose, date, class_id}) => {
 
         {/* <button onClick={onClose}></button> */}
 
-        <div className="sm:mt-16 w-full lg:absolute lg:bottom-0 pb-8 text-center flex flex-col">
+        {/* <div className="sm:mt-16 w-full lg:absolute lg:bottom-0 pb-8 text-center flex flex-col">
           <button
             className="text-black bg-[#FFD52A] py-2 rounded-xl font-semibold text-2xl w-[75%] mx-auto px-10"
             onClick={() => handleSaveAttendance()}
           >
             Submit
           </button>
-        </div>
+        </div> */}
       </div>
-    </>
-  );
-};
+    </div>
+  )
+}
 
-export default QRScanner;
+export default ClassParentAttendance
