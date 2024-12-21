@@ -65,8 +65,8 @@ const Navbar: React.FC = () => {
         ) : (
           <div className="flex justify-center items-center ">
             <p className="sm:text-xs">Welcome {teacher?.name || "Guest"}</p>
-            <span className="p-4" onClick={()=>setOpenModal(true)}>
-              <RiLogoutCircleLine className="text-2xl" />
+            <span className="p-2" onClick={()=>setOpenModal(true)}>
+              <RiLogoutCircleLine className="text-2xl text-[#FFD52A]" />
             </span>
           </div>
         )}
