@@ -15,6 +15,7 @@ const TeacherLogout: React.FC<TeacherLogoutProps> = ({ onClose}) =>{
             Cookies.remove('token');
             Cookies.remove('teacher');
             router('/login');
+            onClose();
         } catch (error) {
             console.log(error)
         }
