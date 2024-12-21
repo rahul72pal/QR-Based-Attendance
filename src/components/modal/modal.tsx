@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "../ui/button";
 
 // Define the props interface for the Modal component
 interface ModalProps {
@@ -20,12 +21,12 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose }) => {
         className="relative z-10 w-full max-w-md"
         onClick={(e) => e.stopPropagation()}
       >
-        <button
-          className="absolute text-[40px] text-[#FFD52A] z-50 -top-3 right-6 hover:text-gray-900"
+        <Button
+          className="absolute text-[40px] bg-transparent text-[#FFD52A] z-50 top-0 right-6 hover:text-gray-900"
           onClick={onClose}
         >
           &times; {/* Close button */}
-        </button>
+        </Button>
         {children}
       </div>
     </div>

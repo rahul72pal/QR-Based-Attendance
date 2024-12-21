@@ -15,10 +15,11 @@ import CreateStudents from "./components/Student/CreateStudents";
 import ClassAllAttendance from "./pages/ClassAllAttendance";
 import ClassParentAttendance from "./pages/ClassParentAttendance";
 import Layout from "./components/Layout";
+import ProtectedRoute from "./components/routes/ProtectedRoute";
 
 const App: React.FC = () => {
   return (
-    <div className="w-[100%] font-title h-[100%] bg-[#000814] text-white">
+    <div className="w-[100%] font-title h-[100vh] bg-[#000814] text-white">
       {/* <QRScanner/> */}
       <div className="sm:min-h-[90vh] pb-4 ">
         <Routes>
@@ -27,44 +28,60 @@ const App: React.FC = () => {
             <Route
               path="/takeattendance"
               element={
+                <ProtectedRoute>
                 <ClassIdComponent>
                   <TakeAttendance />
                 </ClassIdComponent>
+                </ProtectedRoute>
               }
             />
-            <Route path="/class" element={<Class />} />
+            <Route path="/class" element={
+               <ProtectedRoute>
+              <Class />
+              </ProtectedRoute>
+              } />
             <Route
               path="/classAttendance"
               element={
+                <ProtectedRoute>
                 <ClassIdComponent>
                   <ClassAttendance />
                 </ClassIdComponent>
+                </ProtectedRoute>
               }
             />
             <Route
               path="/viewStudentList"
               element={
+                <ProtectedRoute>
                 <ClassIdComponent>
                   <ViewStudentList />
                 </ClassIdComponent>
+                </ProtectedRoute>
               }
             />
             <Route
               path="/student/add"
               element={
+                <ProtectedRoute>
                 <ClassIdComponent>
                   <CreateStudents />
                 </ClassIdComponent>
+                </ProtectedRoute>
               }
             />
             <Route
               path="/classOverall"
               element={
+                <ProtectedRoute>
                 <ClassIdComponent>
                   <ClassAllAttendance />
                 </ClassIdComponent>
+                </ProtectedRoute>
               }
             />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
           </Route>
           {/* <Route path="/QR" element={<QRScanner onClose={()=>void} />} /> */}
           <Route
@@ -75,8 +92,6 @@ const App: React.FC = () => {
             path="/:classId/:className"
             element={<ClassParentAttendance />}
           />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
         </Routes>
       </div>
     </div>
