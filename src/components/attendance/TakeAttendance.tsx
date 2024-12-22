@@ -13,6 +13,7 @@ import { format } from "date-fns";
 import { Calendar } from "../ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { IoArrowBackSharp } from "react-icons/io5";
+import GlobalClassSelector from "../general/GlobalClassSelector";
 // import toast from "react-hot-toast";
 
 // Define the structure of the student data if known
@@ -59,6 +60,8 @@ const TakeAttendance: React.FC = () => {
         Back
       </Button>
 
+      <GlobalClassSelector/>
+
       <p className="text-center py-6 text-xl sm:text-lg">{classObj.name}</p>
       <div className="text-white bg-[#000814] min-h-[70vh] text-center flex flex-col justify-between">
         {/* Choose class */}
@@ -99,7 +102,7 @@ const TakeAttendance: React.FC = () => {
             disabled={!date}
               onClick={openModal}
               className={`text-black bg-[#FFD52A] 
-              py-2 rounded-xl font-semibold sm:text-xl
+              py-2 mb-16 rounded-xl font-semibold sm:text-xl
                text-4xl w-full mx-auto ${date ? "opacity-95": "opacity-15"}`}
             >
               Take

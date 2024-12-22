@@ -1,9 +1,11 @@
 import { createStudents } from "@/services/student";
 import { RootState } from "@/slices/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // import { useNavigate } from "react-router-dom";
 import QRCode from "qrcode"; // Import the QRCode library
+import GlobalClassSelector from "../general/GlobalClassSelector";
+import toast from "react-hot-toast";
 
 const CreateStudents = () => {
   const [name, setName] = useState<string>("");
@@ -39,11 +41,20 @@ const CreateStudents = () => {
     setLoading(false);
   };
 
+  useEffect(()=>{
+    if(!classobj._id){
+      toast('Select class!', {
+        icon: '⚠️',
+      });
+    }
+  })
+
   console.log(qrCodeDataUrl);
 
   return (
     <div className="flex flex-col items-center justify-center h-[80vh] bg-[#000814]">
-      <div className="p-6 sm:mt-[150px] sm:w-[90%] sm:m-5 bg-[#161D29] rounded shadow-md w-96">
+      <GlobalClassSelector/>
+      {classobj._id && <div className="p-6 sm:mt-[150px] sm:w-[90%] sm:m-5 bg-[#161D29] rounded shadow-md w-96">
         <h1 className="text-3xl font-semibold text-center sm:text-lg">Add Student</h1>
         <h1 className="text-lg py-4 text-center sm:text-xl">{classobj?.name}</h1>
         <form onSubmit={handleSubmit} className="mt-4">
@@ -71,7 +82,7 @@ const CreateStudents = () => {
             </button>
           </div>
         </form>
-      </div>
+      </div>}
 
       {/* Showing QR code */}
       <div className="m-4 flex items-center justify-center">

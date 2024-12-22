@@ -4,28 +4,26 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 interface ClassIdComponentProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 
 const ClassIdComponent: React.FC<ClassIdComponentProps> = ({ children }) => {
-    const router = useNavigate();
-    const classobj = useSelector((state: RootState) => state.class);
+  const router = useNavigate();
+  const classobj = useSelector((state: RootState) => state.class);
+  const storedClasses = JSON.parse(localStorage.getItem("classes") || "[]");
+  console.log("Stored classes:", storedClasses);
 
-    useEffect(() => {
-        if (!classobj._id) {
-            router('/class');
-        }
-    }, [classobj._id, router]);
-
-    if (!classobj._id) {
-        return null;
+  useEffect(() => {
+    if (!storedClasses) {
+      router("/class");
     }
+  }, [classobj._id, router]);
 
-    return (
-        <div>
-            {children}
-        </div>
-    );
-}
+  if (!storedClasses) {
+    return null;
+  }
+
+  return <div>{children}</div>;
+};
 
 export default ClassIdComponent;

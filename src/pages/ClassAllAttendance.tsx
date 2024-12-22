@@ -14,8 +14,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import * as XLSX from "xlsx";
-import { IoArrowBackSharp } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import GlobalClassSelector from "@/components/general/GlobalClassSelector";
 
 interface student {
   id: string;
@@ -38,7 +37,6 @@ const ClassAllAttendance = () => {
   const classobj = useSelector((state: RootState) => state.class);
   const [attendanceData, setAttendanceData] = useState<result>();
   const [downloading, setdwonloading] = useState<boolean>(false);
-  const router = useNavigate();
 
   const getAttendance = async () => {
     try {
@@ -74,59 +72,75 @@ const ClassAllAttendance = () => {
   };
 
   useEffect(() => {
-    getAttendance();
+    if(!classobj._id){
+      toast('Select class!', {
+        icon: '⚠️',
+      });
+    }else{
+      getAttendance();
+    }
   }, [classobj._id]);
 
   return (
-    <div className="text-center p-4 sm:p-1 flex flex-col">
-      <Button onClick={() => router(-1)} className="p-4 mt-6 ml-6 sm:text-xs">
+    <div className="text-center p-4 sm:p-1 flex flex-col justify-center items-center">
+      {/* <Button onClick={() => router(-1)} className="p-4 mt-6 ml-6 sm:text-xs">
               <IoArrowBackSharp/>
               Back
-            </Button>
+            </Button> */}
+      <GlobalClassSelector/>
       <span className="py-5">Class Over All Attendance</span>
       <Button disabled={downloading} onClick={exportToExcel} className="w-fit mx-auto my-5">Export Excel</Button>
-      <Table
-        className="w-full text-xs py-8 pb-4 mx-auto overflow-x-auto m-6 sm:m-2 border-2 p-3"
-        style={{ tableLayout: "fixed" }}
-      >
-        <TableHeader className="">
-          <TableRow className="hover:bg-transparent">
-            <TableHead className="w-[100px] text-start text-[#FFD52A]">
-              Date
-            </TableHead>
+      {
+        attendanceData?.attendance &&
+        attendanceData?.attendance.length > 0
+
+        ?
+        (<Table
+          className="w-full text-xs py-8 pb-4 mx-auto overflow-x-auto m-6 sm:m-2 border-2 p-3"
+          style={{ tableLayout: "fixed" }}
+        >
+          <TableHeader className="">
+            <TableRow className="hover:bg-transparent">
+              <TableHead className="w-[100px] text-start text-[#FFD52A]">
+                Date
+              </TableHead>
+              {attendanceData &&
+                attendanceData.students.map((student: student) => (
+                  <TableHead
+                    key={student.id}
+                    className="w-[100px] lg:text text-center text-[#FFD52A]"
+                  >
+                    {student.name}
+                  </TableHead>
+                ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody className="h-[10px]">
             {attendanceData &&
-              attendanceData.students.map((student: student) => (
-                <TableHead
-                  key={student.id}
-                  className="w-[100px] lg:text text-center text-[#FFD52A]"
+              attendanceData.attendance.map((attendance: attendabce) => (
+                <TableRow
+                  className="h-[10px] hover:bg-transparent"
+                  key={attendance._id}
                 >
-                  {student.name}
-                </TableHead>
+                  <TableCell className="w-[100px] text-start h-1 py-2">
+                    {attendance.date ? format(attendance.date, "dd/MM/yyyy") : ""}
+                  </TableCell>
+                  {attendance.attendance_data
+                    .split("")
+                    .slice(0, attendanceData?.students.length || 0)
+                    .map((char: string, index: number) => (
+                      <TableCell key={index} className="text-center h-1 py-0">
+                        {char === "1" ? "P" : "A"}
+                      </TableCell>
+                    ))}
+                </TableRow>
               ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody className="h-[10px]">
-          {attendanceData &&
-            attendanceData.attendance.map((attendance: attendabce) => (
-              <TableRow
-                className="h-[10px] hover:bg-transparent"
-                key={attendance._id}
-              >
-                <TableCell className="w-[100px] text-start h-1 py-2">
-                  {attendance.date ? format(attendance.date, "dd/MM/yyyy") : ""}
-                </TableCell>
-                {attendance.attendance_data
-                  .split("")
-                  .slice(0, attendanceData?.students.length || 0)
-                  .map((char: string, index: number) => (
-                    <TableCell key={index} className="text-center h-1 py-0">
-                      {char === "1" ? "P" : "A"}
-                    </TableCell>
-                  ))}
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
+          </TableBody>
+        </Table>):
+        (
+          <div>NO Data Found</div>
+        )
+      }
     </div>
   );
 };

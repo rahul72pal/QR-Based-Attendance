@@ -16,12 +16,13 @@ import ClassAllAttendance from "./pages/ClassAllAttendance";
 import ClassParentAttendance from "./pages/ClassParentAttendance";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
+import ParentShare from "./pages/ParentShare";
 
 const App: React.FC = () => {
   return (
-    <div className="w-[100%] font-title min-h-[100vh] bg-[#000814] text-white">
+    <div className="w-[100%] font-title min-h-[100vh]  bg-[#000814] text-white">
       {/* <QRScanner/> */}
-      <div className="sm:min-h-[90vh] pb-4 ">
+      <div className="sm:min-h-[100vh] pb-4 ">
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
@@ -76,6 +77,16 @@ const App: React.FC = () => {
                 <ProtectedRoute>
                 <ClassIdComponent>
                   <ClassAllAttendance />
+                </ClassIdComponent>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/parentshare"
+              element={
+                <ProtectedRoute>
+                <ClassIdComponent>
+                  <ParentShare/>
                 </ClassIdComponent>
                 </ProtectedRoute>
               }

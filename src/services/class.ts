@@ -15,24 +15,29 @@ if(import.meta.env.VITE_NODE_ENV === 'development'){
 export const getAllClass = async () => {
     const toastId = toast.loading("Wait..");
     try {
-        // console.log(process.env.REACT_APP_API_URL);
         const response = await apiConnector('GET', `${URL}/class/getAll`);
         
         if (!response) {
             toast.error("Error in Attendance!");
             return undefined; // Return undefined if response is not valid
         }
-        console.log(response);
+
+        const classes = response.data?.classes || [];
         
-        return response.data; // Cast response.data to Student[]
+        // Store classes in localStorage
+        localStorage.setItem("classes", JSON.stringify(classes));
+
+        console.log("Classes stored in localStorage:", classes);
+        return classes; // Return the classes array
     } catch (error: any) {
         console.log(error);
-        toast.error(error?.response.data.message); // Optional: Display an error toast
+        toast.error(error?.response?.data?.message || "An error occurred.");
         return undefined; // Return undefined in case of an error
     } finally {
         toast.dismiss(toastId);
     }
 };
+
 
 export const getClassAllAttendance = async (class_id: string)=>{
     const toastId = toast.loading("Wait..");

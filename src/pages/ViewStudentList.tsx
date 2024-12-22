@@ -15,39 +15,29 @@ import { useNavigate } from "react-router-dom";
 import { IoArrowBackSharp } from "react-icons/io5";
 import { StudentDataTable } from "@/components/Student Table/data-table";
 import { useColumns } from "@/components/Student Table/columns";
-
-// Define the Student interface
-// interface Student {
-//   id: string;
-//   name: string;
-//   roll_number: number;
-//   // present?: boolean; // Optional property for attendance status
-//   attendance_percentage: number;
-// }
+import GlobalClassSelector from "@/components/general/GlobalClassSelector";
 
 const ViewStudentList = () => {
   const [students, setStudents] = useState<any>([]);
   const router = useNavigate();
   const classobj = useSelector((state: RootState) => state.class);
 
-  // Define fetchStudents using useCallback to memoize the function
+  // Memoized fetchStudents function
   const fetchStudents = useCallback(async () => {
     try {
       const result = await getAllStudents(classobj._id);
       if (result) {
-        setStudents(result); // Set the fetched students
+        setStudents(result); // Update students state
       }
     } catch (error) {
       console.error("Error fetching students:", error);
     }
-  }, [classobj._id]); // Dependency ensures fetchStudents is re-created only if classobj._id changes
+  }, [classobj._id]); // Dependency ensures function is recreated when classobj._id changes
 
-  // Use useEffect to call fetchStudents only once
+  // Call fetchStudents whenever classobj._id changes
   useEffect(() => {
-    if (students.length === 0) {
-      fetchStudents();
-    }
-  }, [fetchStudents, students.length]); // Dependencies ensure fetchStudents is only called when required
+    fetchStudents();
+  }, [fetchStudents]); // fetchStudents already depends on classobj._id
 
   return (
     <div className="">
@@ -55,10 +45,15 @@ const ViewStudentList = () => {
         <IoArrowBackSharp />
         Back
       </Button>
+      <GlobalClassSelector />
       <div className="mt-8">
         <p className="text-center sm:text-lg">Student Attendance List</p>
         <p className="text-center text-xs sm:text-xs">Class 10th Science</p>
-        {students && <div className="p-2"><StudentDataTable data={students} columns={useColumns()} /></div>}
+        {students && (
+          <div className="p-2">
+            <StudentDataTable data={students} columns={useColumns()} />
+          </div>
+        )}
       </div>
     </div>
   );
