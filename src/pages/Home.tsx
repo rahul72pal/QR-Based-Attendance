@@ -10,7 +10,7 @@ const Home: React.FC = () => {
   const router = useNavigate();
 
   return (
-    <div className="h-[100%]">
+    <div className="h-[100%] p-3">
       <Class/>
       <p>Home</p>
       <button onClick={() => router('/takeattendance')}>Take Attendance</button>

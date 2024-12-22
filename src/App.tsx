@@ -19,7 +19,7 @@ import ProtectedRoute from "./components/routes/ProtectedRoute";
 
 const App: React.FC = () => {
   return (
-    <div className="w-[100%] font-title h-[100vh] bg-[#000814] text-white">
+    <div className="w-[100%] font-title min-h-[100vh] bg-[#000814] text-white">
       {/* <QRScanner/> */}
       <div className="sm:min-h-[90vh] pb-4 ">
         <Routes>

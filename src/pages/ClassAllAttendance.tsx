@@ -14,6 +14,8 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import * as XLSX from "xlsx";
+import { IoArrowBackSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 interface student {
   id: string;
@@ -36,6 +38,7 @@ const ClassAllAttendance = () => {
   const classobj = useSelector((state: RootState) => state.class);
   const [attendanceData, setAttendanceData] = useState<result>();
   const [downloading, setdwonloading] = useState<boolean>(false);
+  const router = useNavigate();
 
   const getAttendance = async () => {
     try {
@@ -76,6 +79,10 @@ const ClassAllAttendance = () => {
 
   return (
     <div className="text-center p-4 sm:p-1 flex flex-col">
+      <Button onClick={() => router(-1)} className="p-4 mt-6 ml-6 sm:text-xs">
+              <IoArrowBackSharp/>
+              Back
+            </Button>
       <span className="py-5">Class Over All Attendance</span>
       <Button disabled={downloading} onClick={exportToExcel} className="w-fit mx-auto my-5">Export Excel</Button>
       <Table
