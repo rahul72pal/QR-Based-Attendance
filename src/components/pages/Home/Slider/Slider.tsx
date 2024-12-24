@@ -78,14 +78,14 @@ export default (props: any) => {
     <>
       {/* Carousel */}
       <div
-        className="slideC mt-5 hover:cursor-pointer"
+        className="slideC mt-5 hover:cursor-pointer "
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         {props.data.map((item: any, i: any) => (
           <React.Fragment key={item.id}>
             <div
-              className="slide"
+              className="slide esm:ml-[-17px]"
               style={{
                 ...getStyles(i),
               }}
@@ -108,7 +108,7 @@ export default (props: any) => {
 const SliderContent = (props: any) => {
   return (
     <div
-      className="sliderContent rounded-lg relative mt-9 pt-7 shadow-lg shadow-white"
+      className="sliderContent rounded-lg relative mt-9 pt-7 shadow-lg shadow-white sm:w-[90vw]"
       style={{
         backgroundImage: `url(${props.icon})`,
         backgroundSize: "cover",
