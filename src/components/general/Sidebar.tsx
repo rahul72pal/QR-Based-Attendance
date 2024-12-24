@@ -1,15 +1,25 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { AiFillEnvironment } from "react-icons/ai";
 // import { IoIosSearch } from "react-icons/io";
 import { MdDashboard } from "react-icons/md";
-import { FaChalkboardTeacher, FaPlusCircle, FaListUl, FaChartBar, FaGraduationCap, FaUserPlus, FaUserFriends, FaClipboardList} from "react-icons/fa";
+import {
+  FaChalkboardTeacher,
+  FaPlusCircle,
+  FaListUl,
+  FaChartBar,
+  FaGraduationCap,
+  FaUserPlus,
+  FaUserFriends,
+  FaClipboardList,
+} from "react-icons/fa";
 import { MdAssignmentTurnedIn, MdShare } from "react-icons/md";
 // import { IoImages } from "react-icons/io5";
 import { RiLogoutCircleLine } from "react-icons/ri";
 
 import { IoChevronDownSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { IoIosCheckmarkCircle } from "react-icons/io";
 
 type Props = {
   isMobile: boolean;
@@ -17,8 +27,10 @@ type Props = {
 
 const SideBar = (props: Props) => {
   const [open, setOpen] = useState(true);
-//   const [submenuOpen, setSubmenuOpen] = useState(false);
-  const [submenuOpenState, setSubmenuOpenState] = useState<Record<number, boolean>>({});
+  //   const [submenuOpen, setSubmenuOpen] = useState(false);
+  const [submenuOpenState, setSubmenuOpenState] = useState<
+    Record<number, boolean>
+  >({});
 
   const toggleSubmenu = (index: number) => {
     setSubmenuOpenState((prevState) => ({
@@ -29,8 +41,7 @@ const SideBar = (props: Props) => {
 
   const router = useNavigate();
 
-
-  const handleMenuClick = (route:string,) => {
+  const handleMenuClick = (route: string) => {
     if (route) {
       router(route);
       setOpen(false);
@@ -95,17 +106,21 @@ const SideBar = (props: Props) => {
           icon: <MdShare />,
           route: "/parentshare",
         },
+        {
+          title: "Check Attendance",
+          icon: <IoIosCheckmarkCircle />,
+          route: "/classAttendance",
+        },
       ],
     },
     // { title: "Pages", icon: <FaFileAlt /> },
     // { title: "Media", icon: <IoImages />, spacing: true },
     { title: "Logout", icon: <RiLogoutCircleLine />, spacing: true },
   ];
-  
 
   return (
     <div
-      className={`bg-dark-purple bg-[#000814] p-5 pt-8 duration-300 border-r-2 border-amber-300 ${
+      className={`bg-dark-purple bg-[#000814] p-5 pt-8 duration-300 border-r-2 border-amber-300 shadow-lg shadow-white ${
         open ? "w-72" : `w-16 ${props.isMobile && "-ml-[70px]"}`
       } ${
         props.isMobile
@@ -117,13 +132,13 @@ const SideBar = (props: Props) => {
         onClick={() => setOpen(!open)}
         className={`${
           !open && "rotate-180"
-        }  text-dark-purple border text-2xl rounded-full absolute -right-10 top-2 border-dark-purple cursor-pointer`}
+        }  text-dark-purple bg-white text-[#000814] border text-3xl rounded-full absolute -right-10 top-2 border-dark-purple cursor-pointer`}
       />
 
       {
         <div className="inline-flex mt-4 sm:text-sm">
           <AiFillEnvironment
-            className={`bg-amber-300 sm:text-[25px] text-4xl rounded cursor-pointer block float-left mr-2 duration-300 ${
+            className={`bg-[#FFD52A] text-[#000814] sm:text-[25px] text-4xl rounded cursor-pointer block float-left mr-2 duration-300 ${
               open && "rotate-[360deg]"
             }`}
           />
@@ -140,7 +155,7 @@ const SideBar = (props: Props) => {
       {/* menu */}
       <ul>
         {Menus.map((menu, index) => (
-          <>
+          <Fragment key={index}>
             <li
               key={index}
               className={`text-gray-300 text-sm flex items-center gap-x-4   cursor-pointer p-1 hover:bg-light-white rounded-md  ${
@@ -160,7 +175,7 @@ const SideBar = (props: Props) => {
               </span>
               {menu.submenu && open && (
                 <IoChevronDownSharp
-                className={`${
+                  className={`${
                     submenuOpenState[index] ? "rotate-180" : ""
                   } transition-transform duration-200`}
                   onClick={() => toggleSubmenu(index)}
@@ -171,16 +186,19 @@ const SideBar = (props: Props) => {
               <ul>
                 {menu?.submenuitem?.map((submenuItem, index) => (
                   <li
-                    className="text-amber-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 px-5 hover:bg-light-white"
+                    className="text-amber-300 border-l-2 text-sm flex items-center gap-x-4 cursor-pointer p-2 pr-5 ml-3 hover:bg-light-white"
                     key={index}
-                    onClick={()=>handleMenuClick(submenuItem.route)}
-                  >
+                    onClick={() => handleMenuClick(submenuItem.route)}
+                  > 
+                    <span className="text-2xl sm:text-sm block float-left">
+                      {submenuItem.icon ? submenuItem.icon : <MdDashboard />}
+                    </span>
                     {submenuItem.title}
                   </li>
                 ))}
               </ul>
             )}
-          </>
+          </Fragment>
         ))}
       </ul>
     </div>

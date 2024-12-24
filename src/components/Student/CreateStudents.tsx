@@ -52,9 +52,9 @@ const CreateStudents = () => {
   console.log(qrCodeDataUrl);
 
   return (
-    <div className="flex flex-col items-center justify-center h-[80vh] bg-[#000814]">
+    <div className="flex flex-col items-center sm:pt-6 h-[80vh] bg-[#000814]">
       <GlobalClassSelector/>
-      {classobj._id && <div className="p-6 sm:mt-[150px] sm:w-[90%] sm:m-5 bg-[#161D29] rounded shadow-md w-96">
+      {classobj._id && <div className="p-6 sm:mt-[50px] sm:w-[90%] sm:m-5 bg-[#161D29] rounded shadow-md w-96">
         <h1 className="text-3xl font-semibold text-center sm:text-lg">Add Student</h1>
         <h1 className="text-lg py-4 text-center sm:text-xl">{classobj?.name}</h1>
         <form onSubmit={handleSubmit} className="mt-4">

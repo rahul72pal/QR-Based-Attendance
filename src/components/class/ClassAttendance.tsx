@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { getAttdance } from "@/services/attendance";
 import StudentList from "../Student/StudentList";
 import { IoArrowBackSharp } from "react-icons/io5";
+import GlobalClassSelector from "../general/GlobalClassSelector";
 
 function cn(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -69,6 +70,8 @@ const ClassAttendance = () => {
         <IoArrowBackSharp />
         Back
       </Button>
+
+      <GlobalClassSelector/>
       <p className="text-center py-6 sm:text-lg">
         {classobj.name ? classobj.name : "No class selected"}
       </p>

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 // import {
 //   TableBody,
 //   TableCell,
@@ -11,15 +11,16 @@ import { getAllStudents } from "@/services/student";
 import { RootState } from "@/slices/store";
 import { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { IoArrowBackSharp } from "react-icons/io5";
+// import { useNavigate } from "react-router-dom";
+// import { IoArrowBackSharp } from "react-icons/io5";
 import { StudentDataTable } from "@/components/Student Table/data-table";
 import { useColumns } from "@/components/Student Table/columns";
 import GlobalClassSelector from "@/components/general/GlobalClassSelector";
+import toast from "react-hot-toast";
 
 const ViewStudentList = () => {
   const [students, setStudents] = useState<any>([]);
-  const router = useNavigate();
+  // const router = useNavigate();
   const classobj = useSelector((state: RootState) => state.class);
 
   // Memoized fetchStudents function
@@ -36,20 +37,26 @@ const ViewStudentList = () => {
 
   // Call fetchStudents whenever classobj._id changes
   useEffect(() => {
-    fetchStudents();
+    if(classobj._id){
+      fetchStudents();
+    }else{
+      toast('Select class!', {
+        icon: '⚠️',
+      });
+    }
   }, [fetchStudents]); // fetchStudents already depends on classobj._id
 
   return (
     <div className="">
-      <Button onClick={() => router(-1)} className="p-4 mt-6 ml-6 sm:text-xs">
+      {/* <Button onClick={() => router(-1)} className="p-4 mt-6 ml-6 sm:text-xs">
         <IoArrowBackSharp />
         Back
-      </Button>
+      </Button> */}
       <GlobalClassSelector />
       <div className="mt-8">
         <p className="text-center sm:text-lg">Student Attendance List</p>
         <p className="text-center text-xs sm:text-xs">Class 10th Science</p>
-        {students && (
+        {classobj._id && students && (
           <div className="p-2">
             <StudentDataTable data={students} columns={useColumns()} />
           </div>

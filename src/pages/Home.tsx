@@ -3,6 +3,7 @@ import Class from "@/components/class/Class";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { SliderCursol } from '../components/pages/Home/Slider/index'
 // import {students} from '../components/Student Table/StudentData'
 // import {columns} from '../components/Student Table/columns'
 
@@ -11,6 +12,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="h-[100%] p-3">
+      <SliderCursol/>
       <Class/>
       <p>Home</p>
       <button onClick={() => router('/takeattendance')}>Take Attendance</button>

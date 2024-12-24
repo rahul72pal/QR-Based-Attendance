@@ -39,7 +39,7 @@ const Layout = () => {
 
         {/* Main content area */}
         <main className="flex-1 overflow-x-hidden overflow-y-auto">
-          <div className="p-1 flex h-screen flex-1 overflow-x-hidden overflow-y-auto">
+          <div className="p-1 relative flex h-screen flex-1 overflow-x-hidden overflow-y-auto">
             <Sidebar isMobile ={isMobile}/>
             {/* {isMobile && <MobileSidebar open={open} Onclose={()=>setOpen(false)} />} */}
             <div className=" w-full h-full"><Outlet/></div>

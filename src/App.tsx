@@ -17,6 +17,7 @@ import ClassParentAttendance from "./pages/ClassParentAttendance";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
 import ParentShare from "./pages/ParentShare";
+import CreateClass from "./components/class/CreateClass";
 
 const App: React.FC = () => {
   return (
@@ -91,6 +92,11 @@ const App: React.FC = () => {
                 </ProtectedRoute>
               }
             />
+            <Route path="/classCreate" element={
+              <ProtectedRoute>
+              <CreateClass/>
+              </ProtectedRoute>
+              } />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
           </Route>

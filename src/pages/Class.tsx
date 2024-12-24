@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { getAllClass } from "@/services/class";
-import { RootState } from "@/slices/store";
+// import { RootState } from "@/slices/store";
 
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useSelector } from "react-redux";
+// import { useNavigate } from "react-router-dom";
 import { FaClipboardList } from "react-icons/fa";
 
-import { IoArrowBackSharp } from "react-icons/io5";
+// import { IoArrowBackSharp } from "react-icons/io5";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 interface Class {
@@ -17,8 +17,8 @@ interface Class {
 
 const Class = () => {
   const [classList, setClassList] = useState<Class[]>();
-  const classObj = useSelector((state: RootState) => state.class);
-  const router = useNavigate();
+  // const classObj = useSelector((state: RootState) => state.class);
+  // const router = useNavigate();
 
   const fetchAllClasses = async () => {
     try {
@@ -38,10 +38,10 @@ const Class = () => {
 
   return (
     <div className="">
-      <Button className="p-5 mt-6 ml-6 sm:text-xs" onClick={() => router(-1)}>
+      {/* <Button className="p-5 mt-6 ml-6 sm:text-xs" onClick={() => router(-1)}>
         <IoArrowBackSharp />
         Back
-      </Button>
+      </Button> */}
 
       <p className="text-2xl text-center py-6">All Class's</p>
       {/* <div className="flex justify-between items-center py-3 gap-2">
@@ -79,7 +79,7 @@ const Class = () => {
         classList.length > 0 &&
         classList.map((classobj) => (
           <Button
-            key={classObj._id}
+            key={classobj._id}
             // onClick={() => router("/takeattendance")}
             className="shadow-sm shadow-white sm:text-xs flex justify-between"
           >
