@@ -30,19 +30,18 @@ const Layout = () => {
   //   console.log("token =", token);
 
   return (
-    <div className="flex flex-col">
-      <div className="h-[8vh] border-b-2 py-4 pb-4 border-gray-600">
+    <div className="flex flex-col overflow-y-auto ">
+      <div className="h-[8vh] border-b-2 py-4 pb-4 border-gray-600 ">
         <Navbar />
       </div>
-      <div className="flex flex-1 relative">
+      <div className="flex flex-1 relative ">
         {/* {isAuthenticated && <MenuBar />} */}
 
         {/* Main content area */}
-        <main className="flex-1 overflow-x-hidden overflow-y-auto">
-          <div className="p-1 relative flex h-screen flex-1 overflow-x-hidden overflow-y-auto">
-            <Sidebar isMobile ={isMobile}/>
-            {/* {isMobile && <MobileSidebar open={open} Onclose={()=>setOpen(false)} />} */}
-            <div className=" w-full h-full"><Outlet/></div>
+        <main className="flex-1 overflow-x-hidden overflow-y-auto ">
+          <div className="flex h-screen ">
+            <Sidebar isMobile={isMobile} />
+            <div className=" w-full h-fit sm:pb-[50px]"><Outlet/></div>
           </div>
         </main>
       </div>

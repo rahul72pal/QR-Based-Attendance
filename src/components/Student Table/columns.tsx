@@ -304,10 +304,12 @@ export function useColumns() {
       cell: ({ row }) => {
         const attendance = row.getValue<number>("attendance_percentage");
         const person = row.original;
+        console.log("Person =", person);
+        //  path="/:id/:name/:roll_number/:classId"
         return (
           <div className="text-center">
             <Button
-              onClick={() => navigate(`/student/${person.id}/${person.name}/${classObj._id}`)}
+              onClick={() => navigate(`/${person.id}/${person.name}/${person.roll_number}/${classObj._id}`)}
               className="bg-white text-black hover:text-white sm:text-xs px-2 h-[35px] mx-auto "
             >
               {attendance}%

@@ -42,9 +42,9 @@ const Navbar: React.FC = () => {
             src="./assets/img12.png"
             alt="Attendance Logo"
           />
-          <span className="leading-[20px] select-none sm:text-lg font-title text-[20px]">
+         {!token && <span className="leading-[20px] select-none sm:text-lg font-title text-[20px]">
             Attendance
-          </span>
+          </span>}
         </div>
 
         {!token ? (

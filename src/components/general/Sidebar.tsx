@@ -3,6 +3,7 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 import { AiFillEnvironment } from "react-icons/ai";
 // import { IoIosSearch } from "react-icons/io";
 import { MdDashboard } from "react-icons/md";
+import { MdAttachMoney } from "react-icons/md";
 import {
   FaChalkboardTeacher,
   FaPlusCircle,
@@ -102,6 +103,11 @@ const SideBar = (props: Props) => {
           route: "/takeattendance",
         },
         {
+          title: "Take New Attendance",
+          icon: <FaClipboardList />,
+          route: "/newattendance",
+        },
+        {
           title: "Parent Share",
           icon: <MdShare />,
           route: "/parentshare",
@@ -110,7 +116,19 @@ const SideBar = (props: Props) => {
           title: "Check Attendance",
           icon: <IoIosCheckmarkCircle />,
           route: "/classAttendance",
-        },
+        }
+      ],
+    },
+    {
+      title: "Pricing",
+      submenu: true,
+      icon: <MdAttachMoney />,
+      submenuitem: [
+        {
+          title: "Pricing",
+          icon: <IoIosCheckmarkCircle />,
+          route: "/pricing",
+        }
       ],
     },
     // { title: "Pages", icon: <FaFileAlt /> },
@@ -120,30 +138,30 @@ const SideBar = (props: Props) => {
 
   return (
     <div
-      className={`bg-dark-purple bg-[#000814] p-5 pt-8 duration-300 border-r-2 border-amber-300 shadow-lg shadow-white ${
+      className={`bg-dark-purple h-[100%] bg-[#000814] p-5 pt-8 duration-300 border-r-2 border-amber-300 shadow-md shadow-white overflow-y-scroll ${
         open ? "w-72" : `w-16 ${props.isMobile && "-ml-[70px]"}`
       } ${
         props.isMobile
           ? "absolute top-0 left-0 h-screen z-10"
-          : "relative h-auto"
+          : "relative h-full"
       }`}
     >
       <IoIosArrowRoundBack
         onClick={() => setOpen(!open)}
         className={`${
           !open && "rotate-180"
-        }  text-dark-purple bg-white text-[#000814] border text-3xl rounded-full absolute -right-10 top-2 border-dark-purple cursor-pointer`}
+        }  text-dark-purple bg-white text-[#000814] border text-4xl rounded-full absolute -right-11 top-2 border-dark-purple cursor-pointer`}
       />
 
       {
         <div className="inline-flex mt-4 sm:text-sm">
           <AiFillEnvironment
-            className={`bg-[#FFD52A] text-[#000814] sm:text-[25px] text-4xl rounded cursor-pointer block float-left mr-2 duration-300 ${
+            className={`bg-[#FFD52A] text-[#000814] sm:text-[30px] text-4xl rounded cursor-pointer block float-left mr-2 duration-300 ${
               open && "rotate-[360deg]"
             }`}
           />
           <h1
-            className={`text-white sm:text-lg origin-left font-medium text-2xl duration-300 ${
+            className={`text-white sm:text-2lg origin-left font-medium text-2xl duration-300 ${
               !open && "scale-0"
             }`}
           >
@@ -166,7 +184,7 @@ const SideBar = (props: Props) => {
                 {menu.icon ? menu.icon : <MdDashboard />}
               </span>
               <span
-                className={`text-base sm:text-md font-medium flex-1 duration-200 ${
+                className={`text-base sm:text-lg font-medium flex-1 duration-200 ${
                   !open && "hidden "
                 }`}
                 onClick={() => toggleSubmenu(index)}
@@ -186,10 +204,11 @@ const SideBar = (props: Props) => {
               <ul>
                 {menu?.submenuitem?.map((submenuItem, index) => (
                   <li
-                    className="text-amber-300 border-l-2 text-sm flex items-center gap-x-4 cursor-pointer p-2 pr-5 ml-3 hover:bg-light-white"
+                    className="text-amber-300 border-l-2 text-md flex items-center gap-x-1 cursor-pointer p-2 pr-5 ml-3 hover:bg-light-white"
                     key={index}
                     onClick={() => handleMenuClick(submenuItem.route)}
-                  > 
+                  >
+                    -
                     <span className="text-2xl sm:text-sm block float-left">
                       {submenuItem.icon ? submenuItem.icon : <MdDashboard />}
                     </span>

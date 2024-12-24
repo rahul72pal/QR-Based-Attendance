@@ -19,6 +19,7 @@ import GlobalClassSelector from "@/components/general/GlobalClassSelector";
 import toast from "react-hot-toast";
 
 const ViewStudentList = () => {
+  const columns = useColumns();
   const [students, setStudents] = useState<any>([]);
   // const router = useNavigate();
   const classobj = useSelector((state: RootState) => state.class);
@@ -58,7 +59,7 @@ const ViewStudentList = () => {
         <p className="text-center text-xs sm:text-xs">Class 10th Science</p>
         {classobj._id && students && (
           <div className="p-2">
-            <StudentDataTable data={students} columns={useColumns()} />
+            <StudentDataTable data={students} columns={columns} />
           </div>
         )}
       </div>
