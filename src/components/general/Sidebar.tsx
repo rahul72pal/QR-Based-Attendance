@@ -116,7 +116,7 @@ const SideBar = (props: Props) => {
           title: "Check Attendance",
           icon: <IoIosCheckmarkCircle />,
           route: "/classAttendance",
-        }
+        },
       ],
     },
     {
@@ -128,7 +128,7 @@ const SideBar = (props: Props) => {
           title: "Plan's",
           icon: <IoIosCheckmarkCircle />,
           route: "/pricing",
-        }
+        },
       ],
     },
     // { title: "Pages", icon: <FaFileAlt /> },
@@ -138,19 +138,19 @@ const SideBar = (props: Props) => {
 
   return (
     <div
-      className={`bg-dark-purple h-[100%] bg-[#000814] p-5 pt-8 duration-300 border-r-2 border-amber-300 shadow-md shadow-white ${
+      className={`bg-dark-purple z-10 h-[100%] bg-[#000814] p-5 pt-8 duration-300 border-r-2 border-amber-300 shadow-md shadow-white ${
         open ? "w-72" : `w-16 ${props.isMobile && "-ml-[70px]"}`
       } ${
-        props.isMobile
-          ? "absolute top-0 left-0 h-screen z-10"
-          : "relative h-full"
+        props.isMobile ? "absolute top-0 left-0 h-screen " : "relative h-full"
       }`}
     >
       <IoIosArrowRoundBack
         onClick={() => setOpen(!open)}
         className={`${
           !open && "rotate-180"
-        }  text-dark-purple bg-white text-[#000814] border text-4xl rounded-full absolute ${open ? "right-1" : "-right-11"} top-2 border-dark-purple cursor-pointer duration-300`}
+        }  text-dark-purple bg-white text-[#000814] border text-4xl rounded-full absolute ${
+          open ? "right-1" : "-right-11"
+        } top-2 border-dark-purple cursor-pointer duration-300`}
       />
 
       {
@@ -201,15 +201,20 @@ const SideBar = (props: Props) => {
               )}
             </li>
             {menu.submenu && submenuOpenState[index] && open && (
-              <ul>
+              <ul
+                className={`transition-all duration-300 ${
+                  submenuOpenState[index]
+                    ? "max-h-[500px] opacity-100"
+                    : "max-h-0 opacity-0"
+                } overflow-hidden`}
+              >
                 {menu?.submenuitem?.map((submenuItem, index) => (
                   <li
-                    className="text-amber-300 border-l-2 text-md flex items-center gap-x-1 cursor-pointer p-2 pr-5 ml-3 hover:bg-light-white"
+                    className="text-amber-300 text-md flex items-center gap-x-2 cursor-pointer p-2 pr-5 hover:bg-light-white duration-300"
                     key={index}
                     onClick={() => handleMenuClick(submenuItem.route)}
                   >
-                    -
-                    <span className="text-2xl sm:text-sm block float-left">
+                    <span className="text-2xl ml-1 sm:text-sm block float-left">
                       {submenuItem.icon ? submenuItem.icon : <MdDashboard />}
                     </span>
                     {submenuItem.title}

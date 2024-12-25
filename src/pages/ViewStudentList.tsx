@@ -48,7 +48,7 @@ const ViewStudentList = () => {
   }, [fetchStudents]); // fetchStudents already depends on classobj._id
 
   return (
-    <div className="">
+    <div className="w-[100%]">
       {/* <Button onClick={() => router(-1)} className="p-4 mt-6 ml-6 sm:text-xs">
         <IoArrowBackSharp />
         Back

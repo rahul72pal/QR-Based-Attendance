@@ -49,7 +49,7 @@ const CreateStudents = () => {
     }
   })
 
-  console.log(qrCodeDataUrl);
+  console.log(qrCodeDataUrl, classobj._id);
 
   return (
     <div className="flex flex-col items-center sm:pt-6 h-[80vh] bg-[#000814]">
@@ -85,11 +85,11 @@ const CreateStudents = () => {
       </div>}
 
       {/* Showing QR code */}
-      <div className="m-4 flex items-center justify-center">
+      {/* <div className="m-4 flex items-center justify-center">
         {qrCodeDataUrl && (
           <img src={qrCodeDataUrl} alt="QR Code" className="mt-4 w-[400px] mx-auto" />
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

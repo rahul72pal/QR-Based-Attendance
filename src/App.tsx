@@ -23,8 +23,7 @@ import PricingPages from "./pages/PricingPages";
 
 const App: React.FC = () => {
   return (
-    <div className="w-[100%] font-title min-h-[100vh]  bg-[#000814] text-white overflow-y-auto">
-      {/* Other content */}
+    <div className="w-full font-title bg-[#000814] text-white">
       <div className="">
         <Routes>
           <Route element={<Layout />}>
@@ -117,7 +116,7 @@ const App: React.FC = () => {
             />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/pricing" element={<PricingPages/>}/>
+            <Route path="/pricing" element={<PricingPages />} />
           </Route>
           {/* <Route path="/QR" element={<QRScanner onClose={()=>void} />} /> */}
           <Route
