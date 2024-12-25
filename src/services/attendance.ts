@@ -71,7 +71,7 @@ export const getAttdance = async (data: getAttdanceData) => {
 };
 
 export const getStudentAttendance = async(data: getStudentAttendance)=>{
-    const toastId = toast.loading("Wait..");
+    // const toastId = toast.loading("Wait..");
     try {
         const response = await apiConnector("POST", `${URL}/attendance/getStudent`, data);
 
@@ -85,6 +85,6 @@ export const getStudentAttendance = async(data: getStudentAttendance)=>{
         toast.error("An error occurred while save Attendance.");
         return undefined
     }finally {
-        toast.dismiss(toastId);
+        // toast.dismiss(toastId);
     }
 }

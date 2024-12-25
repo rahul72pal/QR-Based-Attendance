@@ -38,7 +38,7 @@ const Layout = () => {
         {/* {isAuthenticated && <MenuBar />} */}
 
         {/* Main content area */}
-        <main className="flex-1 overflow-x-hidden overflow-y-auto ">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto">
           <div className="flex h-screen ">
             <Sidebar isMobile={isMobile} />
             <div className=" w-full h-fit sm:pb-[50px]"><Outlet/></div>

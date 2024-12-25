@@ -1,4 +1,5 @@
 import Pricing from '@/components/pages/pricing'
+
 // import React from 'react'
 
 // type Props = {}

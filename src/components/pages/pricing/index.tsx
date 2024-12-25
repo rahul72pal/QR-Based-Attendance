@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import React, { ReactNode } from "react";
+import { IoArrowBackSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 // Define props for PricingCard
 interface PricingCardProps {
@@ -335,8 +337,13 @@ const List: React.FC<ListProps> = ({ children }) => {
 
 // Main Pricing Component
 const Pricing: React.FC = () => {
+  const router = useNavigate();
   return (
-    <section className="relative z-10 overflow-hidden bg-[#000814] pb-12 pt-20 lg:pb-[90px] lg:pt-[120px]">
+    <section className="relative z-10 overflow-hidden bg-[#000814] pb-12 lg:pb-[90px] sm:pt-[20px] pt-[120px]">
+      <Button onClick={() => router(-1)} className=" mb-6 ml-6 sm:text-xs">
+        <IoArrowBackSharp />
+        Back
+      </Button>
       <div className="container mx-auto">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
@@ -348,56 +355,56 @@ const Pricing: React.FC = () => {
                 Our Pricing Plan
               </h2>
               <p className="text-base text-body-color">
-                There are many variations of passages of Lorem Ipsum available
-                but the majority have suffered alteration in some form.
+                Streamline your attendance management with our comprehensive
+                plans. Generate individual student ID cards and take advantage
+                of QR-based attendance tracking for effortless monitoring.
               </p>
             </div>
           </div>
         </div>
 
         <div className="-mx-4 flex flex-wrap justify-center">
+          {/* Free Plan */}
           <PricingCard
-            type="Personal"
-            price="$59"
-            subscription="year"
-            description="Perfect for using in a personal website or a client project."
-            buttonText="Choose Personal"
+            type="Free"
+            price="₹0"
+            subscription="7 months"
+            description="Best for individuals who want to explore basic features."
+            buttonText="Choose Free"
           >
-            <List>1 User</List>
-            <List>All UI components</List>
-            <List>Lifetime access</List>
-            <List>Free updates</List>
-            <List>Use on 1 (one) project</List>
-            <List>3 Months support</List>
+            <List>5 Classes</List>
+            <List>25 Students</List>
+            <List>7 Months Validation</List>
           </PricingCard>
+
+          {/* ₹59 Plan */}
           <PricingCard
-            type="Business"
-            price="$199"
-            subscription="year"
-            description="Perfect for using in a personal website or a client project."
-            buttonText="Choose Business"
+            type="Standard"
+            price="₹59"
+            subscription="month"
+            description="Perfect for educators managing mid-sized classes."
+            buttonText="Choose Standard"
             active
           >
-            <List>5 User</List>
-            <List>All UI components</List>
-            <List>Lifetime access</List>
-            <List>Free updates</List>
-            <List>Use on 3 (three) projects</List>
-            <List>4 Months support</List>
+            <List>12 Classes</List>
+            <List>50 Students</List>
+            <List>1 Year Validation</List>
+            <List>QR-based Attendance</List>
           </PricingCard>
+
+          {/* ₹159 Plan */}
           <PricingCard
-            type="Professional"
-            price="$256"
-            subscription="year"
-            description="Perfect for using in a personal website or a client project."
-            buttonText="Choose Professional"
+            type="Premium"
+            price="₹159"
+            subscription="month"
+            description="Ideal for institutions with larger class needs and extra features."
+            buttonText="Choose Premium"
           >
-            <List>Unlimited User</List>
-            <List>All UI components</List>
-            <List>Lifetime access</List>
-            <List>Free updates</List>
-            <List>Unlimited projects</List>
-            <List>12 Months support</List>
+            <List>20 Classes</List>
+            <List>100 Students</List>
+            <List>1 Year Validation</List>
+            <List>Custom ID Card</List>
+            <List>QR-based Attendance</List>
           </PricingCard>
         </div>
       </div>

@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../ui/button";
 import { CircularProgress } from "../ui/progress";
 import { IoArrowBackSharp } from "react-icons/io5";
+import toast from "react-hot-toast";
 // import { useSelector } from "react-redux";
 // import { RootState } from "@/slices/store";
 
@@ -41,7 +42,9 @@ const StudentHeatMap: FC<StudentHeatmapInterface> = ({
   console.log("classId =", student_id, classId);
 
   const getAllstudentAttendance = async () => {
+    const toasId = toast.loading("Wait..");
     try {
+      
       const data = {
         class_id: classId ? classId : "",
         student_id: student_id?.toString(),
@@ -55,6 +58,7 @@ const StudentHeatMap: FC<StudentHeatmapInterface> = ({
     } catch (error) {
       console.log(error);
     }
+    toast.dismiss(toasId);
   };
 
   useEffect(() => {

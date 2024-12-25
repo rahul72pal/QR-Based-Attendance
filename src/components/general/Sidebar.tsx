@@ -125,7 +125,7 @@ const SideBar = (props: Props) => {
       icon: <MdAttachMoney />,
       submenuitem: [
         {
-          title: "Pricing",
+          title: "Plan's",
           icon: <IoIosCheckmarkCircle />,
           route: "/pricing",
         }
@@ -138,7 +138,7 @@ const SideBar = (props: Props) => {
 
   return (
     <div
-      className={`bg-dark-purple h-[100%] bg-[#000814] p-5 pt-8 duration-300 border-r-2 border-amber-300 shadow-md shadow-white overflow-y-scroll ${
+      className={`bg-dark-purple h-[100%] bg-[#000814] p-5 pt-8 duration-300 border-r-2 border-amber-300 shadow-md shadow-white ${
         open ? "w-72" : `w-16 ${props.isMobile && "-ml-[70px]"}`
       } ${
         props.isMobile
@@ -150,7 +150,7 @@ const SideBar = (props: Props) => {
         onClick={() => setOpen(!open)}
         className={`${
           !open && "rotate-180"
-        }  text-dark-purple bg-white text-[#000814] border text-4xl rounded-full absolute -right-11 top-2 border-dark-purple cursor-pointer`}
+        }  text-dark-purple bg-white text-[#000814] border text-4xl rounded-full absolute ${open ? "right-1" : "-right-11"} top-2 border-dark-purple cursor-pointer duration-300`}
       />
 
       {

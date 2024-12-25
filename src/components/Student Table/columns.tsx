@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/slices/store";
 import QRCode from "qrcode";
 import { generatePDF } from "@/utils/downloadPdf";
+import toast from "react-hot-toast";
 
 interface StudentType {
   id: string;
@@ -235,19 +236,20 @@ export function useColumns() {
   const navigate = useNavigate();
   const classObj = useSelector((state: RootState) => state.class);
 
-  const generateQRCode = async (data: object) => {
+  const generateQRCode = async (studentUrl: string) => {
     try {
-      const jsonString = JSON.stringify(data); // Convert data to JSON string
-      const url = await QRCode.toDataURL(jsonString, { errorCorrectionLevel: 'H', width: 256 }); // Generate QR code as data URL
+      // const jsonString = JSON.stringify(data); // Convert data to JSON string
+      const url = await QRCode.toDataURL(studentUrl, { errorCorrectionLevel: 'H', width: 256 }); // Generate QR code as data URL
       return url; // Set the QR code data URL to state
     } catch (error) {
       console.error("Error generating QR code:", error);
     }
   };
 
-  const downloadIDCard = async(student: any) => {
-
-    const imageUrl = await generateQRCode(student);
+  const downloadIDCard = async(student: any, studentAttendanceLink: string) => {
+    const toasId = toast.loading("Downloading ID card..");
+    console.log("studentAttendanceLink =", studentAttendanceLink);
+    const imageUrl = await generateQRCode(studentAttendanceLink);
 
     const img = `<img src=${imageUrl} alt="QR Code">`
     const final_html = generateHTMLPDF(html_string, {
@@ -259,6 +261,7 @@ export function useColumns() {
     // console.log("Final Html =", final_html);
 
     generatePDF(final_html, student?.name);
+    toast.dismiss(toasId);
   };
 
   const columns: ColumnDef<StudentType>[] = [
@@ -304,7 +307,7 @@ export function useColumns() {
       cell: ({ row }) => {
         const attendance = row.getValue<number>("attendance_percentage");
         const person = row.original;
-        console.log("Person =", person);
+        // console.log("Person =", person);
         //  path="/:id/:name/:roll_number/:classId"
         return (
           <div className="text-center">
@@ -334,6 +337,9 @@ export function useColumns() {
           roll_number: person.roll_number,
           class_id: classObj._id,
         };
+
+        const baseUrl = window.location.origin;
+        const studentAttendanceLink = `${baseUrl}/${person.id}/${encodeURIComponent(person.name)}/${person.roll_number}/${classObj._id}`;
         // console.log("Person Actions =", studentObj);
         return (
           <div className="text-center w-[100px]">
@@ -345,7 +351,7 @@ export function useColumns() {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-[#000814] shadow-white shadow-md p-3 border rounded-md">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem onClick={() => downloadIDCard(studentObj)}>
+                <DropdownMenuItem onClick={() => downloadIDCard(studentObj, studentAttendanceLink)}>
                   Download ID card
                 </DropdownMenuItem>
               </DropdownMenuContent>
