@@ -21,6 +21,7 @@ import { RiLogoutCircleLine } from "react-icons/ri";
 import { IoChevronDownSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { IoIosCheckmarkCircle } from "react-icons/io";
+import Cookies from "js-cookie";
 
 type Props = {
   isMobile: boolean;
@@ -28,6 +29,7 @@ type Props = {
 
 const SideBar = (props: Props) => {
   const [open, setOpen] = useState(true);
+  const token = Cookies.get("token");
   //   const [submenuOpen, setSubmenuOpen] = useState(false);
   const [submenuOpenState, setSubmenuOpenState] = useState<
     Record<number, boolean>
@@ -141,7 +143,7 @@ const SideBar = (props: Props) => {
       className={`bg-dark-purple z-10 h-[100%] bg-[#000814] p-5 pt-8 duration-300 border-r-2 border-amber-300 shadow-md shadow-white ${
         open ? "w-72" : `w-16 ${props.isMobile && "-ml-[70px]"}`
       } ${
-        props.isMobile ? "absolute top-0 left-0 h-screen " : "relative h-full"
+        props.isMobile ? "absolute left-0 h-screen " : "relative h-full"
       }`}
     >
       <IoIosArrowRoundBack
@@ -155,11 +157,11 @@ const SideBar = (props: Props) => {
 
       {
         <div className="inline-flex mt-4 sm:text-sm">
-          <AiFillEnvironment
+          {token && <AiFillEnvironment
             className={`bg-[#FFD52A] text-[#000814] sm:text-[30px] text-4xl rounded cursor-pointer block float-left mr-2 duration-300 ${
               open && "rotate-[360deg]"
             }`}
-          />
+          />}
           <h1
             className={`text-white sm:text-2lg origin-left font-medium text-2xl duration-300 ${
               !open && "scale-0"

@@ -20,6 +20,8 @@ const Layout = () => {
     };
   }, []);
 
+  console.log(token);
+
   return (
     <div className="flex flex-col h-[120vh] min-h-[100vh] w-full">
       {/* Navbar */}
@@ -36,7 +38,7 @@ const Layout = () => {
         </div>}
 
         {/* Main Content */}
-        <main className="h-[100vh] w-[98vw] sm:w-full overflow-y-scroll ">
+        <main className="h-[100vh] w-[100vw] sm:w-full overflow-y-scroll ">
           {isMobile && <div className="sm:h-[8vh] border-b-2 border-gray-600">
             <Navbar />
           </div>}
