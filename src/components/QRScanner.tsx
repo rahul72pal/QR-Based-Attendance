@@ -144,11 +144,11 @@ const QRScanner: React.FC<QRScannerProps> = ({ onClose, date, class_id}) => {
 
   return (
     <>
-      <div className="relative sm:w-[100vw] flex flex-col items-center lg:w-[100%] mx-auto justify-center h-screen bg-gray-600 bg-opacity-50">
+      <div className="relative sm:w-[100vw] sm:h-[100vh] sm:py-10 flex flex-col items-center lg:w-[100%] mx-auto justify-center h-screen bg-gray-600 bg-opacity-50">
         {startScan && (
           <video
             ref={videoEl}
-            className="sm:w-[100vw] w-[50vw] h-[70vh] sm:h-[100vw] absolute top-10 sm:max-w-[100vw] sm:max-h-[70vh] object-cover rounded-lg shadow-lg border-dashed border-red-600"
+            className="sm:w-[100vw] w-[50vw] h-[70vh] sm:h-[100vw] sm:mt-7 absolute top-10 sm:max-w-[100vw] sm:max-h-[70vh] object-cover rounded-lg shadow-lg"
           />
         )}
 
@@ -167,7 +167,7 @@ const QRScanner: React.FC<QRScannerProps> = ({ onClose, date, class_id}) => {
           )}
         </div>
 
-        <div className="mt-[200px] text-center">
+        <div className="mt-[270px] text-center">
           <h3>Number of Scanned Results: {scannedResult.length}</h3>
 
           <button

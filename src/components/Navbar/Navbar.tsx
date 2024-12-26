@@ -37,11 +37,11 @@ const Navbar: React.FC = () => {
           onClick={() => router("/")}
           className="h-full flex justify-center items-center gap-2"
         >
-          <img
+          {!token && <img
             className="w-[40px] h-[40px] rounded-full"
             src="./assets/img12.png"
             alt="Attendance Logo"
-          />
+          />}
          {!token && <span className="leading-[20px] select-none sm:text-lg font-title text-[20px]">
             Attendance
           </span>}

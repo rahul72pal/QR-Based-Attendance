@@ -112,7 +112,7 @@ const TakeAttendance: React.FC = () => {
       </div>
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <div>
+        <div className="h-[100vh] ">
           <QRScanner class_id={classObj._id ? classObj._id : ""} date={formatDate(date).toString()} onClose={closeModal} />
         </div>
       </Modal>

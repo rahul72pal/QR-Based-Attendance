@@ -24,7 +24,7 @@ import PricingPages from "./pages/PricingPages";
 const App: React.FC = () => {
   return (
     <div className="w-full h-[120v] font-title bg-[#000814] text-white">
-      <div className="h-[100%] overflow-y-scroll">
+      <div className="h-[100%]">
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
