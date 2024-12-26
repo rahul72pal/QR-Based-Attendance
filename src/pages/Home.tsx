@@ -12,7 +12,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="h-[100%] p-3">
-      <SliderCursol/>
+      <div className="overflow-x-auto"><SliderCursol/></div>
       <Class/>
       <p>Home</p>
       <button onClick={() => router('/takeattendance')}>Take Attendance</button>

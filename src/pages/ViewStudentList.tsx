@@ -48,7 +48,7 @@ const ViewStudentList = () => {
   }, [fetchStudents]); // fetchStudents already depends on classobj._id
 
   return (
-    <div className="w-[100%]">
+    <div className="w-[100vw]">
       {/* <Button onClick={() => router(-1)} className="p-4 mt-6 ml-6 sm:text-xs">
         <IoArrowBackSharp />
         Back
@@ -58,7 +58,7 @@ const ViewStudentList = () => {
         <p className="text-center sm:text-lg">Student Attendance List</p>
         <p className="text-center text-xs sm:text-xs">Class 10th Science</p>
         {classobj._id && students && (
-          <div className="p-2">
+          <div className="p-2 w-[100vw] overflow-x-auto">
             <StudentDataTable data={students} columns={columns} />
           </div>
         )}

@@ -86,7 +86,7 @@ export function StudentDataTable<TData, TValue>({
           // value={(table.getColumn("name")?.getFilterValue() as string) || ""}
           value={(table.getState().globalFilter as string) || ""}
           onChange={(e) => table.setGlobalFilter(String(e.target.value))}
-          className="max-w-sm bg-[#000814] my-7 outline-none border"
+          className="max-w-[90vw] bg-[#000814] my-7 outline-none border"
         />
 
         <DropdownMenu >

@@ -82,7 +82,7 @@ const ClassAllAttendance = () => {
   }, [classobj._id]);
 
   return (
-    <div className="text-center p-4 sm:p-1 flex flex-col justify-center items-center">
+    <div className="text-center w-[100vw] p-4 sm:p-1 flex flex-col justify-center items-center">
       {/* <Button onClick={() => router(-1)} className="p-4 mt-6 ml-6 sm:text-xs">
               <IoArrowBackSharp/>
               Back
