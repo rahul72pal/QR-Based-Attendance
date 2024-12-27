@@ -3,12 +3,14 @@ import { FC, useEffect, useState } from "react";
 import "react-calendar-heatmap/dist/styles.css";
 import "./style.css";
 import { getStudentAttendance } from "@/services/attendance";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 // import { Button } from "../ui/button";
 import { CircularProgress } from "../ui/progress";
 // import { IoArrowBackSharp } from "react-icons/io5";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 import Heatmap from "../general/HeatMap/Heatmap";
+// import { set } from "date-fns";
+import HorizontalLoader from "../general/HorizontalLoader";
 // import { useSelector } from "react-redux";
 // import { RootState } from "@/slices/store";
 
@@ -35,6 +37,7 @@ const StudentHeatMap: FC<StudentHeatmapInterface> = ({
   console.log(endDate);
   const [attendance, setAttendance] = useState<attendance[]>([]);
   const [percentage, Setpercentage] = useState<number | undefined>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { id: student_id, classId } = useParams();
   const { name: student_name } = useParams();
@@ -43,7 +46,7 @@ const StudentHeatMap: FC<StudentHeatmapInterface> = ({
   console.log("classId =", student_id, classId);
 
   const getAllstudentAttendance = async () => {
-    const toasId = toast.loading("Wait..");
+    setLoading(true);
     try {
       const data = {
         class_id: classId ? classId : "",
@@ -60,7 +63,7 @@ const StudentHeatMap: FC<StudentHeatmapInterface> = ({
     } catch (error) {
       console.log(error);
     }
-    toast.dismiss(toasId);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -89,9 +92,13 @@ const StudentHeatMap: FC<StudentHeatmapInterface> = ({
         <CircularProgress value={percentage && Math.floor(percentage)} />
       </div>
 
-      <div className="w-[100vw] ">
-        <Heatmap data={attendance} />
-      </div>
+      {loading ? (
+        <HorizontalLoader />
+      ) : (
+        <div className="w-[100vw] ">
+          <Heatmap data={attendance} />
+        </div>
+      )}
     </div>
   );
 };
