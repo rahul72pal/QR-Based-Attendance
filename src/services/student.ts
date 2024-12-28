@@ -60,14 +60,18 @@ export const getAllStudents = async (
 
 export const createStudents = async (
   class_id: string | null,
-  name: string
+  name: string,
+  fatherName: string,
+  date: Date | undefined
 ): Promise<CreateStudentResponse | undefined> => {
   const toastId = toast.loading("Wait..");
   try {
     // console.log(process.env.REACT_APP_API_URL);
-    const response = await apiConnector("POST", `${URL}/students/create`, {
+    const response = await apiConnector("POST", `${URL}/students/createStudent`, {
       name,
       class_id,
+      father_name: fatherName,
+      dob: date
     });
 
     if (!response) {

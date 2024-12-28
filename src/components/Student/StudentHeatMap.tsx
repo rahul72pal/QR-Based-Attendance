@@ -11,6 +11,7 @@ import { CircularProgress } from "../ui/progress";
 import Heatmap from "../general/HeatMap/Heatmap";
 // import { set } from "date-fns";
 import HorizontalLoader from "../general/HorizontalLoader";
+import { format } from "date-fns";
 // import { useSelector } from "react-redux";
 // import { RootState } from "@/slices/store";
 
@@ -70,33 +71,30 @@ const StudentHeatMap: FC<StudentHeatmapInterface> = ({
     getAllstudentAttendance();
   }, []);
 
-  // console.log(attendance,percentage);
+  console.log(attendance,percentage);
   // console.log(startDate);
   // console.log(endDate);
 
   return (
     <div className="w-[100vw] h-[100vh] flex flex-col justify-center items-center ">
-      <div>
-        {/* <Button onClick={() => router(-1)} className="p-5 m-4">
-          <IoArrowBackSharp/>
-          Back
-        </Button> */}
+      <div className="text-lg text-center py-6 pb-[100px]">
+        <p>For this QR system contact at <span className="text-sm italic text-yellow-300 ">rahulgwl72@gmail.com</span></p>
       </div>
       {/* You can render the startDate, endDate, and data here */}
       <h1 className="text-md flex flex-col text-center ">
         <span>{student_name} </span>
-        <span className="text-xs">(2024-09-01 to 2025-10-13)</span>
+        {attendance && attendance.length > 0 && <span className="text-xs">{(format(attendance[0]?.date, 'PPP'))} To {(format(attendance[attendance.length-1]?.date, 'PPP'))}</span>}
       </h1>
 
-      <div className="rounded-full mx-auto w-fit p-6">
+      {attendance && attendance.length > 0 && <div className="rounded-full mx-auto w-fit p-6">
         <CircularProgress value={percentage && Math.floor(percentage)} />
-      </div>
+      </div>}
 
       {loading ? (
         <HorizontalLoader />
       ) : (
         <div className="w-[100vw] ">
-          <Heatmap data={attendance} />
+          {attendance && attendance.length > 0 ? <Heatmap data={attendance} /> : <div className="text-center p-6 text-2xl">No Data Found</div>}
         </div>
       )}
     </div>

@@ -36,10 +36,15 @@ const SideBar = (props: Props) => {
   >({});
 
   const toggleSubmenu = (index: number) => {
-    setSubmenuOpenState((prevState) => ({
-      ...prevState,
-      [index]: !prevState[index],
-    }));
+    setSubmenuOpenState((prevState) => {
+      // Create a new state object where all submenus are closed
+      const newState: Record<number, boolean> = {};
+  
+      // Set the selected submenu to open
+      newState[index] = !prevState[index];
+  
+      return newState;
+    });
   };
 
   const router = useNavigate();
@@ -182,7 +187,7 @@ const SideBar = (props: Props) => {
                 menu.spacing ? "mt-9" : "mt-2"
               }`}
             >
-              <span className="text-2xl sm:text-sm block float-left">
+              <span className="text-2xl block float-left">
                 {menu.icon ? menu.icon : <MdDashboard />}
               </span>
               <span
@@ -212,7 +217,7 @@ const SideBar = (props: Props) => {
               >
                 {menu?.submenuitem?.map((submenuItem, index) => (
                   <li
-                    className="text-amber-300 text-md flex items-center gap-x-2 cursor-pointer p-2 pr-5 hover:bg-light-white duration-300"
+                    className="text-amber-300 py-3 text-sm flex items-center gap-x-2 cursor-pointer p-2 pr-5 hover:bg-light-white duration-300"
                     key={index}
                     onClick={() => handleMenuClick(submenuItem.route)}
                   >

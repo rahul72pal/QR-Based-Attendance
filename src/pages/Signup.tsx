@@ -7,38 +7,53 @@ const Signup: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [mobileNumber, setMobileNumber] = useState<string>("");
+  const [institutionName, setInstitutionName] = useState<string>("");
+  const [instituteAddress, setInstituteAddress] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const router = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
+    // Mobile number validation: Ensure it's 10 digits
+    const mobileNumberRegex = /^\d{10}$/;
+    if (!mobileNumberRegex.test(mobileNumber)) {
+      alert("Mobile number must be exactly 10 digits.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const data = {
         name,
         email,
         password,
+        mobile_number: mobileNumber, // Ensure this is sent as a string
+        institution_name: institutionName,
+        institute_address: instituteAddress,
       };
       const response = await SignupTeacher(data);
       if (response) {
         console.log(response);
         Cookies.set("token", response.token, { expires: 7 });
-        Cookies.set("teacher", JSON.stringify(response.teacher), { expires: 7 })
+        Cookies.set("teacher", JSON.stringify(response.teacher), { expires: 7 });
         router("/class");
       }
     } catch (error) {
       console.log(error);
     }
+
     setLoading(false);
-    console.log("Signing up with:", { name, email, password });
   };
 
   return (
-    <div className="flex items-center justify-center h-[80vh] bg-[#000814]">
-      <div className="p-6 bg-[#161D29] rounded shadow-md w-96">
-        <h1 className="text-3xl font-semibold text-center">Sign Up</h1>
-        <p className="text-center">Create your account</p>
-        <form onSubmit={handleSubmit} className="mt-4">
+    <div className="flex items-center justify-center h-[80%] bg-[#000814] overflow-y-auto">
+      <div className="p-6 bg-[#161D29] rounded shadow-md w-96 sm:mt-[80px]">
+        <h1 className="text-3xl sm:text-xl font-semibold text-center">Sign Up</h1>
+        <p className="text-center sm:text-sm">Create your account</p>
+        <form onSubmit={handleSubmit} className="mt-4 sm:text-sm">
           <div className="mb-4">
             <label htmlFor="name" className="block mb-1">
               Name
@@ -48,7 +63,7 @@ const Signup: React.FC = () => {
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-[#000814] outline-none border-none p-2 rounded"
+              className="w-full sm:text-xs bg-[#000814] outline-none border-none p-2 rounded"
               placeholder="Enter your name"
               required
             />
@@ -62,7 +77,7 @@ const Signup: React.FC = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-[#000814] outline-none border-none p-2 rounded"
+              className="w-full sm:text-xs bg-[#000814] outline-none border-none p-2 rounded"
               placeholder="Enter your email"
               required
             />
@@ -76,8 +91,50 @@ const Signup: React.FC = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-[#000814] outline-none border-none p-2 rounded"
+              className="w-full sm:text-xs bg-[#000814] outline-none border-none p-2 rounded"
               placeholder="Enter your password"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="mobileNumber" className="block mb-1">
+              Mobile Number
+            </label>
+            <input
+              type="text"
+              id="mobileNumber"
+              value={mobileNumber}
+              onChange={(e) => setMobileNumber(e.target.value)}
+              className="w-full sm:text-xs bg-[#000814] outline-none border-none p-2 rounded"
+              placeholder="Enter your mobile number"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="institutionName" className="block mb-1">
+              Institution Name
+            </label>
+            <input
+              type="text"
+              id="institutionName"
+              value={institutionName}
+              onChange={(e) => setInstitutionName(e.target.value)}
+              className="w-full sm:text-xs bg-[#000814] outline-none border-none p-2 rounded"
+              placeholder="Enter your institution name"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="instituteAddress" className="block mb-1">
+              Institution Address
+            </label>
+            <input
+              type="text"
+              id="instituteAddress"
+              value={instituteAddress}
+              onChange={(e) => setInstituteAddress(e.target.value)}
+              className="w-full sm:text-xs bg-[#000814] outline-none border-none p-2 rounded"
+              placeholder="Enter your institution address"
               required
             />
           </div>
@@ -87,7 +144,7 @@ const Signup: React.FC = () => {
               type="submit"
               className="w-full bg-white text-black p-2 rounded "
             >
-              {loading ? "Logging.." : "Sign Up"}
+              {loading ? "Signing Up..." : "Sign Up"}
             </button>
           </div>
         </form>

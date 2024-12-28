@@ -39,7 +39,7 @@ export const getAllClass = async () => {
 
 export const createClass = async (name: string) => {
   try {
-    const result = await apiConnector("POST", `${URL}/class/create`, { name });
+    const result = await apiConnector("POST", `${URL}/class/createClass`, { name });
 
     if (!result) {
       toast.error("Error in Add Class!");
@@ -50,7 +50,7 @@ export const createClass = async (name: string) => {
 
   } catch (error: any) {
     console.log(error);
-    toast.error(error?.response.data.message); 
+    toast.error("Error!"); 
     return undefined;   
   }
 };
