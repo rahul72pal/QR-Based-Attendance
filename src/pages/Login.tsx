@@ -1,13 +1,16 @@
 import { login } from "@/services/auth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { setInstitueAdd, setInstitueName, setName, setToken } from "@/slices/teacherReducer";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const router = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,11 +22,22 @@ const Login: React.FC = () => {
       };
       const response = await login(data);
       if (response) {
-        console.log(response);
+        console.log("Login ApI response =>",response);
+        // Store the token in cookies
         Cookies.set("token", response.token, { expires: 7 });
         Cookies.set("teacher", JSON.stringify(response.teacher), {
           expires: 7,
         });
+
+        // Store the token in local storage
+        localStorage.setItem("token", response.token);
+        dispatch(setToken(response.token))
+        dispatch(setName(response.teacher.name))
+        dispatch(setInstitueName(response.teacher.institution_name))
+        dispatch(setInstitueAdd(response.teacher.institude_address))
+        localStorage.setItem("teacher", JSON.stringify(response.teacher));
+
+        // Redirect to the class page
         router("/class");
       }
     } catch (error) {

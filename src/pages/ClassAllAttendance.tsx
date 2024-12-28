@@ -89,7 +89,7 @@ const ClassAllAttendance = () => {
             </Button> */}
       <GlobalClassSelector/>
       <span className="py-5">Class Over All Attendance</span>
-      <Button disabled={downloading} onClick={exportToExcel} className="w-fit mx-auto my-5">Export Excel</Button>
+      {classobj && classobj._id && <Button disabled={downloading} onClick={exportToExcel} className="w-fit mx-auto my-5">Export Excel</Button>}
       {
         attendanceData?.attendance &&
         attendanceData?.attendance.length > 0

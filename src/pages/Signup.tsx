@@ -2,9 +2,12 @@ import { SignupTeacher } from "@/services/auth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { setInstitueAdd, setInstitueName, setToken, setName } from "@/slices/teacherReducer";
 
 const Signup: React.FC = () => {
-  const [name, setName] = useState<string>("");
+  const dispatch = useDispatch();
+  const [username, setUserName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [mobileNumber, setMobileNumber] = useState<string>("");
@@ -27,7 +30,7 @@ const Signup: React.FC = () => {
 
     try {
       const data = {
-        name,
+        username,
         email,
         password,
         mobile_number: mobileNumber, // Ensure this is sent as a string
@@ -38,7 +41,15 @@ const Signup: React.FC = () => {
       if (response) {
         console.log(response);
         Cookies.set("token", response.token, { expires: 7 });
-        Cookies.set("teacher", JSON.stringify(response.teacher), { expires: 7 });
+        Cookies.set("teacher", JSON.stringify(response.teacher), {
+          expires: 7,
+        });
+        localStorage.setItem("token", response.token);
+        dispatch(setToken(response.token));
+        dispatch(setName(response.teacher.name));
+        dispatch(setInstitueName(response.teacher.institution_name));
+        dispatch(setInstitueAdd(response.teacher.institude_address));
+        localStorage.setItem("teacher", JSON.stringify(response.teacher));
         router("/class");
       }
     } catch (error) {
@@ -51,7 +62,9 @@ const Signup: React.FC = () => {
   return (
     <div className="flex items-center justify-center h-[80%] bg-[#000814] overflow-y-auto">
       <div className="p-6 bg-[#161D29] rounded shadow-md w-96 sm:mt-[80px]">
-        <h1 className="text-3xl sm:text-xl font-semibold text-center">Sign Up</h1>
+        <h1 className="text-3xl sm:text-xl font-semibold text-center">
+          Sign Up
+        </h1>
         <p className="text-center sm:text-sm">Create your account</p>
         <form onSubmit={handleSubmit} className="mt-4 sm:text-sm">
           <div className="mb-4">
@@ -61,8 +74,8 @@ const Signup: React.FC = () => {
             <input
               type="text"
               id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={username}
+              onChange={(e) => setUserName(e.target.value)}
               className="w-full sm:text-xs bg-[#000814] outline-none border-none p-2 rounded"
               placeholder="Enter your name"
               required

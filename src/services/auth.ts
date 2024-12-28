@@ -10,7 +10,7 @@ if (import.meta.env.VITE_NODE_ENV === "development") {
 }
 
 interface signupData {
-  name: string;
+  username: string;
   email: string;
   password: string;
 }
@@ -37,9 +37,9 @@ export const SignupTeacher = async (data: signupData) => {
     console.log(response);
 
     return response.data; // Cast response.data to Student[]
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
-    toast.error("An error occurred while Signup."); // Optional: Display an error toast
+    toast.error(`An error ${error.response.data.message}`); // Optional: Display an error toast
     return undefined; // Return undefined in case of an error
   } finally {
     toast.dismiss(toastId);

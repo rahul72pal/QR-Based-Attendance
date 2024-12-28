@@ -2,10 +2,12 @@
 
 import { configureStore } from '@reduxjs/toolkit'
 import classReducer from './classReducer'
+import teacherReducer from './teacherReducer'
 
 export const store = configureStore({
   reducer: {
-    class: classReducer
+    class: classReducer,
+    teacher: teacherReducer
   },
 })
 

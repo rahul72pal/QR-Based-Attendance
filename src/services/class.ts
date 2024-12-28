@@ -46,6 +46,13 @@ export const createClass = async (name: string) => {
       return undefined; 
     }
 
+    if(result.status === 203){
+      toast.error("No Permission Add Class!");
+      return undefined; 
+    }
+
+    console.log("Create Class Result",result);
+
     return result.data; 
 
   } catch (error: any) {

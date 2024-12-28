@@ -1,26 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import Modal from "../modal/modal";
 import TeacherLogout from "../teacher/TeacherLogout";
+import { useSelector } from "react-redux";
+import { RootState } from "@/slices/store";
 
 const Navbar: React.FC = () => {
   const router = useNavigate();
-  const token = Cookies.get("token");
-  const teacherCookie = Cookies.get("teacher");
+  // const token = Cookies.get("token");
+  const teacher = useSelector((state: RootState)=> state.teacher)
+  // const teacherCookie = Cookies.get("teacher");
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
-  let teacher;
-
-  // Check if the teacher cookie exists before parsing
-  if (teacherCookie) {
-    try {
-      teacher = JSON.parse(teacherCookie);
-    } catch (error) {
-      console.error("Error parsing teacher cookie:", error);
-      teacher = null; // Set to null if parsing fails
-    }
-  }
 
   console.log(teacher);
 
@@ -37,17 +29,17 @@ const Navbar: React.FC = () => {
           onClick={() => router("/")}
           className="h-full flex justify-center items-center gap-2"
         >
-          {!token && <img
+          {!teacher.token && <img
             className="w-[40px] h-[40px] rounded-full"
             src="./assets/img12.png"
             alt="Attendance Logo"
           />}
-         {!token && <span className="leading-[20px] select-none sm:text-lg font-title text-[20px]">
+         {!teacher.token && <span className="leading-[20px] select-none sm:text-lg font-title text-[20px]">
             Attendance
           </span>}
         </div>
 
-        {!token ? (
+        {!teacher.token ? (
           <div className="h-full flex gap-2 justify-center items-center text-xs">
             <button
               onClick={() => router("/login")}

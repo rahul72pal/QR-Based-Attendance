@@ -14,15 +14,19 @@ import { RootState } from "@/slices/store";
 import QRCode from "qrcode";
 import { generatePDF } from "@/utils/downloadPdf";
 import toast from "react-hot-toast";
+import { format, isValid } from "date-fns";
 
 interface StudentType {
   id: string;
   name: string;
   roll_number: number;
   attendance_percentage: number;
+  father_name: string,
+  dob: Date
 }
 
-let html_string = `<!DOCTYPE html>
+let html_string = `
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -86,7 +90,7 @@ let html_string = `<!DOCTYPE html>
             position: relative;
         }
         .info-section p {
-            margin: 15px 0;
+            margin: 10px 0;
             font-size: 12px;
             text-align: left;
         }
@@ -149,14 +153,15 @@ let html_string = `<!DOCTYPE html>
     <div class="card">
         <div class="diagonal-yellow"></div>
         <div class="card-header">
-            <h1>GURUKUL CLASSES</h1>
+            <h1>{{institute_name}}</h1>
         </div>
         <div class="photo-section"></div>
         <h2 class="name">{{name}}</h2>
         <div class="info-section">
             <p><strong>ROLL NO:</strong> {{roll_number}}</p>
+            <p><strong>Father:</strong> {{father_name}}</p>
             <p><strong>CLASS:</strong> {{class}}<sup>th</sup></p>
-            <p><strong>DOB:</strong> 05-02-2003</p>
+            <p><strong>DOB:</strong> {{dob}}</p>
         </div>
         <div class="footer">
             For this QR system, contact at mail rahulgwl72@gmail.com.
@@ -165,13 +170,13 @@ let html_string = `<!DOCTYPE html>
     <div class="card">
         <div class="diagonal-yellow"></div>
         <div class="card-header">
-            <h1>GURUKUL CLASSES</h1>
+            <h1>{{institute_name}}</h1>
         </div>
         <div class="qr-section">
             {{img}}
         </div>
         <div class="address">
-            <strong>ADD :</strong> In front of miss sill school Sikandar Kampoo, Gwalior.
+            <strong>ADD :</strong> {{institute_address}}.
         </div>
         <div class="signature">
             <strong>Director Sign.</strong>
@@ -185,55 +190,9 @@ let html_string = `<!DOCTYPE html>
 </html>
 `;
 
-// const html_temp2 = `<!DOCTYPE html>
-// <html lang="en">
-// <head>
-//     <meta charset="UTF-8">
-//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//     <title>Student ID Card</title>
-// </head>
-// <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f5f5f5;">
-//     <div class="card" style="width: 300px; height: 500px; background-color: #000814; margin: 50px auto; border-radius: 10px; overflow: hidden; color: white; text-align: center; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); position: relative;">
-//         <div class="diagonal-yellow" style="position: absolute; width: 100%; height: 40%; background-color: #ffd700; clip-path: polygon(0 0, 100% 0, 100% 45%, 0 15%); z-index: 1;"></div>
-//         <div class="card-header" style="padding: 15px 0; z-index: 2; position: relative;">
-//             <h1 style="margin: 0; font-size: 25px; color: #000814; font-weight: bold;">GURUKUL CLASSES</h1>
-//         </div>
-//         <div class="photo-section" style="background-color: white; height: 120px; margin: 20px auto; width: 100px; border-radius: 5px; z-index: 2; position: relative;"></div>
-//         <h2 style="margin: 40px auto;">{{name}}</h2>
-//         <div class="info-section" style="text-align: center; margin: 20px 80px; z-index: 2; position: relative;">
-//             <p style="margin: 15px 0; font-size: 12px; text-align: left;"><strong>ROLL NO:</strong> {{roll_number}}</p>
-//             <p style="margin: 15px 0; font-size: 12px; text-align: left;"><strong>CLASS:</strong> {{class}}<sup>th</sup></p>
-//             <p style="margin: 15px 0; font-size: 12px; text-align: left;"><strong>DOB:</strong> 05-02-2003</p>
-//         </div>
-//         <div class="footer" style="font-size: 12px; margin-top: 30px; border-top: 1px solid white; padding-top: 10px; z-index: 2; position: relative;">
-//             For this QR system, contact at mail rahulgwl72@gmail.com.
-//         </div>
-//     </div>
-//     <div class="card" style="width: 300px; height: 500px; background-color: #000814; margin: 50px auto; border-radius: 10px; overflow: hidden; color: white; text-align: center; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); position: relative;">
-//         <div class="diagonal-yellow" style="position: absolute; width: 100%; height: 40%; background-color: #ffd700; clip-path: polygon(0 0, 100% 0, 100% 45%, 0 15%); z-index: 1;"></div>
-//         <div class="card-header" style="padding: 15px 0; z-index: 2; position: relative;">
-//             <h1 style="margin: 0; font-size: 25px; color: #000814; font-weight: bold;">GURUKUL CLASSES</h1>
-//         </div>
-//         <div class="qr-section" style="background-color: white; margin: 10px 20px; border-radius: 5px; z-index: 2; position: relative;">
-//             {{img}}
-//         </div>
-//         <div class="address" style="font-size: 14px; margin: 15px 20px 5px; text-align: left; z-index: 2; position: relative;">
-//             <strong>ADD :</strong> In front of miss sill school Sikandar Kampoo, Gwalior.
-//         </div>
-//         <div class="signature" style="text-align: right; margin-top: 5px; font-size: 14px; display: flex; gap: 5px; justify-content: center; align-items: center; z-index: 2; position: relative;">
-//             <strong>Director Sign.</strong>
-//             <div style="width: 150px; height: 50px; background-color: white;"></div>
-//         </div>
-//         <div class="footer" style="font-size: 12px; margin-top: 30px; border-top: 1px solid white; padding-top: 10px; z-index: 2; position: relative;">
-//             For this QR system, contact at mail rahulgwl72@gmail.com
-//         </div>
-//     </div>
-// </body>
-// </html>
-// `;
-
 export function useColumns() {
   const navigate = useNavigate();
+  const teacher = useSelector((state: RootState)=> state.teacher)
   const classObj = useSelector((state: RootState) => state.class);
 
   const generateQRCode = async (studentUrl: string) => {
@@ -256,7 +215,11 @@ export function useColumns() {
       name: student?.name,
       class: classObj.name,
       roll_number: student.roll_number,
-      img: img
+      img: img,
+      institute_name: teacher.institute_name.toUpperCase(),
+      institute_address: teacher.institute_address,
+      father_name: student.father_name,
+      dob: student.dob && isValid(new Date(student.dob)) ? format(new Date(student.dob), "dd-MM-yyyy") : "N/A"
     });
     // console.log("Final Html =", final_html);
 
@@ -292,6 +255,40 @@ export function useColumns() {
         </Button>
       ),
       accessorKey: "name",
+    },
+    {
+      header: ({ column }) => (
+        <Button
+          className="sm:text-xs"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          DOB
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+      accessorKey: "dob",
+      cell: ({ row }) => {
+        const dob = row.original.dob; // Get the date of birth
+      
+        // Check if dob is a valid date
+        const formattedDob = dob && isValid(new Date(dob)) ? format(new Date(dob), "dd-MM-yyyy") : "N/A"; // Fallback to "N/A" if invalid
+      
+        return (
+          <span>{formattedDob}</span>
+        );
+      }
+    },
+    {
+      header: ({ column }) => (
+        <Button
+          className="sm:text-xs"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Father Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+      accessorKey: "father_name",
     },
     {
       header: ({ column }) => (
@@ -336,6 +333,8 @@ export function useColumns() {
           name: person.name,
           roll_number: person.roll_number,
           class_id: classObj._id,
+          father_name: person.father_name,
+          dob: person.dob
         };
 
         const baseUrl = window.location.origin;

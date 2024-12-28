@@ -21,7 +21,9 @@ import { RiLogoutCircleLine } from "react-icons/ri";
 import { IoChevronDownSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { IoIosCheckmarkCircle } from "react-icons/io";
-import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
+import { RootState } from "@/slices/store";
+// import Cookies from "js-cookie";
 
 type Props = {
   isMobile: boolean;
@@ -29,7 +31,9 @@ type Props = {
 
 const SideBar = (props: Props) => {
   const [open, setOpen] = useState(true);
-  const token = Cookies.get("token");
+  // const token = Cookies.get("token");
+  const teacher = useSelector((state: RootState)=> state.teacher)
+  const token = teacher.token ? teacher.token : null
   //   const [submenuOpen, setSubmenuOpen] = useState(false);
   const [submenuOpenState, setSubmenuOpenState] = useState<
     Record<number, boolean>
@@ -172,7 +176,7 @@ const SideBar = (props: Props) => {
               !open && "scale-0"
             }`}
           >
-            DashBoard
+            {teacher.institute_name}
           </h1>
         </div>
       }

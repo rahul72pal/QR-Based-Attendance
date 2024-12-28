@@ -21,6 +21,7 @@ import toast from "react-hot-toast";
 const ViewStudentList = () => {
   const columns = useColumns();
   const [students, setStudents] = useState<any>([]);
+  const teacher = useSelector((state: RootState)=> state.teacher)
   // const router = useNavigate();
   const classobj = useSelector((state: RootState) => state.class);
 
@@ -46,6 +47,8 @@ const ViewStudentList = () => {
       });
     }
   }, [fetchStudents]); // fetchStudents already depends on classobj._id
+
+  console.log("Teacher from local storage =", teacher);
 
   return (
     <div className="w-[100vw]">

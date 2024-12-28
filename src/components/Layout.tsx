@@ -2,11 +2,16 @@ import { useEffect, useState } from "react";
 import Sidebar from "./general/Sidebar";
 import Navbar from "./Navbar/Navbar";
 import { Outlet } from "react-router-dom";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
+import { RootState } from "@/slices/store";
 
 const Layout = () => {
   const [isMobile, setIsMobile] = useState(false);
-  const token = Cookies.get("token");
+  // const token = Cookies.get("token");
+  const teacher = useSelector((state: RootState)=> state.teacher)
+
+  const token = teacher.token ? teacher.token : null;
 
   const checkIsMobile = () => {
     setIsMobile(window.innerWidth <= 768);

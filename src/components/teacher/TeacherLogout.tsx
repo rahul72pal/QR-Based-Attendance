@@ -1,25 +1,36 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { setInstitueAdd, setInstitueName, setName, setToken } from "@/slices/teacherReducer";
 
 interface TeacherLogoutProps {
   onClose: () => void; // Function to close the modal
 }
 
-const TeacherLogout: React.FC<TeacherLogoutProps> = ({ onClose}) =>{
+const TeacherLogout: React.FC<TeacherLogoutProps> = ({ onClose }) => {
+  const router = useNavigate();
+  const dispatch = useDispatch();
 
-    const router = useNavigate();
+  const handleRemoveCookies = () => {
+    try {
+      Cookies.remove("token");
+      Cookies.remove("teacher");
+      // Remove the token from local storage
+      localStorage.removeItem("token");
+      dispatch(setToken(null))
 
-    const handleRemoveCookies = ()=>{
-        try {
-            Cookies.remove('token');
-            Cookies.remove('teacher');
-            router('/login');
-            onClose();
-        } catch (error) {
-            console.log(error)
-        }
+      // Remove the teacher information from local storage
+      localStorage.removeItem("teacher");
+      dispatch(setName(null))
+      dispatch(setInstitueName(null))
+      dispatch(setInstitueAdd(null))
+      router("/login");
+      onClose();
+    } catch (error) {
+      console.log(error);
     }
+  };
   return (
     <div className="bg-gray-800 p-6 w-[80%] mx-auto flex flex-col gap-10 rounded-md text-center ">
       <p className="text-xl">Are You Want to Logout</p>

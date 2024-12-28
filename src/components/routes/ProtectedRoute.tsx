@@ -1,32 +1,26 @@
 import React, { useEffect } from "react";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "@/slices/store";
 
 type Props = {
   children: React.ReactNode;
 };
 
-let teacher: object;
 
 const ProtectedRoute = (props: Props) => {
   const navigate = useNavigate();
-  const token = Cookies.get("token");
-  const teacherCookie = Cookies.get("teacher");
-
-  // Check if the teacher cookie exists before parsing
-  if (teacherCookie) {
-    try {
-      teacher = JSON.parse(teacherCookie);
-    } catch (error) {
-      console.error("Error parsing teacher cookie:", error);
-    }
-  }
+  // const token = Cookies.get("token");
+  // const teacherCookie = Cookies.get("teacher");
+  const teacher = useSelector((state: RootState)=> state.teacher)
+  console.log("Token ====", teacher, teacher.token === null);
 
   useEffect(() => {
-    if (!token && !teacher) {
+    if (teacher.token === null) {
       navigate('/login');
     }
-  }, [token, teacher, navigate]);
+  }, [teacher.token, teacher, navigate]);
 
   return <>{props.children}</>;
 };
