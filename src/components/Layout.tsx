@@ -28,7 +28,7 @@ const Layout = () => {
   console.log(token);
 
   return (
-    <div className="flex flex-col h-[120vh] min-h-[100vh] w-full">
+    <div className="flex flex-col h-[120vh] min-h-[100vh] w-full bg-[#000814] text-white">
       {/* Navbar */}
       {!isMobile && <div className="h-[8vh] border-b-2 border-gray-600">
             <Navbar />
