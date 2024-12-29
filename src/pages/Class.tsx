@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { getAllClass } from "@/services/class";
+import { deleteClassById, getAllClass } from "@/services/class";
 // import { RootState } from "@/slices/store";
 
 import { useEffect, useState } from "react";
@@ -13,14 +13,20 @@ import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 // import { setClasses } from "@/slices/classReducer";
 import { RootState } from "@/slices/store";
+import { setClassId, setClassName } from "@/slices/classReducer";
+import Modal from "@/components/modal/modal";
 interface Class {
   _id: string | null;
   name: string | null;
 }
 
+
 const Class = () => {
   const [classList, setClassList] = useState<Class[]>();
-  const classObj = useSelector((state: RootState)=>state.class)
+  const classObj = useSelector((state: RootState)=>state.class);
+  const [isModalOpen, setOpenModal] = useState<boolean>(false);
+  const [deletedId, setDeleteId] = useState<string>('');
+  const [deletedname, setDeletename] = useState<string>('');
   // const classObj = useSelector((state: RootState) => state.class);
   // const router = useNavigate();
   const dispatch = useDispatch();
@@ -41,6 +47,40 @@ const Class = () => {
     fetchAllClasses();
   }, []);
 
+  const deleteClass = async()=>{
+    try {
+      const deleteResponse = await deleteClassById(deletedId);
+      if(deleteResponse){
+        if(deletedId === classObj._id){
+          setClassId(null),
+          setClassName(null)
+        }
+        fetchAllClasses();
+        setOpenModal(false);
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleDeleteModalOpen = async(id: string| null, name:string| null)=>{
+    setOpenModal(true);
+    id && setDeleteId(id);
+    name && setDeletename(name);
+  }
+
+  const ClassModalForm = ()=>{
+    return(
+      <div className="bg-gray-800 p-6 w-[80%] mx-auto flex flex-col gap-10 rounded-md text-center ">
+        <p className="text-xl">Are You Want to Delete <span className="text-[#FFD52A]">{deletedname}</span></p>
+        <div className="flex flex-col gap-5">
+          <Button onClick={deleteClass} className="bg-[#FFD52A] text-black font-bold">Delete</Button>
+          <Button onClick={()=>setOpenModal(false)}>cancel</Button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="">
 
@@ -48,22 +88,30 @@ const Class = () => {
         <div className="flex flex-col w-[300px] mx-auto gap-4 ">
           {classList !== undefined &&
         classList.length > 0 &&
-        classList.map((classobj) => (
+        classList.map((classobject) => (
           <Button
-            key={classobj._id}
+            key={classobject._id}
             // onClick={() => router("/takeattendance")}
             className="shadow-sm shadow-white sm:text-xs flex justify-between"
           >
             <FaClipboardList />
-            <p>{classobj.name}</p>
+            <p>{classobject.name}</p>
             <div className="flex justify-center items-center gap-4">
             <BiSolidEditAlt/>
+            <span onClick={()=>handleDeleteModalOpen(classobject._id, classobject.name)}>
             <MdDelete/>
+            </span>
             </div>
           </Button>
         ))}
 
         </div>
+
+        {isModalOpen && (
+        <Modal isOpen={isModalOpen} onClose={() => setOpenModal(false)}>
+          <ClassModalForm/>
+        </Modal>
+      )}
 
     </div>
   );

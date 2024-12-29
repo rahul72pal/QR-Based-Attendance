@@ -28,11 +28,8 @@ export const getAllClass = async (dispatch: Dispatch, classobj: any) => {
     const classes = response.data?.classes || [];
 
     dispatch(setClasses(classes));
-
-    if (classobj.classes?.length === 0) {
-      // Store classes in localStorage
-      localStorage.setItem("classes", JSON.stringify(classes));
-    }
+    localStorage.setItem("classes", JSON.stringify(classes));
+    
     console.log("Classes stored in localStorage:", classes);
     return classes; // Return the classes array
   } catch (error: any) {
@@ -95,3 +92,28 @@ export const getClassAllAttendance = async (class_id: string) => {
     toast.dismiss(toastId);
   }
 };
+
+export const deleteClassById = async (class_id: string| null)=>{
+  const toastId = toast.loading("Deleting..");
+  try {
+    // console.log(process.env.REACT_APP_API_URL);
+    const response = await apiConnector(
+      "DELETE",
+      `${URL}/class/delete/${class_id}`
+    );
+
+    if (!response) {
+      toast.error("Error in Attendance!");
+      return undefined; // Return undefined if response is not valid
+    }
+    console.log(response);
+    toast.success("Delete");
+    return response; // Cast response.data to Student[]
+  } catch (error: any) {
+    console.log(error);
+    toast.error(error?.response.data.message); // Optional: Display an error toast
+    return undefined; // Return undefined in case of an error
+  } finally {
+    toast.dismiss(toastId);
+  }
+}

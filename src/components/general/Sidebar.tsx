@@ -14,7 +14,10 @@ import {
   FaUserFriends,
   FaClipboardList,
 } from "react-icons/fa";
-import { MdAssignmentTurnedIn, MdShare } from "react-icons/md";
+import { MdAssignmentTurnedIn, 
+  // MdShare
+
+ } from "react-icons/md";
 // import { IoImages } from "react-icons/io5";
 import { RiLogoutCircleLine } from "react-icons/ri";
 
@@ -111,18 +114,13 @@ const SideBar = (props: Props) => {
         {
           title: "Take Attendance",
           icon: <FaClipboardList />,
-          route: "/takeattendance",
-        },
-        {
-          title: "Take New Attendance",
-          icon: <FaClipboardList />,
           route: "/newattendance",
         },
-        {
-          title: "Parent Share",
-          icon: <MdShare />,
-          route: "/parentshare",
-        },
+        // {
+        //   title: "Parent Share",
+        //   icon: <MdShare />,
+        //   route: "/parentshare",
+        // },
         {
           title: "Check Attendance",
           icon: <IoIosCheckmarkCircle />,

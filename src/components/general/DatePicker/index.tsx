@@ -53,7 +53,7 @@ export default function DatePicker({ date, setDate }: DatePickerProps) {
       <div className="bg-[#000814]  text-white flex gap-3 py-3">
         <select className="bg-[#000814] sm:text-xs w-[80px] rounded-lg text-center border text-white" name="years" id="years" onChange={handleYearChange}>
           {Array.from({ length: 28 }, (_, i) => (
-            <option className="bg-[#000814]  text-white" key={i} value={1995 + i}>
+            <option className="bg-[#000814]  text-white" key={i} value={1999 + i}>
               {1999 + i}
             </option>
           ))}

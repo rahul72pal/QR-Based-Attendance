@@ -6,10 +6,10 @@ import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/slices/store";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { getAttdance } from "@/services/attendance";
 import StudentList from "../Student/StudentList";
-import { IoArrowBackSharp } from "react-icons/io5";
+// import { IoArrowBackSharp } from "react-icons/io5";
 import GlobalClassSelector from "../general/GlobalClassSelector";
 
 function cn(...classes: any) {
@@ -28,7 +28,7 @@ const ClassAttendance = () => {
   const [date, setDate] = useState<Date | undefined>(undefined);
   const classobj = useSelector((state: RootState) => state.class);
   const [students, setStudents] = useState<Student[]>([]);
-  const router = useNavigate();
+  // const router = useNavigate();
 
   const formatDate = (date: Date | undefined): string => {
     if (!date) {
@@ -66,10 +66,10 @@ const ClassAttendance = () => {
 
   return (
     <div className="sm:text-xs flex-1 flex flex-col justify-center items-center">
-      <Button onClick={() => router(-1)} className="p-4 mt-6 ml-6 sm:text-xs">
+      {/* <Button onClick={() => router(-1)} className="p-4 mt-6 ml-6 sm:text-xs">
         <IoArrowBackSharp />
         Back
-      </Button>
+      </Button> */}
 
       <GlobalClassSelector/>
       <p className="text-center py-6 sm:text-lg">

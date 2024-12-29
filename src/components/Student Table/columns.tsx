@@ -255,16 +255,26 @@ export function useColumns() {
         </Button>
       ),
       accessorKey: "name",
+      cell: ({ row }) => {
+        const name = row.original.name;
+        return (
+          <div className="text-center">
+              {name}
+          </div>
+        );
+      },
     },
     {
       header: ({ column }) => (
-        <Button
-          className="sm:text-xs"
+        <div className="text-center">
+          <Button
+          className="sm:text-xs mx-auto text-center"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           DOB
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
+        </div>
       ),
       accessorKey: "dob",
       cell: ({ row }) => {
@@ -274,7 +284,7 @@ export function useColumns() {
         const formattedDob = dob && isValid(new Date(dob)) ? format(new Date(dob), "dd-MM-yyyy") : "N/A"; // Fallback to "N/A" if invalid
       
         return (
-          <span>{formattedDob}</span>
+          <div className="text-center">{formattedDob}</div>
         );
       }
     },
@@ -289,6 +299,14 @@ export function useColumns() {
         </Button>
       ),
       accessorKey: "father_name",
+      cell: ({ row }) => {
+        const father_name = row.original.father_name;
+        return (
+          <div className="text-center">
+              {father_name}
+          </div>
+        );
+      },
     },
     {
       header: ({ column }) => (

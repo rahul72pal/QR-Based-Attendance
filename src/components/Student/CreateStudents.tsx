@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import GlobalClassSelector from "../general/GlobalClassSelector";
 import toast from "react-hot-toast";
 import DatePicker from "../general/DatePicker";
+import { useNavigate } from "react-router-dom";
 
 const CreateStudents = () => {
   const [name, setName] = useState<string>("");
@@ -16,6 +17,7 @@ const CreateStudents = () => {
   const classobj = useSelector((state: RootState) => state.class);
   const [loading, setLoading] = useState<boolean>(false);
   const [date, setDate] = useState<Date | undefined>(undefined);
+  const router = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,6 +31,7 @@ const CreateStudents = () => {
       );
       if (response) {
         console.log(response);
+        router('/viewStudentList') 
       }
     } catch (error) {
       console.log(error);

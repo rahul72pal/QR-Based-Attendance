@@ -10,10 +10,14 @@ interface ClassIdComponentProps {
 const ClassIdComponent: React.FC<ClassIdComponentProps> = ({ children }) => {
   const router = useNavigate();
   const classobj = useSelector((state: RootState) => state.class);
-  const storedClasses = JSON.parse(localStorage.getItem("classes") || "[]");
-  console.log("Stored classes:", storedClasses);
+  const storedClasses = classobj.classes;
+  console.log("Stored classes class ID component:", storedClasses, classobj);
 
   useEffect(() => {
+    if(storedClasses.length === 0){
+      router('/classCreate')
+      return;
+    }
     if (!storedClasses) {
       router("/class");
     }
