@@ -2,6 +2,10 @@
 
 import toast from "react-hot-toast";
 import { apiConnector } from "./axios";
+// import { useDispatch, useSelector } from "react-redux";
+import { setClasses } from "@/slices/classReducer";
+// import { RootState } from "@/slices/store";
+import { Dispatch } from "@reduxjs/toolkit";
 
 let URL = "";
 
@@ -11,7 +15,7 @@ if (import.meta.env.VITE_NODE_ENV === "development") {
   URL = import.meta.env.VITE_API_URL;
 }
 
-export const getAllClass = async () => {
+export const getAllClass = async (dispatch: Dispatch, classobj: any) => {
   const toastId = toast.loading("Wait..");
   try {
     const response = await apiConnector("GET", `${URL}/class/getAll`);
@@ -23,9 +27,12 @@ export const getAllClass = async () => {
 
     const classes = response.data?.classes || [];
 
-    // Store classes in localStorage
-    localStorage.setItem("classes", JSON.stringify(classes));
+    dispatch(setClasses(classes));
 
+    if (classobj.classes?.length === 0) {
+      // Store classes in localStorage
+      localStorage.setItem("classes", JSON.stringify(classes));
+    }
     console.log("Classes stored in localStorage:", classes);
     return classes; // Return the classes array
   } catch (error: any) {
@@ -37,28 +44,30 @@ export const getAllClass = async () => {
   }
 };
 
+
 export const createClass = async (name: string) => {
   try {
-    const result = await apiConnector("POST", `${URL}/class/createClass`, { name });
+    const result = await apiConnector("POST", `${URL}/class/createClass`, {
+      name,
+    });
 
     if (!result) {
       toast.error("Error in Add Class!");
-      return undefined; 
+      return undefined;
     }
 
-    if(result.status === 203){
+    if (result.status === 203) {
       toast.error("No Permission Add Class!");
-      return undefined; 
+      return undefined;
     }
 
-    console.log("Create Class Result",result);
+    console.log("Create Class Result", result);
 
-    return result.data; 
-
+    return result.data;
   } catch (error: any) {
     console.log(error);
-    toast.error("Error!"); 
-    return undefined;   
+    toast.error("Error!");
+    return undefined;
   }
 };
 

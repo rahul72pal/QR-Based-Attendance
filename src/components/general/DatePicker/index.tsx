@@ -52,13 +52,13 @@ export default function DatePicker({ date, setDate }: DatePickerProps) {
     <div className="bg-[#000814]  text-white flex flex-col justify-center items-center relative">
       <div className="bg-[#000814]  text-white flex gap-3 py-3">
         <select className="bg-[#000814] sm:text-xs w-[80px] rounded-lg text-center border text-white" name="years" id="years" onChange={handleYearChange}>
-          {Array.from({ length: 30 }, (_, i) => (
+          {Array.from({ length: 28 }, (_, i) => (
             <option className="bg-[#000814]  text-white" key={i} value={1995 + i}>
-              {1995 + i}
+              {1999 + i}
             </option>
           ))}
         </select>
-        <select className="bg-[#000814] w-[80px] sm:text-xs rounded-lg text-center border text-white" name="months" id="months" onChange={handleMonthChange}>
+        <select className="bg-[#000814] w-[80px] sm:text-xs rounded-lg text-center border text-white py-[4px]" name="months" id="months" onChange={handleMonthChange}>
           {Array.from({ length: 12 }, (_, i) => (
             <option className="bg-[#000814]  text-white" key={i} value={i + 1}>
               {new Date(0, i).toLocaleString("default", { month: "short" })}

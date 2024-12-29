@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     _id: null ,
-    name: null 
+    name: null ,
+    classes: JSON.parse(localStorage.getItem("classes") || "[]")
 }
 
 const classSlice = createSlice({
@@ -14,9 +15,12 @@ const classSlice = createSlice({
         },
         setClassName(state, value){
             state.name = value.payload
+        },
+        setClasses(state, value){
+            state.classes = value.payload
         }
     }
 });
 
-export const {setClassId, setClassName} = classSlice.actions
+export const {setClassId, setClassName, setClasses} = classSlice.actions
 export default classSlice.reducer

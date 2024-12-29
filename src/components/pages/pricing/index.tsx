@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import React, { ReactNode } from "react";
+import toast from "react-hot-toast";
 import { IoArrowBackSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +13,44 @@ interface PricingCardProps {
   subscription: string;
   buttonText: string;
   active?: boolean;
+}
+
+const handleClickChoosePlan = ()=>{
+  toast.custom((t) => (
+    <div
+      className={`${
+        t.visible ? 'animate-enter' : 'animate-leave'
+      } max-w-md w-full bg-[#000814]  shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+    >
+      <div className="flex-1 w-0 p-4">
+        <div className="flex items-start">
+          <div className="flex-shrink-0 pt-0.5">
+            <img
+              className="h-10 w-10 rounded-full"
+              src="https://avatars.githubusercontent.com/u/110774048?s=400&u=cf40be6dde0eea7aab508087feaee4c7f5c8c6db&v=4"
+              alt=""
+            />
+          </div>
+          <div className="ml-3 flex-1">
+            <p className="text-sm font-medium text-white">
+              Contact Rahul Pal
+            </p>
+            <p className="mt-1 text-sm text-gray-200">
+              Mob:- 8962113963
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="flex border-l bg-[#000814] ">
+        <button
+          onClick={() => toast.dismiss(t.id)}
+          className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-yellow-400 hover:text-yellow-500 focus:outline-none focus:ring-2 "
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  ))
 }
 
 // PricingCard Component
@@ -53,6 +92,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
           {buttonText}
         </a> */}
         <Button
+        onClick={handleClickChoosePlan}
           className={`block font-bold w-full rounded-md border border-primary bg-white p-3 text-center text-base text-black transition hover:bg-black hover:text-white esm:text-sm sm:text-base ${
             active ? "border-primary" : "border-stroke"
           }`}
@@ -339,7 +379,7 @@ const List: React.FC<ListProps> = ({ children }) => {
 const Pricing: React.FC = () => {
   const router = useNavigate();
   return (
-    <section className="relative z-10 overflow-hidden bg-[#000814] pb-12 lg:pb-[90px] sm:pt-[20px] pt-[120px]">
+    <section className="relative z-1 overflow-hidden bg-[#000814] pb-12 lg:pb-[90px] sm:pt-[20px] pt-[120px]">
       <Button onClick={() => router(-1)} className=" mb-6 ml-6 sm:text-xs">
         <IoArrowBackSharp />
         Back
@@ -375,6 +415,7 @@ const Pricing: React.FC = () => {
             <List>5 Classes</List>
             <List>25 Students</List>
             <List>7 Months Validation</List>
+            <List>QR Attendance</List>
           </PricingCard>
 
           {/* ₹59 Plan */}
@@ -390,6 +431,8 @@ const Pricing: React.FC = () => {
             <List>50 Students</List>
             <List>1 Year Validation</List>
             <List>QR-based Attendance</List>
+            <List>First 5 User 100₹ OFF</List>
+            <List>6 Month 300₹ OFFER</List>
           </PricingCard>
 
           {/* ₹159 Plan */}
@@ -405,6 +448,8 @@ const Pricing: React.FC = () => {
             <List>1 Year Validation</List>
             <List>Custom ID Card</List>
             <List>QR-based Attendance</List>
+            <List>First 5 User 100₹ OFF</List>
+            <List>6 Month 300₹ OFFER</List>
           </PricingCard>
         </div>
       </div>

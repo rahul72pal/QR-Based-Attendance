@@ -76,7 +76,7 @@ const StudentHeatMap: FC<StudentHeatmapInterface> = ({
   // console.log(endDate);
 
   return (
-    <div className="w-[100vw] h-[100vh] flex flex-col justify-center items-center ">
+    <div className="w-[100vw] h-[100vh] flex flex-col justify-center items-center bg-[#000814] text-white px-4">
       <div className="text-lg text-center py-6 pb-[100px]">
         <p>For this QR system contact at <span className="text-sm italic text-yellow-300 ">rahulgwl72@gmail.com</span></p>
       </div>

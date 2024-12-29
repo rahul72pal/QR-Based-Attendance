@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { setInstitueAdd, setInstitueName, setName, setToken } from "@/slices/teacherReducer";
+import { setClasses } from "@/slices/classReducer";
 
 interface TeacherLogoutProps {
   onClose: () => void; // Function to close the modal
@@ -22,9 +23,11 @@ const TeacherLogout: React.FC<TeacherLogoutProps> = ({ onClose }) => {
 
       // Remove the teacher information from local storage
       localStorage.removeItem("teacher");
+      localStorage.removeItem("classes")
       dispatch(setName(null))
       dispatch(setInstitueName(null))
       dispatch(setInstitueAdd(null))
+      dispatch(setClasses(null))
       router("/login");
       onClose();
     } catch (error) {

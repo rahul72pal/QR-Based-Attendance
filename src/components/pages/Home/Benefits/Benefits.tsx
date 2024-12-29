@@ -1,7 +1,10 @@
 // import React from 'react';
+import { Button } from '@/components/ui/button';
 import { FaClock, FaUserCheck, FaSyncAlt, FaCloud, FaShieldAlt, FaChartBar } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const Benefits = () => {
+  const router = useNavigate();
   const list = [
     {
       title: "Accessible Anytime, Anywhere",
@@ -41,6 +44,10 @@ const Benefits = () => {
             </li>
           ))}
         </ul>
+      </div>
+
+      <div className=' text-center my-8'>
+       <Button className='text-white font-bold' onClick={()=>router('/pricing')}>Check Our Pricing</Button>
       </div>
     </div>
   );

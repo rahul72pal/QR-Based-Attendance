@@ -16,7 +16,8 @@ const GlobalClassSelector = () => {
   const classObj = useSelector((state: RootState) => state.class);
   const [selectedClass, setSelectedClass] = useState<Class | null>(classObj);
   const dispatch = useDispatch();
-  const storedClasses = JSON.parse(localStorage.getItem("classes") || "[]");
+  // const storedClasses = JSON.parse(localStorage.getItem("classes") || "[]");
+  const storedClasses = classObj.classes;
   console.log("Stored classes:", storedClasses);
 
   const handleClassSelect = (classobj: Class) => {
@@ -51,7 +52,7 @@ const GlobalClassSelector = () => {
                     : "bg-[#161D29] "
                 } 
                   py-2 border text-xs
-                  border-white mb-1 rounded-lg cursor-pointer `}
+                  border-white mb-1 rounded-lg cursor-pointer z-50 `}
                 onClick={() => handleClassSelect(classobj)}
               >
                 {classobj.name}

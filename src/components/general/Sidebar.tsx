@@ -149,7 +149,7 @@ const SideBar = (props: Props) => {
 
   return (
     <div
-      className={`bg-dark-purple z-10 h-[100%] bg-[#000814] p-5 pt-8 duration-300 border-r-2 border-amber-300 shadow-md shadow-white ${
+      className={`bg-dark-purple z-20 h-[100%] bg-[#000814] p-5 pt-8 duration-300 border-r-2 border-amber-300 shadow-md shadow-white ${
         open ? "w-72" : `w-16 ${props.isMobile && "-ml-[70px]"}`
       } ${
         props.isMobile ? "absolute left-0 h-screen " : "relative h-full"
@@ -213,7 +213,7 @@ const SideBar = (props: Props) => {
             </li>
             {menu.submenu && submenuOpenState[index] && open && (
               <ul
-                className={`transition-all duration-300 ${
+                className={`transition-all duration-300 rounded-lg ${
                   submenuOpenState[index]
                     ? "max-h-[500px] opacity-100"
                     : "max-h-0 opacity-0"
@@ -221,7 +221,7 @@ const SideBar = (props: Props) => {
               >
                 {menu?.submenuitem?.map((submenuItem, index) => (
                   <li
-                    className="text-amber-300 py-3 text-sm flex items-center gap-x-2 cursor-pointer p-2 pr-5 hover:bg-light-white duration-300"
+                    className="text-amber-300 bg-[#0F1725] py-3 text-sm flex items-center gap-x-2 cursor-pointer p-2 pr-5 hover:bg-light-white duration-300"
                     key={index}
                     onClick={() => handleMenuClick(submenuItem.route)}
                   >
