@@ -16,6 +16,7 @@ if (import.meta.env.VITE_NODE_ENV === "development") {
 }
 
 export const getAllClass = async (dispatch: Dispatch, classobj: any) => {
+  console.log(classobj);
   const toastId = toast.loading("Wait..");
   try {
     const response = await apiConnector("GET", `${URL}/class/getAll`);
