@@ -12,7 +12,7 @@ export default function DatePicker({ date, setDate }: DatePickerProps) {
   // const [selectDay, setSelectDay] = useState<number>(0);
   const [opendaysbox, setOpendaysbox] = useState<boolean>(false);
 
-  console.log(date)
+  console.log(date);
 
   const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setYear(event.target.value);
@@ -23,7 +23,7 @@ export default function DatePicker({ date, setDate }: DatePickerProps) {
   };
 
   const getDaysInMonth = (month: number, year: number) => {
-    setOpendaysbox(true)
+    setOpendaysbox(true);
     return new Date(year, month, 0).getDate();
   };
 
@@ -51,14 +51,35 @@ export default function DatePicker({ date, setDate }: DatePickerProps) {
   return (
     <div className="bg-[#000814]  text-white flex flex-col justify-center items-center relative">
       <div className="bg-[#000814]  text-white flex gap-3 py-3">
-        <select className="bg-[#000814] sm:text-xs w-[80px] rounded-lg text-center border text-white" name="years" id="years" onChange={handleYearChange}>
+        <select
+          className="bg-[#000814] sm:text-xs w-[80px] rounded-lg text-center border text-white"
+          name="years"
+          id="years"
+          onChange={handleYearChange}
+        >
+          <option className="bg-[#000814]  text-white">
+            Year
+          </option>
           {Array.from({ length: 28 }, (_, i) => (
-            <option className="bg-[#000814]  text-white" key={i} value={1999 + i}>
+            <option
+              className="bg-[#000814]  text-white"
+              key={i}
+              value={1999 + i}
+            >
               {1999 + i}
             </option>
           ))}
         </select>
-        <select className="bg-[#000814] w-[80px] sm:text-xs rounded-lg text-center border text-white py-[4px]" name="months" id="months" onChange={handleMonthChange}>
+        <select
+          className="bg-[#000814] w-[80px] sm:text-xs rounded-lg text-center border text-white py-[4px]"
+          name="months"
+          id="months"
+          onChange={handleMonthChange}
+        >
+          <option className="bg-[#000814]  text-white">
+            Month
+          </option>
+
           {Array.from({ length: 12 }, (_, i) => (
             <option className="bg-[#000814]  text-white" key={i} value={i + 1}>
               {new Date(0, i).toLocaleString("default", { month: "short" })}
@@ -67,23 +88,23 @@ export default function DatePicker({ date, setDate }: DatePickerProps) {
         </select>
       </div>
 
-      {opendaysbox && <div
-      className="bg-[#161D29] z-10 w-[250px] gap-3 p-5 rounded-lg absolute top-[80px] text-white grid grid-rows-7 grid-cols-5 border"
-      >
-        {daysNumber > 0 ? (
-          daysArray.map((day) => (
-            <button
-            className="w-[30px] bg-[#132138] border hover:scale-125 duration-300 rounded-md "
-              key={day}
-              onClick={() => handleClickDay(day)}
-            >
-              {day}
-            </button>
-          ))
-        ) : (
-          <div style={{ gridColumn: "span 5", textAlign: "center" }}>0</div>
-        )}
-      </div>}
+      {opendaysbox && (
+        <div className="bg-[#161D29] z-10 w-[250px] gap-3 p-5 rounded-lg absolute top-[80px] text-white grid grid-rows-7 grid-cols-5 border">
+          {daysNumber > 0 ? (
+            daysArray.map((day) => (
+              <button
+                className="w-[30px] bg-[#132138] border hover:scale-125 duration-300 rounded-md "
+                key={day}
+                onClick={() => handleClickDay(day)}
+              >
+                {day}
+              </button>
+            ))
+          ) : (
+            <div style={{ gridColumn: "span 5", textAlign: "center" }}>0</div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

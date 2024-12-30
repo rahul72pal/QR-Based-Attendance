@@ -431,8 +431,9 @@ const Pricing: React.FC = () => {
             <List>50 Students</List>
             <List>1 Year Validation</List>
             <List>QR-based Attendance</List>
-            <List>First 5 User 100₹ OFF</List>
-            <List>6 Month 300₹ OFFER</List>
+            <List>First 5 User 50₹ OFF</List>
+            <List>6 Month 350₹ OFFER</List>
+            <List>12 Month 750₹ OFFER</List>
           </PricingCard>
 
           {/* ₹159 Plan */}
@@ -449,7 +450,8 @@ const Pricing: React.FC = () => {
             <List>Custom ID Card</List>
             <List>QR-based Attendance</List>
             <List>First 5 User 100₹ OFF</List>
-            <List>6 Month 300₹ OFFER</List>
+            <List>6 Month 450₹ OFFER</List>
+            <List>12 Month 900₹ OFFER</List>
           </PricingCard>
         </div>
       </div>

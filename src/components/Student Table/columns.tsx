@@ -160,7 +160,7 @@ let html_string = `
         <div class="info-section">
             <p><strong>ROLL NO:</strong> {{roll_number}}</p>
             <p><strong>Father:</strong> {{father_name}}</p>
-            <p><strong>CLASS:</strong> {{class}}<sup>th</sup></p>
+            <p><strong>CLASS:</strong> {{class}}</p>
             <p><strong>DOB:</strong> {{dob}}</p>
         </div>
         <div class="footer">
