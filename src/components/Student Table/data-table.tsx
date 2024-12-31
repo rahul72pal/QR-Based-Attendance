@@ -86,7 +86,7 @@ export function StudentDataTable<TData, TValue>({
           // value={(table.getColumn("name")?.getFilterValue() as string) || ""}
           value={(table.getState().globalFilter as string) || ""}
           onChange={(e) => table.setGlobalFilter(String(e.target.value))}
-          className="max-w-[90vw] bg-[#000814] my-7 outline-none border"
+          className="sm:max-w-[90vw] sm:w-[95vw] w-[20vw] bg-[#000814] my-7 outline-none border"
         />
 
         <DropdownMenu >
@@ -117,7 +117,7 @@ export function StudentDataTable<TData, TValue>({
         </DropdownMenu>
       </div>
       {/* table  */}
-      <div className="rounded-md border">
+      <div className="rounded-md border w-[70vw] sm:w-[100%] mx-auto">
         <Table className="">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => {
@@ -126,7 +126,7 @@ export function StudentDataTable<TData, TValue>({
                   {headerGroup.headers.map((header) => {
                     return (
                       <TableHead
-                        className="min-w-[150px] p-2 sm:text-xs text-yellow-300"
+                        className="sm:min-w-[150px] p-2 sm:text-xs text-yellow-300"
                         key={header.id}
                       >
                         {flexRender(

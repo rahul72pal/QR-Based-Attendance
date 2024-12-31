@@ -129,3 +129,37 @@ export const parentAttendance = async (
     toast.dismiss(toastId);
   }
 };
+
+export const updateStudent = async(
+  student_id: string | null,
+  name: string,
+  father_name: string,
+  dob: Date | undefined
+)=>{
+  const toastId = toast.loading("Update...");
+  try {
+    const response = await apiConnector(
+      "POST",
+      `${URL}/students/updateStudent/${student_id}`,
+      {
+        name,
+        father_name,
+        dob,
+      }
+    );
+
+    if (!response) {
+      toast.error("Error in Update Students!");
+      return undefined; // Return undefined if response is not valid
+    }
+
+    toast.success("Updated!");
+    return response.data; // Cast response.data to Student[]
+  } catch (error) {
+    console.log(error);
+    toast.error("An error occurred while Updating students."); // Optional: Display an error toast
+    return undefined; // Return undefined in case of an error
+  } finally {
+    toast.dismiss(toastId);
+  }
+}

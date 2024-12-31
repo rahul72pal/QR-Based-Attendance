@@ -17,11 +17,27 @@ import { StudentDataTable } from "@/components/Student Table/data-table";
 import { useColumns } from "@/components/Student Table/columns";
 import GlobalClassSelector from "@/components/general/GlobalClassSelector";
 import toast from "react-hot-toast";
+import Modal from "@/components/modal/modal";
+import EditStudent from "@/components/Student/EditStudent";
+
+interface StudentType {
+  id: string;
+  name: string;
+  roll_number: number;
+  attendance_percentage: number;
+  father_name: string;
+  dob: string;
+}
 
 const ViewStudentList = () => {
-  const columns = useColumns();
+  const [selectedStudent, setSelectedStudent] = useState<StudentType | null>(
+    null
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const columns = useColumns(setSelectedStudent, setIsModalOpen);
   const [students, setStudents] = useState<any>([]);
-  const teacher = useSelector((state: RootState)=> state.teacher)
+  // const teacher = useSelector((state: RootState) => state.teacher);
   // const router = useNavigate();
   const classobj = useSelector((state: RootState) => state.class);
 
@@ -39,16 +55,16 @@ const ViewStudentList = () => {
 
   // Call fetchStudents whenever classobj._id changes
   useEffect(() => {
-    if(classobj._id){
+    if (classobj._id) {
       fetchStudents();
-    }else{
-      toast('Select class!', {
-        icon: '⚠️',
+    } else {
+      toast("Select class!", {
+        icon: "⚠️",
       });
     }
   }, [fetchStudents]); // fetchStudents already depends on classobj._id
 
-  console.log("Teacher from local storage =", teacher);
+  console.log("11111122222222=", selectedStudent);
 
   return (
     <div className="w-[100vw]">
@@ -66,6 +82,17 @@ const ViewStudentList = () => {
           </div>
         )}
       </div>
+
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <EditStudent
+          id={selectedStudent?.id ? selectedStudent.id: ""}
+          name={selectedStudent?.name ? selectedStudent.name : ""}
+          father_name={selectedStudent?.father_name? selectedStudent.father_name: ""}
+          dob={selectedStudent?.dob? selectedStudent.dob : ""}
+          onClose={() => setIsModalOpen(false)}
+          fetchStudentList={()=>fetchStudents()}
+        />
+      </Modal>
     </div>
   );
 };

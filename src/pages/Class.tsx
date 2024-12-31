@@ -1,5 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { deleteClassById, getAllClass, updateClassName } from "@/services/class";
+import {
+  deleteClassById,
+  getAllClass,
+  updateClassName,
+} from "@/services/class";
 // import { RootState } from "@/slices/store";
 
 import { useEffect, useState } from "react";
@@ -27,7 +31,12 @@ interface ClassNameUpdateFormProps {
   fetchClass: () => void; // Assuming this is a function to fetch updated class data
 }
 
-const ClassNameUpdateForm: React.FC<ClassNameUpdateFormProps> = ({ className, classId, onClose, fetchClass }) => {
+const ClassNameUpdateForm: React.FC<ClassNameUpdateFormProps> = ({
+  className,
+  classId,
+  onClose,
+  fetchClass,
+}) => {
   const [newClassName, setNewClassName] = useState<string>(className);
   const [loading, setLoading] = useState<boolean>(false); // Loading state
 
@@ -63,15 +72,17 @@ const ClassNameUpdateForm: React.FC<ClassNameUpdateFormProps> = ({ className, cl
           required
         />
       </form>
-      <div className="flex flex-row-reverse justify-evenly gap-5">
-        <button
+      <div className="flex flex-row-reverse justify-around gap-5">
+        <Button
+        disabled={newClassName === className}
           onClick={handleUpdateClass}
-          className={`bg-white text-black hover:text-white font-bold ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-          disabled={loading} // Disable button when loading
+          className={`bg-white text-black hover:text-white font-bold ${
+            loading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-          {loading ? 'Updating...' : 'Update'} {/* Show loading text */}
-        </button>
-        <button onClick={onClose}>Cancel</button>
+          {loading ? "Updating..." : "Update"}
+        </Button>
+        <Button onClick={onClose}>cancel</Button>
       </div>
     </div>
   );
@@ -160,7 +171,6 @@ const Class = () => {
       </div>
     );
   };
-  
 
   return (
     <div className="">
@@ -207,7 +217,12 @@ const Class = () => {
           isOpen={updateModalOpen}
           onClose={() => setUpdateModalOpen(false)}
         >
-          <ClassNameUpdateForm className={updateClass?.name ? updateClass.name : ""} classId={updateClass?._id ? updateClass._id : ""}  onClose={() => setUpdateModalOpen(false)} fetchClass={()=>fetchAllClasses()} />
+          <ClassNameUpdateForm
+            className={updateClass?.name ? updateClass.name : ""}
+            classId={updateClass?._id ? updateClass._id : ""}
+            onClose={() => setUpdateModalOpen(false)}
+            fetchClass={() => fetchAllClasses()}
+          />
         </Modal>
       )}
     </div>

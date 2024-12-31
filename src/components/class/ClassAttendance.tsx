@@ -72,8 +72,8 @@ const ClassAttendance = () => {
       </Button> */}
 
       <GlobalClassSelector/>
-      <p className="text-center py-6 sm:text-lg">
-        {classobj.name ? classobj.name : "No class selected"}
+      <p className="text-center py-6 sm:text-2xl italic">Check Attendance For 
+         <span className="text-[#FFD52A]"> {classobj.name ? classobj.name : "No class selected"}</span>
       </p>
       <div className="mx-auto flex items-center justify-center py-2">
         <Popover>

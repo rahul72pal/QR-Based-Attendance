@@ -15,14 +15,16 @@ import QRCode from "qrcode";
 import { generatePDF } from "@/utils/downloadPdf";
 import toast from "react-hot-toast";
 import { format, isValid } from "date-fns";
+import Modal from "../modal/modal";
+import { useState } from "react";
 
 interface StudentType {
   id: string;
   name: string;
   roll_number: number;
   attendance_percentage: number;
-  father_name: string,
-  dob: Date
+  father_name: string;
+  dob: string;
 }
 
 let html_string = `
@@ -190,27 +192,37 @@ let html_string = `
 </html>
 `;
 
-export function useColumns() {
+export function useColumns(
+  setSelectedStudent: (student: StudentType) => void,
+  setIsModalOpen: (isOpen: boolean) => void
+) {
   const navigate = useNavigate();
-  const teacher = useSelector((state: RootState)=> state.teacher)
+  const teacher = useSelector((state: RootState) => state.teacher);
   const classObj = useSelector((state: RootState) => state.class);
+  const [openModal, setOpneMdal] = useState<boolean>(false);
 
   const generateQRCode = async (studentUrl: string) => {
     try {
       // const jsonString = JSON.stringify(data); // Convert data to JSON string
-      const url = await QRCode.toDataURL(studentUrl, { errorCorrectionLevel: 'H', width: 256 }); // Generate QR code as data URL
+      const url = await QRCode.toDataURL(studentUrl, {
+        errorCorrectionLevel: "H",
+        width: 256,
+      }); // Generate QR code as data URL
       return url; // Set the QR code data URL to state
     } catch (error) {
       console.error("Error generating QR code:", error);
     }
   };
 
-  const downloadIDCard = async(student: any, studentAttendanceLink: string) => {
+  const downloadIDCard = async (
+    student: any,
+    studentAttendanceLink: string
+  ) => {
     const toasId = toast.loading("Downloading ID card..");
     console.log("studentAttendanceLink =", studentAttendanceLink);
     const imageUrl = await generateQRCode(studentAttendanceLink);
 
-    const img = `<img src=${imageUrl} alt="QR Code">`
+    const img = `<img src=${imageUrl} alt="QR Code">`;
     const final_html = generateHTMLPDF(html_string, {
       name: student?.name,
       class: classObj.name,
@@ -219,13 +231,18 @@ export function useColumns() {
       institute_name: teacher.institute_name.toUpperCase(),
       institute_address: teacher.institute_address,
       father_name: student.father_name,
-      dob: student.dob && isValid(new Date(student.dob)) ? format(new Date(student.dob), "dd-MM-yyyy") : "N/A"
+      dob:
+        student.dob && isValid(new Date(student.dob))
+          ? format(new Date(student.dob), "dd-MM-yyyy")
+          : "N/A",
     });
     // console.log("Final Html =", final_html);
 
     generatePDF(final_html, student?.name);
     toast.dismiss(toasId);
   };
+
+  console.log("111111111111=", openModal);
 
   const columns: ColumnDef<StudentType>[] = [
     {
@@ -257,36 +274,33 @@ export function useColumns() {
       accessorKey: "name",
       cell: ({ row }) => {
         const name = row.original.name;
-        return (
-          <div className="text-center">
-              {name}
-          </div>
-        );
+        return <div className="text-center">{name}</div>;
       },
     },
     {
       header: ({ column }) => (
         <div className="text-center">
           <Button
-          className="sm:text-xs mx-auto text-center"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          DOB
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+            className="sm:text-xs mx-auto text-center"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            DOB
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
         </div>
       ),
       accessorKey: "dob",
       cell: ({ row }) => {
         const dob = row.original.dob; // Get the date of birth
-      
+
         // Check if dob is a valid date
-        const formattedDob = dob && isValid(new Date(dob)) ? format(new Date(dob), "dd-MM-yyyy") : "N/A"; // Fallback to "N/A" if invalid
-      
-        return (
-          <div className="text-center">{formattedDob}</div>
-        );
-      }
+        const formattedDob =
+          dob && isValid(new Date(dob))
+            ? format(new Date(dob), "dd-MM-yyyy")
+            : "N/A"; // Fallback to "N/A" if invalid
+
+        return <div className="text-center">{formattedDob}</div>;
+      },
     },
     {
       header: ({ column }) => (
@@ -301,11 +315,7 @@ export function useColumns() {
       accessorKey: "father_name",
       cell: ({ row }) => {
         const father_name = row.original.father_name;
-        return (
-          <div className="text-center">
-              {father_name}
-          </div>
-        );
+        return <div className="text-center">{father_name}</div>;
       },
     },
     {
@@ -327,7 +337,11 @@ export function useColumns() {
         return (
           <div className="text-center">
             <Button
-              onClick={() => navigate(`/${person.id}/${person.name}/${person.roll_number}/${classObj._id}`)}
+              onClick={() =>
+                navigate(
+                  `/${person.id}/${person.name}/${person.roll_number}/${classObj._id}`
+                )
+              }
               className="bg-white text-black hover:text-white sm:text-xs px-2 h-[35px] mx-auto "
             >
               {attendance}%
@@ -339,7 +353,7 @@ export function useColumns() {
     {
       header: () => {
         return (
-          <div className=" w-[100px] text-center">
+          <div className=" w-[100px] text-center mx-auto">
             <span>Action</span>
           </div>
         );
@@ -352,24 +366,44 @@ export function useColumns() {
           roll_number: person.roll_number,
           class_id: classObj._id,
           father_name: person.father_name,
-          dob: person.dob
+          dob: person.dob,
         };
 
         const baseUrl = window.location.origin;
-        const studentAttendanceLink = `${baseUrl}/${person.id}/${encodeURIComponent(person.name)}/${person.roll_number}/${classObj._id}`;
+        const studentAttendanceLink = `${baseUrl}/${
+          person.id
+        }/${encodeURIComponent(person.name)}/${person.roll_number}/${
+          classObj._id
+        }`;
         // console.log("Person Actions =", studentObj);
         return (
-          <div className="text-center w-[100px]">
+          <div className="text-center w-[100px] mx-auto sm:w-[80px] esm:w-[60px]">
             <DropdownMenu>
               <DropdownMenuTrigger className="mx-auto" asChild>
                 <Button variant="ghost" className="w-8 h-8 p-0 border">
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-[#000814] shadow-white shadow-md p-3 border rounded-md">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem onClick={() => downloadIDCard(studentObj, studentAttendanceLink)}>
+              <DropdownMenuContent className="bg-[#000814] shadow-white shadow-md p-2 esm:p-1 border rounded-md">
+                <DropdownMenuLabel className="text-sm esm:text-xs">
+                  Actions
+                </DropdownMenuLabel>
+                <DropdownMenuItem
+                  onClick={() =>
+                    downloadIDCard(studentObj, studentAttendanceLink)
+                  }
+                  className="text-sm esm:text-xs"
+                >
                   Download ID card
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setSelectedStudent(person); // Set the selected student
+                    setIsModalOpen(true); // Open the modal
+                  }}
+                  className="text-sm esm:text-xs"
+                >
+                  Edit
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -378,6 +412,10 @@ export function useColumns() {
       },
     },
   ];
+
+  <Modal isOpen={openModal} onClose={() => setOpneMdal(false)}>
+    <div>Edit STudent form</div>
+  </Modal>;
 
   return columns;
 }

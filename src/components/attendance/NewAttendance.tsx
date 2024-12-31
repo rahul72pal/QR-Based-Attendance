@@ -63,8 +63,10 @@ const NewAttendance: React.FC = () => {
 
       <GlobalClassSelector/>
 
-      <p className="text-center py-6 text-xl sm:text-lg">{classObj.name}</p>
-      <div className="text-white bg-[#000814] min-h-[70vh] text-center flex flex-col justify-evenly">
+      <p className="text-center py-6 sm:text-2xl italic">Take Attendance For 
+         <span className="text-[#FFD52A]"> {classObj.name ? classObj.name : "No class selected"}</span>
+      </p>
+      <div className="text-white bg-[#000814] min-h-[70vh] text-center flex flex-col justify-between">
         {/* Choose class */}
         {/* <div className="bg-[#000814] py-3">
           {showStudentList && students && students.length > 0 && (
