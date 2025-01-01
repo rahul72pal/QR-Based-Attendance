@@ -1,0 +1,17 @@
+.otpInput {
+    width: 40px; /* Set a fixed width for the input */
+    height: 40px; /* Set a fixed height for the input */
+    border: 2px solid white;
+    background-color: #000814;
+    color: white;
+    text-align: center; /* Center the text */
+    margin: 0 5px; /* Add some margin between inputs */
+    font-size: 20px; /* Increase font size for better visibility */
+    border-radius: 5px; /* Add rounded corners */
+    outline: none; /* Remove default outline */
+    transition: border-color 0.3s; /* Smooth transition for border color */
+  }
+  
+  .otpInput:focus {
+    border-color: #FFD52A; /* Change border color on focus */
+  }
