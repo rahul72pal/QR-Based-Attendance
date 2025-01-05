@@ -20,7 +20,7 @@ const ServiceSection = () => {
           <div className="w-[100%]">
             <h2 className="text-xl text-center">Easy to Use</h2>
             <p className="text-sm leading-6 py-6 italic">
-              GWL QR Attendance makes tracking attendance effortless. Just scan
+              99 Attendance makes tracking attendance effortless. Just scan
               the QR code, and the system does the rest! Perfect for schools,
               offices, and events looking for quick, accurate, and hassle-free
               solutions.
@@ -39,7 +39,7 @@ const ServiceSection = () => {
           <div className="w-[100%]">
             <h2 className="text-xl">Smart and Efficient</h2>
             <p className="text-sm leading-6 py-6 italic">
-            Simplify attendance with GWL QR Attendance. Our system uses QR codes for instant tracking, ensuring accuracy and saving time. Ideal for organizations that value precision and productivity.
+            Simplify attendance with 99 Attendance. Our system uses QR codes for instant tracking, ensuring accuracy and saving time. Ideal for organizations that value precision and productivity.
             </p>
           </div>
         </div>
@@ -55,7 +55,7 @@ const ServiceSection = () => {
           <div className="w-[100%]">
             <h2 className="text-xl">Quick and Reliable</h2>
             <p className="text-sm leading-6 py-6 italic">
-            Say goodbye to manual attendance hassles! GWL QR Attendance offers a fast, secure, and reliable way to manage attendance through QR code technology, perfect for modern institutions and workplaces.
+            Say goodbye to manual attendance hassles! 99 Attendance offers a fast, secure, and reliable way to manage attendance through QR code technology, perfect for modern institutions and workplaces.
             </p>
           </div>
         </div>
@@ -71,7 +71,7 @@ const ServiceSection = () => {
           <div className="w-[100%]">
             <h2 className="text-xl">Seamless Tracking</h2>
             <p className="text-sm leading-6 py-6 italic">
-            GWL QR Attendance provides a seamless solution for attendance management. With real-time QR code scanning, you can ensure error-free records and enhance overall efficiency in your organization.
+            99 Attendance provides a seamless solution for attendance management. With real-time QR code scanning, you can ensure error-free records and enhance overall efficiency in your organization.
             </p>
           </div>
         </div>
