@@ -72,10 +72,10 @@ const ClassAttendance = () => {
       </Button> */}
 
       <GlobalClassSelector/>
-      <p className="text-center py-6 sm:text-2xl italic">Check Attendance For 
+      {classobj._id && <p className="text-center py-6 sm:text-2xl italic">Check Attendance For 
          <span className="text-[#FFD52A]"> {classobj.name ? classobj.name : "No class selected"}</span>
-      </p>
-      <div className="mx-auto flex items-center justify-center py-2">
+      </p>}
+      {classobj._id && <div className="mx-auto flex items-center justify-center py-2">
         <Popover>
           <PopoverTrigger className="text-white bg-[#161D29] sm:text-xs sm:w-fit" asChild>
             <Button
@@ -98,7 +98,7 @@ const ClassAttendance = () => {
             />
           </PopoverContent>
         </Popover>
-      </div>
+      </div>}
 
       <div className="bg-[#000814] py-3 sm:text-xs">
         {students && students.length > 0 ? (
