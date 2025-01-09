@@ -166,7 +166,7 @@ let html_string = `
             <p><strong>DOB:</strong> {{dob}}</p>
         </div>
         <div class="footer">
-            For this QR system, contact at mail rahulgwl72@gmail.com.
+            For this QR system, go to 99attendance.netlify.app
         </div>
     </div>
     <div class="card">
@@ -185,7 +185,7 @@ let html_string = `
             <div></div>
         </div>
         <div class="footer">
-            For this QR system, contact at mail rahulgwl72@gmail.com
+            For this QR system, go to 99attendance.netlify.app
         </div>
     </div>
 </body>
