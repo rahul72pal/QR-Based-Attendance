@@ -29,6 +29,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 
+
 // type Props = {};
 
 interface DataTableProps<TData, TValue> {
@@ -89,11 +90,9 @@ export function StudentDataTable<TData, TValue>({
           className="sm:max-w-[90vw] sm:w-[95vw] w-[20vw] bg-[#000814] my-7 outline-none border"
         />
 
-        <DropdownMenu >
+        <DropdownMenu>
           <DropdownMenuTrigger className="my-7 sm:text-xs">
-            <Button className="ml-auto sm:text-xs">
-              Columns
-            </Button>
+            <Button className="ml-auto sm:text-xs">Columns</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {table
@@ -105,8 +104,8 @@ export function StudentDataTable<TData, TValue>({
                     key={column.id}
                     className="capitalize"
                     checked={column.getIsVisible()}
-                    onCheckedChange={(value)=>{
-                      column.toggleVisibility(!!value)
+                    onCheckedChange={(value) => {
+                      column.toggleVisibility(!!value);
                     }}
                   >
                     {column.id}

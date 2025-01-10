@@ -1,3 +1,5 @@
+import QRCode from "qrcode";
+
 export const generateHTMLPDF = (
   htmlTemplate: string,
   replacementData: Record<string, any>
@@ -41,3 +43,16 @@ export const finalizeHTML = (htmlTemplate: string): string => {
     return htmlTemplate; // Return original template in case of error
   }
 };
+
+export const generateQRCode = async (studentUrl: string) => {
+    try {
+      // const jsonString = JSON.stringify(data); // Convert data to JSON string
+      const url = await QRCode.toDataURL(studentUrl, {
+        errorCorrectionLevel: "H",
+        width: 256,
+      }); // Generate QR code as data URL
+      return url; // Set the QR code data URL to state
+    } catch (error) {
+      console.error("Error generating QR code:", error);
+    }
+  };
