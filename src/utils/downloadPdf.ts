@@ -85,7 +85,7 @@ export async function generatePDF(
     });
     // const width = pdf.internal.pageSize.getWidth();
     // const height = (canvas.height * width) / canvas.width;
-    pdf.addImage(imgData, "PNG", 0, 0, 50, 190);
+    pdf.addImage(imgData, "PNG", 0, 0, 123, 215);
     pdf.save(`${student_name}.pdf`);
   } catch (error) {
     console.error("PDF generation error:", error);

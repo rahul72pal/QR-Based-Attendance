@@ -45,7 +45,7 @@ let html_string = `
             width: 300px;
             height: 500px;
             background-color: #000814;
-            margin: 50px auto;
+            margin: 50px 200px;
             border-radius: 10px;
             overflow: hidden;
             color: white;
@@ -71,7 +71,7 @@ let html_string = `
             position: relative;
         }
         .card-header h1 {
-            margin: 0;
+            margin-top: -10px;
             font-size: 25px;
             color: #000814;
             font-weight: bold;
@@ -79,7 +79,7 @@ let html_string = `
         .photo-section {
             background-color: white;
             height: 120px;
-            margin: 20px auto;
+            margin: 30px auto;
             width: 100px;
             border-radius: 5px;
             z-index: 2;
@@ -92,9 +92,10 @@ let html_string = `
             position: relative;
         }
         .info-section p {
-            margin: 10px 0;
-            font-size: 12px;
+            margin: 5px 0;
+            font-size: 14px;
             text-align: left;
+            font-weight: semibold;
         }
         .qr-section {
             background-color: white;
@@ -145,7 +146,7 @@ let html_string = `
             position: relative;
         }
         .name{
-        font-size: 30px;
+        font-size: 22px;
         font-weight: bold;
         z-index: 5;
         }
