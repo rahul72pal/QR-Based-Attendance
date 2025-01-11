@@ -27,6 +27,171 @@ interface StudentType {
   dob: string;
 }
 
+// let html_string = `
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Student ID Card</title>
+//     <style>
+//         body {
+//             font-family: Arial, sans-serif;
+//             margin: 0;
+//             padding: 0;
+//             background-color: #f5f5f5;
+//         }
+//         .card {
+//             width: 300px;
+//             height: 500px;
+//             background-color: #000814;
+//             margin: 50px 200px;
+//             border-radius: 10px;
+//             overflow: hidden;
+//             color: white;
+//             text-align: center;
+//             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+//             position: relative;
+//         }
+//         .diagonal-yellow {
+//             position: absolute;
+//             top: 20px;
+//             left: 20px;
+//             width: 100%;
+//             height: 100%;
+//             background-color: #ffd700;
+//             z-index: 1;
+//             transform: rotate(55deg);
+//             transform-origin: top right;
+   
+//         }
+//         .card-header {
+//             padding: 15px 0;
+//             z-index: 2;
+//             position: relative;
+//         }
+//         .card-header h1 {
+//             margin-top: -10px;
+//             font-size: 25px;
+//             color: #000814;
+//             font-weight: bold;
+//         }
+//         .photo-section {
+//             background-color: white;
+//             height: 120px;
+//             margin: 30px auto;
+//             width: 100px;
+//             border-radius: 5px;
+//             z-index: 2;
+//             position: relative;
+//         }
+//         .info-section {
+//             text-align: center;
+//             margin: 20px 80px;
+//             z-index: 2;
+//             position: relative;
+//         }
+//         .info-section p {
+//             margin: 5px 0;
+//             font-size: 14px;
+//             text-align: left;
+//             font-weight: semibold;
+//         }
+//         .qr-section {
+//             background-color: white;
+//             margin: 10px 20px;
+//             border-radius: 5px;
+//             z-index: 2;
+//             position: relative;
+//             display: flex; /* Use flexbox to center the image */
+//             justify-content: center; /* Center horizontally */
+//             align-items: center; /* Center vertically if needed */
+//             height: auto; /* Adjust height as needed */
+//         }
+        
+//         .qr-section img {
+//             width: 100%; /* Full width of the parent */
+//             max-width: 250px; /* Maximum width */
+//             height: auto; /* Maintain aspect ratio */
+//         }
+//         .address {
+//             font-size: 14px;
+//             margin: 15px 20px 5px;
+//             text-align: left;
+//             z-index: 2;
+//             position: relative;
+//         }
+//         .signature {
+//             text-align: right;
+//             margin-top: 5px;
+//             font-size: 14px;
+//             display: flex;
+//             gap: 5px;
+//             justify-content: center;
+//             align-items: center;
+//             z-index: 2;
+//             position: relative;
+//         }
+//         .signature div {
+//             width: 150px;
+//             height: 30px;
+//             background-color: white;
+//         }
+//         .footer {
+//             font-size: 12px;
+//             margin-top: 20px;
+//             border-top: 1px solid white;
+//             padding-top: 10px;
+//             z-index: 2;
+//             position: relative;
+//         }
+//         .name{
+//         font-size: 22px;
+//         font-weight: bold;
+//         z-index: 5;
+//         }
+//     </style>
+// </head>
+// <body>
+//     <div class="card">
+//         <div class="diagonal-yellow"></div>
+//         <div class="card-header">
+//             <h1>{{institute_name}}</h1>
+//         </div>
+//         <div class="photo-section"></div>
+//         <h2 class="name">{{name}}</h2>
+//         <div class="info-section">
+//             <p><strong>ROLL NO:</strong> {{roll_number}}</p>
+//             <p><strong>Father:</strong> {{father_name}}</p>
+//             <p><strong>CLASS:</strong> {{class}}</p>
+//             <p><strong>DOB:</strong> {{dob}}</p>
+//         </div>
+//         <div class="footer">
+//             For this QR system, go to 99attendance.netlify.app
+//         </div>
+//     </div>
+//     <div class="card">
+//         <div class="diagonal-yellow"></div>
+//         <div class="card-header">
+//             <h1>{{institute_name}}</h1>
+//         </div>
+//         <div class="qr-section">
+//             {{img}}
+//         </div>
+//         <div class="address">
+//             <strong>ADD :</strong> {{institute_address}}.
+//         </div>
+//         <div class="signature">
+//             <strong>Director Sign.</strong>
+//             <div></div>
+//         </div>
+//         <div class="footer">
+//             For this QR system, go to 99attendance.netlify.app
+//         </div>
+//     </div>
+// </body>
+// </html>
+// `;
 let html_string = `
 <!DOCTYPE html>
 <html lang="en">
@@ -36,23 +201,29 @@ let html_string = `
     <title>Student ID Card</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f5f5f5;
+        }
+        .card-container {
+            display: flex; 
+            margin: 0; 
+            gap: 5px;
+            justify-content: center;
+            margin: 15px;
         }
         .card {
             width: 300px;
             height: 500px;
             background-color: #000814;
-            margin: 50px 200px;
             border-radius: 10px;
             overflow: hidden;
             color: white;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             position: relative;
-        }
+          }
         .diagonal-yellow {
             position: absolute;
             top: 20px;
@@ -78,41 +249,52 @@ let html_string = `
         }
         .photo-section {
             background-color: white;
-            height: 120px;
+            height: 170px;
             margin: 30px auto;
-            width: 100px;
+            width: 150px;
             border-radius: 5px;
             z-index: 2;
             position: relative;
         }
         .info-section {
-            text-align: center;
-            margin: 20px 80px;
-            z-index: 2;
-            position: relative;
-        }
-        .info-section p {
-            margin: 5px 0;
-            font-size: 14px;
-            text-align: left;
-            font-weight: semibold;
-        }
+    margin: 10px auto;
+    z-index: 2;
+    position: relative;
+    text-align: left; /* Align text to the left */
+    
+}
+
+.info-section .info-row {
+    display: flex; /* Use flexbox for each row */
+    justify-content: center;
+    align-items: center; /* Align items to the start */
+    width: 100%; /* Full width */
+}
+
+.info-section p {
+    margin: 1px 0;
+    font-size: 14px;
+    font-weight: 600;
+    width: 100%;
+}
+.info-section p strong {
+    margin-left: 80px; /* Add some space between label and value */
+}
         .qr-section {
             background-color: white;
             margin: 10px 20px;
             border-radius: 5px;
             z-index: 2;
             position: relative;
-            display: flex; /* Use flexbox to center the image */
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically if needed */
-            height: auto; /* Adjust height as needed */
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: auto; 
         }
-        
         .qr-section img {
-            width: 100%; /* Full width of the parent */
-            max-width: 250px; /* Maximum width */
-            height: auto; /* Maintain aspect ratio */
+            width: 100%; 
+            max-width: 250px; 
+            height: auto; 
         }
         .address {
             font-size: 14px;
@@ -138,8 +320,8 @@ let html_string = `
             background-color: white;
         }
         .footer {
-            font-size: 12px;
-            margin-top: 20px;
+            font-size: 13px;
+            margin-top: 10px;
             border-top: 1px solid white;
             padding-top: 10px;
             z-index: 2;
@@ -153,7 +335,8 @@ let html_string = `
     </style>
 </head>
 <body>
-    <div class="card">
+  <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <div class="card" style="margin-left: 50px; margin-top: 50px;">
         <div class="diagonal-yellow"></div>
         <div class="card-header">
             <h1>{{institute_name}}</h1>
@@ -161,16 +344,24 @@ let html_string = `
         <div class="photo-section"></div>
         <h2 class="name">{{name}}</h2>
         <div class="info-section">
-            <p><strong>ROLL NO:</strong> {{roll_number}}</p>
-            <p><strong>Father:</strong> {{father_name}}</p>
-            <p><strong>CLASS:</strong> {{class}}</p>
-            <p><strong>DOB:</strong> {{dob}}</p>
-        </div>
+    <div class="info-row">
+        <p><strong>ROLL NO:</strong> {{roll_number}}</p>
+    </div>
+    <div class="info-row">
+        <p><strong>Father:</strong> {{father_name}}</p>
+    </div>
+    <div class="info-row">
+        <p><strong>CLASS:</strong> {{class}}</p>
+    </div>
+    <div class="info-row">
+        <p><strong>DOB:</strong> {{dob}}</p>
+    </div>
+</div>
         <div class="footer">
             For this QR system, go to 99attendance.netlify.app
         </div>
     </div>
-    <div class="card">
+    <div class="card" style="margin-top: 50px;">
         <div class="diagonal-yellow"></div>
         <div class="card-header">
             <h1>{{institute_name}}</h1>
@@ -189,6 +380,7 @@ let html_string = `
             For this QR system, go to 99attendance.netlify.app
         </div>
     </div>
+  </div>
 </body>
 </html>
 `;
