@@ -1,12 +1,5 @@
-// import { Button } from "@/components/ui/button";
-// import {
-//   TableBody,
-//   TableCell,
-//   TableHead,
-//   TableHeader,
-//   TableRow,
-//   Table,
-// } from "@/components/ui/table";
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 import { getAllStudents } from "@/services/student";
 import { RootState } from "@/slices/store";
 import { useEffect, useState, useCallback } from "react";
@@ -23,9 +16,152 @@ import EditStudent from "@/components/Student/EditStudent";
 import { generateHTMLPDF, generateQRCode } from "@/utils/generateHTML";
 // import { generatePDFAllCards } from "@/utils/downloadPdf";
 import { Button } from "@/components/ui/button";
+import { generateZIPPDF } from "@/utils/downloadPdf";
 
-let html_string = `<div class="card-container">
-    <div class="card">
+let html_string = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student ID Card</title>
+    <style>
+        body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f5f5f5;
+        }
+        .card-container {
+            display: flex; 
+            margin: 0; 
+            gap: 5px;
+            justify-content: center;
+            margin: 15px;
+        }
+        .card {
+            width: 300px;
+            height: 500px;
+            background-color: #000814;
+            border-radius: 10px;
+            overflow: hidden;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+          }
+        .diagonal-yellow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100%;
+            height: 100%;
+            background-color: #ffd700;
+            z-index: 1;
+            transform: rotate(55deg);
+            transform-origin: top right;
+   
+        }
+        .card-header {
+            padding: 15px 0;
+            z-index: 2;
+            position: relative;
+        }
+        .card-header h1 {
+            margin-top: -10px;
+            font-size: 25px;
+            color: #000814;
+            font-weight: bold;
+        }
+        .photo-section {
+            background-color: white;
+            height: 170px;
+            margin: 30px auto;
+            width: 150px;
+            border-radius: 5px;
+            z-index: 2;
+            position: relative;
+        }
+        .info-section {
+    margin: 10px auto;
+    z-index: 2;
+    position: relative;
+    text-align: left; /* Align text to the left */
+    
+}
+
+.info-section .info-row {
+    display: flex; /* Use flexbox for each row */
+    justify-content: center;
+    align-items: center; /* Align items to the start */
+    width: 100%; /* Full width */
+}
+
+.info-section p {
+    margin: 1px 0;
+    font-size: 14px;
+    font-weight: 600;
+    width: 100%;
+}
+.info-section p strong {
+    margin-left: 80px; /* Add some space between label and value */
+}
+        .qr-section {
+            background-color: white;
+            margin: 10px 20px;
+            border-radius: 5px;
+            z-index: 2;
+            position: relative;
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: auto; 
+        }
+        .qr-section img {
+            width: 100%; 
+            max-width: 250px; 
+            height: auto; 
+        }
+        .address {
+            font-size: 14px;
+            margin: 15px 20px 5px;
+            text-align: left;
+            z-index: 2;
+            position: relative;
+        }
+        .signature {
+            text-align: right;
+            margin-top: 5px;
+            font-size: 14px;
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            position: relative;
+        }
+        .signature div {
+            width: 150px;
+            height: 30px;
+            background-color: white;
+        }
+        .footer {
+            font-size: 13px;
+            margin-top: 10px;
+            border-top: 1px solid white;
+            padding-top: 10px;
+            z-index: 2;
+            position: relative;
+        }
+        .name{
+        font-size: 22px;
+        font-weight: bold;
+        z-index: 5;
+        }
+    </style>
+</head>
+<body>
+  <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <div class="card" style="margin-left: 50px; margin-top: 50px;">
         <div class="diagonal-yellow"></div>
         <div class="card-header">
             <h1>{{institute_name}}</h1>
@@ -33,16 +169,24 @@ let html_string = `<div class="card-container">
         <div class="photo-section"></div>
         <h2 class="name">{{name}}</h2>
         <div class="info-section">
-            <p><strong>ROLL NO:</strong> {{roll_number}}</p>
-            <p><strong>Father:</strong> {{father_name}}</p>
-            <p><strong>CLASS:</strong> {{class}}</p>
-            <p><strong>DOB:</strong> {{dob}}</p>
-        </div>
+    <div class="info-row">
+        <p><strong>ROLL NO:</strong> {{roll_number}}</p>
+    </div>
+    <div class="info-row">
+        <p><strong>Father:</strong> {{father_name}}</p>
+    </div>
+    <div class="info-row">
+        <p><strong>CLASS:</strong> {{class}}</p>
+    </div>
+    <div class="info-row">
+        <p><strong>DOB:</strong> {{dob}}</p>
+    </div>
+</div>
         <div class="footer">
             For this QR system, go to 99attendance.netlify.app
         </div>
     </div>
-    <div class="card">
+    <div class="card" style="margin-top: 50px;">
         <div class="diagonal-yellow"></div>
         <div class="card-header">
             <h1>{{institute_name}}</h1>
@@ -61,7 +205,9 @@ let html_string = `<div class="card-container">
             For this QR system, go to 99attendance.netlify.app
         </div>
     </div>
-  </div>`
+  </div>
+</body>
+</html>`
 
 
 interface StudentType {
@@ -82,7 +228,9 @@ const ViewStudentList = () => {
 
   const columns = useColumns(setSelectedStudent, setIsModalOpen);
   const [students, setStudents] = useState<any>([]);
+  const [progress, setProgress] = useState(0);
   const classObj = useSelector((state: RootState) => state.class);
+  const [downaloding, setDownloading] = useState(false);
     // const teacher = useSelector((state: RootState) => state.teacher);
     const baseUrl = window.location.origin;
   const teacher = useSelector((state: RootState) => state.teacher);
@@ -115,203 +263,65 @@ const ViewStudentList = () => {
   console.log("11111122222222=", selectedStudent);
 
   const downloadAllIDCards = async (students: any) => {
-    const toastId = toast.loading("Downloading all ID cards...");
+    const toastId = toast.loading(`Downloading...`);
+    setDownloading(true);
   
     try {
-      const allCardsHTML = await Promise.all(
-        students.map(async (student: any) => {
-          const studentAttendanceLink = `${baseUrl}/${
-            student.id
-          }/${encodeURIComponent(student.name)}/${student.roll_number}/${
-            classObj._id
-          }`;
-          const imageUrl = await generateQRCode(studentAttendanceLink);
+      const zip = new JSZip();
+      const pdfPromises = students.map(async (student: any) => {
+        const studentAttendanceLink = `${baseUrl}/${
+          student.id
+        }/${encodeURIComponent(student.name)}/${student.roll_number}/${
+          classObj._id
+        }`;
+        const imageUrl = await generateQRCode(studentAttendanceLink);
   
-          const img = `<img src=${imageUrl} alt="QR Code">`;
-          return generateHTMLPDF(html_string, {
-            name: student?.name,
-            class: classObj.name,
-            roll_number: student.roll_number,
-            img: img,
-            institute_name: teacher.institute_name.toUpperCase(),
-            institute_address: teacher.institute_address,
-            father_name: student.father_name,
-            dob:
-              student.dob && isValid(new Date(student.dob))
-                ? format(new Date(student.dob), "dd-MM-yyyy")
-                : "N/A",
-          });
-        })
-      );
+        const img = `<img src=${imageUrl} alt="QR Code">`;
+        const htmlContent = generateHTMLPDF(html_string, {
+          name: student?.name,
+          class: classObj.name,
+          roll_number: student.roll_number,
+          img: img,
+          institute_name: teacher.institute_name.toUpperCase(),
+          institute_address: teacher.institute_address,
+          father_name: student.father_name,
+          dob:
+            student.dob && isValid(new Date(student.dob))
+              ? format(new Date(student.dob), "dd-MM-yyyy")
+              : "N/A",
+        });
   
-      const finalHTML = `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Student ID Cards</title>
-            <style>
-                  body {
-                      font-family: Arial, sans-serif;
-                      margin: 0;
-                      padding: 0;
-                      background-color: #f5f5f5;
-                  }
-                  .card-container {
-                      display: flex; 
-                      margin: 0; 
-                      gap: 5px;
-                      justify-content: center;
-                  }
-                  .card {
-                      width: 300px;
-                      height: 500px;
-                      background-color: #000814;
-                      margin: 0; /* Remove margin between cards */
-                      border-radius: 10px;
-                      overflow: hidden;
-                      color: white;
-                      text-align: center;
-                      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                      position: relative;
-                  }
-                  .diagonal-yellow {
-                      position: absolute;
-                      top: 20px;
-                      left: 20px;
-                      width: 100%;
-                      height: 100%;
-                      background-color: #ffd700;
-                      z-index: 1;
-                      transform: rotate(55deg);
-                      transform-origin: top right;
-             
-                  }
-                  .card-header {
-                      padding: 15px 0;
-                      z-index: 2;
-                      position: relative;
-                  }
-                  .card-header h1 {
-                      margin: 0;
-                      font-size: 25px;
-                      color: #000814;
-                      font-weight: bold;
-                  }
-                  .photo-section {
-                      background-color: white;
-                      height: 120px;
-                      margin: 20px auto;
-                      width: 100px;
-                      border-radius: 5px;
-                      z-index: 2;
-                      position: relative;
-                  }
-                  .info-section {
-                      text-align: center;
-                      margin: 20px 80px;
-                      z-index: 2;
-                      position: relative;
-                  }
-                  .info-section p {
-                      margin: 10px 0;
-                      font-size: 12px;
-                      text-align: left;
-                  }
-                  .qr-section {
-                      background-color: white;
-                      margin: 10px 20px;
-                      border-radius: 5px;
-                      z-index: 2;
-                      position: relative;
-                      display: flex; /* Use flexbox to center the image */
-                      justify-content: center; /* Center horizontally */
-                      align-items: center; /* Center vertically if needed */
-                      height: auto; /* Adjust height as needed */
-                  }
-                  
-                  .qr-section img {
-                      width: 100%; /* Full width of the parent */
-                      max-width: 250px; /* Maximum width */
-                      height: auto; /* Maintain aspect ratio */
-                  }
-                  .address {
-                      font-size: 14px;
-                      margin: 15px 20px 5px;
-                      text-align: left;
-                      z-index: 2;
-                      position: relative;
-                  }
-                  .signature {
-                      text-align: right;
-                      margin-top: 5px;
-                      font-size: 14px;
-                      display: flex;
-                      gap: 5px;
-                      justify-content: center;
-                      align-items: center;
-                      z-index: 2;
-                      position: relative;
-                  }
-                  .signature div {
-                      width: 150px;
-                      height: 30px;
-                      background-color: white;
-                  }
-                  .footer {
-                      font-size: 12px;
-                      margin-top: 20px;
-                      border-top: 1px solid white;
-                      padding-top: 10px;
-                      z-index: 2;
-                      position: relative;
-                  }
-                  .name{
-                  font-size: 30px;
-                  font-weight: bold;
-                  z-index: 5;
-                  }
-              </style>
-        </head>
-        <body>
-          <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-            ${allCardsHTML.join("")}
-          </div>
-        </body>
-        </html>
-      `;
+        const pdf = await generateZIPPDF(htmlContent);
+        setProgress((prev)=> prev+1);
+        return { name: student.name, pdf };
+      });
   
-      // Convert HTML string to Blob
-      const blob = new Blob([finalHTML], { type: "text/html" });
-      const url = URL.createObjectURL(blob);
+      const pdfFiles = await Promise.all(pdfPromises);
   
-      // Create a temporary anchor element to trigger download
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `${classObj.name} ID Cards.html`;
-      document.body.appendChild(link);
-      link.click();
+      pdfFiles.forEach(({ name, pdf }) => {
+        zip.file(`${name}.pdf`, pdf.output('blob'), { binary: true });
+      });
   
-      // Clean up the temporary URL and element
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      const content = await zip.generateAsync({ type: 'blob' });
+      saveAs(content, 'id_cards.zip');
   
-      toast.success("ID cards downloaded successfully!");
-      toast.dismiss(toastId);
+      toast.success("All ID cards downloaded successfully");
     } catch (error) {
       console.error("Error generating ID cards:", error);
       toast.error("Failed to download ID cards");
+    } finally {
       toast.dismiss(toastId);
     }
+    setDownloading(false);
   };
   
   const DownlaodAllCardModal = ()=>{
     return(
       <div className="bg-gray-800 p-6 w-[80%] mx-auto flex flex-col gap-10 rounded-md text-center ">
-      <p className="text-xl">Download HTML File Converte PDF Formate</p>
+      {downaloding && <p>Progress {(progress/students?.length)*100}%</p>}
+      <p className="text-xl">Download Card In ZIP File</p>
       <div className="flex flex-col gap-5">
-        <Button onClick={()=>downloadAllIDCards(students)}>Download</Button>
+        <Button disabled={downaloding} onClick={()=>downloadAllIDCards(students)}>Download</Button>
         <Button onClick={()=>setIsDownloadModal(false)}>cancel</Button>
       </div>
     </div>
@@ -321,7 +331,7 @@ const ViewStudentList = () => {
   return (
     <div className="w-[100vw]">
       <Button onClick={()=>setIsDownloadModal(true)} className="p-4 mt-6 ml-6 sm:text-xs">
-        Download All ID Cards
+        Download All ID Cards ZIP File
       </Button>
       <GlobalClassSelector />
       <div className="mt-8">

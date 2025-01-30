@@ -85,10 +85,43 @@ export async function generatePDF(
     });
     // const width = pdf.internal.pageSize.getWidth();
     // const height = (canvas.height * width) / canvas.width;
-    pdf.addImage(imgData, "PNG", 0, 0, 169, 158);
+    pdf.addImage(imgData, "PNG", 0, 0, 169, 153);
     pdf.save(`${student_name}.pdf`);
   } catch (error) {
     console.error("PDF generation error:", error);
+  }
+}
+
+export async function generateZIPPDF(
+  content: string,
+  // student_name: string
+): Promise<jsPDF> {
+  try {
+    // Create a temporary container and append to the body
+    const tempElement = document.createElement("div");
+    tempElement.innerHTML = content;
+    tempElement.style.position = "absolute";
+    tempElement.style.left = "-6999px"; // Hide the element offscreen
+    document.body.appendChild(tempElement);
+
+    // Generate the canvas
+    const canvas = await html2canvas(tempElement);
+    const imgData = canvas.toDataURL("image/png");
+
+    // Cleanup the temporary element
+    document.body.removeChild(tempElement);
+
+    // Generate the PDF
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
+    });
+    pdf.addImage(imgData, "PNG", 0, 0, 169, 153);
+    return pdf;
+  } catch (error) {
+    console.error("PDF generation error:", error);
+    throw error;
   }
 }
 
