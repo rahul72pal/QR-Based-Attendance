@@ -3,7 +3,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
-import { setInstitueAdd, setInstitueName, setName, setToken } from "@/slices/teacherReducer";
+import {
+  setInstitueAdd,
+  setInstitueName,
+  setName,
+  setToken,
+} from "@/slices/teacherReducer";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -11,6 +16,13 @@ const Login: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const router = useNavigate();
   const dispatch = useDispatch();
+
+  function setTokenWithExpiration(token: any, teacher: any) {
+    const expirationTime = Date.now() + 180 * 24 * 60 * 60 * 1000; // 6 months in milliseconds
+    localStorage.setItem("token", token);
+    localStorage.setItem("tokenExpiration", expirationTime as any);
+    localStorage.setItem("teacher", JSON.stringify(teacher));
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,20 +34,20 @@ const Login: React.FC = () => {
       };
       const response = await login(data);
       if (response) {
-        console.log("Login ApI response =>",response);
+        console.log("Login ApI response =>", response);
         // Store the token in cookies
-        Cookies.set("token", response.token, { expires: 7 });
+        Cookies.set("token", response.token, { expires: 180 });
         Cookies.set("teacher", JSON.stringify(response.teacher), {
           expires: 7,
         });
 
         // Store the token in local storage
-        localStorage.setItem("token", response.token);
-        dispatch(setToken(response.token))
-        dispatch(setName(response.teacher.name))
-        dispatch(setInstitueName(response.teacher.institution_name))
-        dispatch(setInstitueAdd(response.teacher.institude_address))
-        localStorage.setItem("teacher", JSON.stringify(response.teacher));
+        // Usage
+        setTokenWithExpiration(response.token, response.teacher);
+        dispatch(setToken(response.token));
+        dispatch(setName(response.teacher.name));
+        dispatch(setInstitueName(response.teacher.institution_name));
+        dispatch(setInstitueAdd(response.teacher.institude_address));
 
         // Redirect to the class page
         router("/class");

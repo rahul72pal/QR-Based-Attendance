@@ -335,8 +335,7 @@ const ViewStudentList = () => {
       </Button>
       <GlobalClassSelector />
       <div className="mt-8">
-        <p className="text-center sm:text-lg">Student Attendance List</p>
-        <p className="text-center text-xs sm:text-xs">Class 10th Science</p>
+        <p className="text-center sm:text-lg">{classObj.name} Student Attendance List</p>
         {classobj._id && students && (
           <div className="p-2 w-[100vw] overflow-x-auto">
             <StudentDataTable data={students} columns={columns} />
