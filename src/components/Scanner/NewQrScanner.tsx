@@ -192,31 +192,38 @@ const NewQrScanner = (props: Props) => {
 
   return (
     <>
-      <div className="relative sm:w-[100vw] flex flex-col items-center lg:w-[100%] mx-auto justify-center h-screen bg-gray-600 bg-opacity-50">
+      <div className="relative sm:w-[100vw] flex flex-col items-center lg:w-[100%] mx-auto justify-start h-screen bg-gray-600 bg-opacity-50">
+        {/* Video layer (absolute only when scanning) */}
         {startScan && (
           <video
             ref={videoEl}
-            className="sm:w-[100vw] w-[50vw] h-[70vh] sm:h-[100vw] absolute top-10 sm:max-w-[100vw] sm:max-h-[70vh] object-cover rounded-lg shadow-lg border-dashed border-red-600"
+            className="sm:w-[100vw] w-[50vw] h-[70vh] sm:h-[100vw] object-cover rounded-lg shadow-lg border-dashed border-red-600"
           />
         )}
 
+        {/* QR Box: Always in flow */}
         <div
           ref={qrBoxEl}
-          className="w-64 h-64 absolute text-center flex flex-col gap-4 top-10 border-4  border-dashed border-yellow-500"
+          className={`w-64 h-64 flex flex-col gap-4 border-4 border-dashed border-yellow-500 mt-10 ${
+            startScan ? "absolute top-10" : ""
+          }`}
         >
-          {!videoEl.current && !startScan && (
+          {!startScan && !videoEl.current && (
             <img
               src={sampleQrImage}
               alt="QR Frame"
-              className="w-full h-full object-cover opacity-70 "
+              className="w-full h-full object-cover opacity-70"
               width={356}
               height={356}
             />
           )}
         </div>
 
-        <div className="mt-[200px] text-center">
-          <h3>Number of Scanned Results: {scannedResult.length}</h3>
+        {/* Scanned Results */}
+        <div className="mt-10 text-center">
+          <h3 className="text-xl">
+            Number of Scanned Results: {scannedResult.length}
+          </h3>
 
           <button
             className="px-8 mt-4 py-2 text-[23px] bg-gray-700 text-white rounded-md"
@@ -226,9 +233,8 @@ const NewQrScanner = (props: Props) => {
           </button>
         </div>
 
-        {/* <button onClick={onClose}></button> */}
-
-        <div className="sm:mt-16 w-full lg:absolute lg:bottom-0 pb-8 text-center flex flex-col">
+        {/* Submit Button */}
+        <div className="sm:mt-16 w-full text-center flex flex-col mt-10 lg:mt-12">
           <button
             className="text-black bg-[#FFD52A] py-2 rounded-xl font-semibold text-2xl w-[75%] mx-auto px-10"
             onClick={() => handleSaveAttendance()}
