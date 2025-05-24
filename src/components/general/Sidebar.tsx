@@ -14,10 +14,10 @@ import {
   FaUserFriends,
   FaClipboardList,
 } from "react-icons/fa";
-import { MdAssignmentTurnedIn, 
+import {
+  MdAssignmentTurnedIn,
   // MdShare
-
- } from "react-icons/md";
+} from "react-icons/md";
 // import { IoImages } from "react-icons/io5";
 import { RiLogoutCircleLine } from "react-icons/ri";
 
@@ -35,8 +35,8 @@ type Props = {
 const SideBar = (props: Props) => {
   const [open, setOpen] = useState(true);
   // const token = Cookies.get("token");
-  const teacher = useSelector((state: RootState)=> state.teacher)
-  const token = teacher.token ? teacher.token : null
+  const teacher = useSelector((state: RootState) => state.teacher);
+  const token = teacher.token ? teacher.token : null;
   //   const [submenuOpen, setSubmenuOpen] = useState(false);
   const [submenuOpenState, setSubmenuOpenState] = useState<
     Record<number, boolean>
@@ -46,10 +46,10 @@ const SideBar = (props: Props) => {
     setSubmenuOpenState((prevState) => {
       // Create a new state object where all submenus are closed
       const newState: Record<number, boolean> = {};
-  
+
       // Set the selected submenu to open
       newState[index] = !prevState[index];
-  
+
       return newState;
     });
   };
@@ -147,11 +147,9 @@ const SideBar = (props: Props) => {
 
   return (
     <div
-      className={`bg-dark-purple z-20 h-[100%] bg-[#000814] p-5 pt-8 duration-300 border-r-2 border-amber-300 shadow-md shadow-white ${
+      className={`bg-dark-purple z-20 min-h-screen bg-[#000814] p-5 pt-8 duration-300 border-r-2 border-amber-300 shadow-md shadow-white ${
         open ? "w-72" : `w-16 ${props.isMobile && "-ml-[70px]"}`
-      } ${
-        props.isMobile ? "absolute left-0 h-screen " : "relative h-full"
-      }`}
+      } ${props.isMobile ? "absolute left-0 top-0" : "relative"}`}
     >
       <IoIosArrowRoundBack
         onClick={() => setOpen(!open)}
@@ -164,11 +162,13 @@ const SideBar = (props: Props) => {
 
       {
         <div className="inline-flex mt-4 sm:text-sm">
-          {token && <AiFillEnvironment
-            className={`bg-[#FFD52A] text-[#000814] sm:text-[30px] text-4xl rounded cursor-pointer block float-left mr-2 duration-300 ${
-              open && "rotate-[360deg]"
-            }`}
-          />}
+          {token && (
+            <AiFillEnvironment
+              className={`bg-[#FFD52A] text-[#000814] sm:text-[30px] text-4xl rounded cursor-pointer block float-left mr-2 duration-300 ${
+                open && "rotate-[360deg]"
+              }`}
+            />
+          )}
           <h1
             className={`text-white sm:text-2lg origin-left font-medium text-2xl duration-300 ${
               !open && "scale-0"
@@ -217,13 +217,13 @@ const SideBar = (props: Props) => {
                     : "max-h-0 opacity-0"
                 } overflow-hidden`}
               >
-                {menu?.submenuitem?.map((submenuItem, index) => (
+                {menu?.submenuitem?.map((submenuItem, subIndex) => (
                   <li
+                    key={subIndex}
                     className="text-amber-300 bg-[#0F1725] py-3 text-sm flex items-center gap-x-2 cursor-pointer p-2 pr-5 hover:bg-light-white duration-300"
-                    key={index}
                     onClick={() => handleMenuClick(submenuItem.route)}
                   >
-                    <span className="text-2xl ml-1 sm:text-sm block float-left">
+                    <span className="ml-1 flex items-center">
                       {submenuItem.icon ? submenuItem.icon : <MdDashboard />}
                     </span>
                     {submenuItem.title}

@@ -28,7 +28,7 @@ const Layout = () => {
   console.log(token);
 
   return (
-    <div className="flex flex-col h-[100vh] min-h-[100vh] w-full bg-[#000814] overflow-y-auto overflow-x-hidden text-white">
+    <div className="flex flex-col h-[100vh] min-h-[100vh] w-full bg-[#000814] text-white">
       {/* Navbar */}
       {!isMobile && <div className="h-[8vh] border-b-2 border-gray-600">
             <Navbar />
@@ -43,7 +43,7 @@ const Layout = () => {
         </div>}
 
         {/* Main Content */}
-        <main className="h-[100vh] w-[100vw] sm:w-full ">
+        <main className="h-[100vh] w-[100vw] sm:w-full overflow-x-hidden pb-20">
           {isMobile && <div className="sm:h-[8vh] border-b-2 border-gray-600">
             <Navbar />
           </div>}
