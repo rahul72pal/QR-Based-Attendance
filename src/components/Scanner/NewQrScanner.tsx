@@ -176,6 +176,10 @@ const NewQrScanner = (props: Props) => {
         date: props.date,
         attendance_data: scannedResult,
       };
+      if(scannedResult.length === 0){
+        toast.error("No Attendance Data to Save!");
+        return;
+      }
       const result = await saveAttdance(attenanceData);
       console.log(result);
       if (result) {
