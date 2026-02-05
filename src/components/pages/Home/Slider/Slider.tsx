@@ -50,13 +50,13 @@ export default (props: any) => {
       };
     else if (activeSlide - 2 === index)
       return {
-        opacity: 1,
+        opacity: 0,
         transform: "translateX(-480px) translateZ(-500px) rotateY(35deg)",
         zIndex: 8,
       };
     else if (activeSlide + 2 === index)
       return {
-        opacity: 1,
+        opacity: 0,
         transform: "translateX(480px) translateZ(-500px) rotateY(-35deg)",
         zIndex: 8,
       };
@@ -75,17 +75,17 @@ export default (props: any) => {
   };
 
   return (
-    <>
+    <div className="relative py-12 overflow-hidden">
       {/* Carousel */}
       <div
-        className="slideC mt-5 hover:cursor-pointer "
+        className="slideC mt-5 hover:cursor-pointer perspective-1000 transform-style-3d scale-[0.35] sm:scale-50 md:scale-75 lg:scale-95 xl:scale-110 origin-center transition-transform duration-300"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         {props.data.map((item: any, i: any) => (
           <React.Fragment key={item.id}>
             <div
-              className="slide esm:ml-[-17px]"
+              className="slide transition-all duration-500 ease-out"
               style={{
                 ...getStyles(i),
               }}
@@ -97,18 +97,28 @@ export default (props: any) => {
       </div>
 
       {/* Buttons */}
-      <div className="btns -mt-7 flex justify-center items-center">
-        <GrPrevious className="btn text-2xl" onClick={prev} />
-        <GrNext className="btn text-2xl" onClick={next} />
+      <div className="btns flex justify-center items-center gap-8 mt-12 z-20 relative">
+        <button
+          className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-white transition-colors duration-300 shadow-md"
+          onClick={prev}
+        >
+          <GrPrevious className="text-2xl" />
+        </button>
+        <button
+          className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-white transition-colors duration-300 shadow-md"
+          onClick={next}
+        >
+          <GrNext className="text-2xl" />
+        </button>
       </div>
-    </>
+    </div>
   );
 };
 
 const SliderContent = (props: any) => {
   return (
     <div
-      className="sliderContent rounded-lg relative mt-9 pt-7 shadow-lg shadow-white sm:w-[90vw]"
+      className="sliderContent rounded-2xl relative mt-9 overflow-hidden shadow-2xl border border-border"
       style={{
         backgroundImage: `url(${props.icon})`,
         backgroundSize: "cover",
@@ -116,12 +126,16 @@ const SliderContent = (props: any) => {
       }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-70 rounded-lg"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
 
       {/* Content */}
-      <div className="relative z-10 p-4">
-        <h2 className="text-white text-3xl font-bold">{props.title}</h2>
-        <p className="text-gray-200 text-xs leading-5">{props.desc}</p>
+      <div className="relative z-10 p-8 flex flex-col justify-end h-full">
+        <h2 className="text-white text-3xl font-bold mb-3 font-title tracking-wide">
+          {props.title}
+        </h2>
+        <p className="text-gray-200 text-sm leading-6 font-light">
+          {props.desc}
+        </p>
       </div>
     </div>
   );

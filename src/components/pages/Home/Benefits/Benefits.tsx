@@ -8,48 +8,79 @@ const Benefits = () => {
   const list = [
     {
       title: "Accessible Anytime, Anywhere",
-      icon: <FaCloud />, // Cloud icon for accessibility
+      icon: <FaCloud />,
+      desc: "Manage attendance from any device, anywhere in the world.",
     },
     {
-      title: "Parents Can Monitor Attendance",
-      icon: <FaUserCheck />, // User-check icon for parental monitoring
+      title: "Monitoring",
+      icon: <FaUserCheck />,
+      desc: "Keep parents informed with real-time updates and notifications.",
     },
     {
-      title: "Real-Time Data Updates",
-      icon: <FaSyncAlt />, // Sync icon for real-time updates
+      title: "Real-Time Updates",
+      icon: <FaSyncAlt />,
+      desc: "Instant data synchronization across all your devices.",
     },
     {
-      title: "24/7 Access to Attendance Records",
-      icon: <FaClock />, // Clock icon for 24/7 access
+      title: "24/7 Access",
+      icon: <FaClock />,
+      desc: "Round-the-clock access to all your attendance records.",
     },
     {
-      title: "Secure QR Code Scanning for Accuracy",
-      icon: <FaShieldAlt />, // Shield icon for security
+      title: "Secure Scanning",
+      icon: <FaShieldAlt />,
+      desc: "Encrypted QR codes ensure data integrity and prevent fraud.",
     },
     {
-      title: "Instant Reports and Real-Time Insights",
-      icon: <FaChartBar />, // Chart bar icon for reports and insights
+      title: "Instant Reports",
+      icon: <FaChartBar />,
+      desc: "Generate comprehensive reports with just a single click.",
     },
   ];
 
   return (
-    <div className='w-[70%] sm:w-[100%] sm:my-6 mx-auto'>
-      <h1 className='text-4xl text-center py-8 text-yellow-400'>Benefits</h1>
+    <section className="py-24 bg-background relative">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-secondary/20 pointer-events-none"></div>
 
-      <div className=''>
-        <ul className='flex flex-col gap-6  w-fit sm:mx-auto'>
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="text-center mb-20">
+          <h1 className="text-4xl md:text-5xl font-bold font-title text-gradient-gold mb-6">
+            Key Benefits
+          </h1>
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+            Why choose Attendify? Because we deliver reliability, speed, and security.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
           {list.map((item, index) => (
-            <li key={index} className='flex gap-3 items-center'>
-              <span className='text-2xl sm:text-lg'>{item.icon} </span><span className='text-lg sm:text-sm'>{item.title}</span>
-            </li>
+            <div
+              key={index}
+              className="glass-card p-8 rounded-2xl hover:-translate-y-2 transition-all duration-300 group flex flex-col items-center text-center border-white/5"
+            >
+              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-3xl text-primary mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-background transition-all duration-300 shadow-glow">
+                {item.icon}
+              </div>
+              <h3 className="text-xl font-bold font-title text-foreground mb-4 group-hover:text-primary transition-colors">
+                {item.title}
+              </h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                {item.desc}
+              </p>
+            </div>
           ))}
-        </ul>
-      </div>
+        </div>
 
-      <div className=' text-center my-8'>
-       <Button className='text-white font-bold' onClick={()=>router('/pricing')}>Check Our Pricing</Button>
+        <div className="text-center">
+          <Button
+            className="bg-primary text-primary-foreground hover:bg-white hover:text-background font-bold px-10 py-6 text-lg rounded-full shadow-glow transition-all duration-300 transform hover:scale-105"
+            onClick={() => router('/pricing')}
+          >
+            Check Our Pricing
+          </Button>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

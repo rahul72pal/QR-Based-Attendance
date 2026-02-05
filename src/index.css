@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Kadwa:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -6,12 +6,106 @@
 
 @layer base {
   :root {
-    --radius: 0.5rem; /* Ensure there's a semicolon here */
+    --background: 214 32% 8%;
+    /* Dark Navy */
+    --foreground: 210 40% 98%;
+
+    --card: 214 32% 12%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 214 32% 10%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 45 93% 58%;
+    /* Gold */
+    --primary-foreground: 214 32% 8%;
+
+    --secondary: 214 25% 18%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 214 25% 15%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 45 93% 58%;
+    --accent-foreground: 214 32% 8%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214 25% 20%;
+    --input: 214 25% 18%;
+    --ring: 45 93% 58%;
+
+    --radius: 0.75rem;
+
+    /* Custom tokens */
+    --gold: 45 93% 58%;
+  }
+
+  .dark {
+    --background: 214 32% 8%;
+    --foreground: 210 40% 98%;
+
+    --card: 214 32% 12%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 214 32% 10%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 45 93% 58%;
+    --primary-foreground: 214 32% 8%;
+
+    --secondary: 214 25% 18%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 214 25% 15%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 45 93% 58%;
+    --accent-foreground: 214 32% 8%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214 25% 20%;
+    --input: 214 25% 18%;
+    --ring: 45 93% 58%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-title;
   }
 }
 
 @layer utilities {
   .clip-polygon {
     clip-path: polygon(0 0, 100% 0, 100% 45%, 0 15%);
+  }
+
+  .glass-card {
+    @apply border border-white/10 backdrop-blur-xl bg-gradient-to-br from-secondary/80 to-secondary/40 shadow-xl;
+  }
+
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-[#f8c630] to-[#f2930d];
+  }
+
+  .shadow-glow {
+    box-shadow: 0 0 60px hsl(45 93% 58% / 0.2);
   }
 }

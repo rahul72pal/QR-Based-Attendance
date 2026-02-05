@@ -4,12 +4,14 @@
 
 const Footer = () => {
   return (
-    <div className='bg-[#161D29] text-center flex justify-center items-center w-[120%] mx-auto sm:h-[5vh] py-[30px] '>
-        <div className="">
-        Copyright © 2023 Rahul Pal. All right received
-        </div>
-    </div>
-  )
-}
+    <footer className="bg-secondary text-secondary-foreground py-8">
+      <div className="container mx-auto px-4 text-center">
+        <p className="text-sm font-medium">
+          Copyright © {new Date().getFullYear()} Rahul Pal. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  );
+};
 
-export default Footer
+export default Footer;

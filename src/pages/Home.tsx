@@ -15,15 +15,41 @@ const Home: React.FC = () => {
   // const router = useNavigate();
 
   return (
-    <div className="h-[100%] p-3">
-      {/* <DatePicker date={date} setDate={setDate}/> */}
-      <div className="sm:overflow-x-auto"><SliderCursol/></div>
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* Hero Section */}
+      <section className="pt-24 pb-12 px-4 text-center relative z-10">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-primary/5 blur-[120px] -z-10 rounded-full pointer-events-none"></div>
 
-      <div className="flex justify-center items-center pt-7"><ServiceSection/></div>
+        <div className="max-w-4xl mx-auto mb-16 space-y-6">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold font-title tracking-tight leading-tight">
+            Smart <span className="text-primary">QR Attendance</span> <br />
+            Made Simple
+          </h1>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto font-light leading-relaxed">
+            Track student attendance effortlessly with our innovative QR-based system. <br className="hidden md:block" />
+            Perfect for educators, institutions, and events.
+          </p>
+        </div>
 
-      <div><Benefits/></div>
-      <div className="bg-[#161D29] text-center sm:h-[5vh] flex justify-center items-center mx-[-30px] ">
-        <Footer/>
+        {/* Slider Section */}
+        <div className="w-full max-w-6xl mx-auto">
+          <SliderCursol />
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <div id="services">
+        <ServiceSection />
+      </div>
+
+      {/* Benefits Section */}
+      <div id="features">
+        <Benefits />
+      </div>
+
+      {/* Footer */}
+      <div className="mt-20">
+        <Footer />
       </div>
     </div>
   );

@@ -15,12 +15,11 @@ interface PricingCardProps {
   active?: boolean;
 }
 
-const handleClickChoosePlan = ()=>{
+const handleClickChoosePlan = () => {
   toast.custom((t) => (
     <div
-      className={`${
-        t.visible ? 'animate-enter' : 'animate-leave'
-      } max-w-md w-full bg-[#000814]  shadow-lg rounded-lg border pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+      className={`${t.visible ? "animate-enter" : "animate-leave"
+        } max-w-md w-full bg-popover shadow-lg rounded-lg border border-border pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
     >
       <div className="flex-1 w-0 p-4">
         <div className="flex items-start">
@@ -32,26 +31,24 @@ const handleClickChoosePlan = ()=>{
             />
           </div>
           <div className="ml-3 flex-1">
-            <p className="text-sm font-medium text-white">
+            <p className="text-sm font-medium text-foreground">
               Contact Rahul Pal
             </p>
-            <p className="mt-1 text-sm text-gray-200">
-              Mob:- 8962113963
-            </p>
+            <p className="mt-1 text-sm text-muted-foreground">mob: 8962113963</p>
           </div>
         </div>
       </div>
-      <div className="flex border-l bg-[#000814] ">
+      <div className="flex border-l border-border">
         <button
           onClick={() => toast.dismiss(t.id)}
-          className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-yellow-400 hover:text-yellow-500 focus:outline-none focus:ring-2 "
+          className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-primary hover:text-primary/80 focus:outline-none focus:ring-2 focus:ring-primary"
         >
           Close
         </button>
       </div>
     </div>
-  ))
-}
+  ));
+};
 
 // PricingCard Component
 const PricingCard: React.FC<PricingCardProps> = ({
@@ -64,307 +61,55 @@ const PricingCard: React.FC<PricingCardProps> = ({
   active = false,
 }) => {
   return (
-    <div className="w-[350px] px-2 esm:w-[90%] sm:w-3/4 md:w-1/2 lg:w-1/3">
-      <div className="relative z-10 mb-10 overflow-hidden rounded-[10px] border-2 border-stroke bg-[#000814] px-6 py-8 shadow-pricing sm:p-10 lg:px-6 lg:py-10 xl:p-[50px]">
-        <span className="mb-3 block text-lg font-semibold text-primary esm:text-base">
-          {type}
-        </span>
-        <h2 className="mb-5 text-[32px] font-bold text-white esm:text-[24px] sm:text-[36px] lg:text-[42px]">
+    <div className="w-full md:w-1/2 lg:w-1/3 px-4 mb-8">
+      <div
+        className={`relative z-10 overflow-hidden rounded-3xl border px-8 py-10 transition-all duration-300 flex flex-col h-full ${active
+          ? "border-primary bg-primary/5 shadow-glow scale-[1.02]"
+          : "border-white/10 bg-card hover:border-primary/50 hover:bg-card/80"
+          }`}
+      >
+        <div className="mb-5 flex items-center justify-between">
+          <span className={`text-sm font-bold tracking-widest uppercase ${active ? 'text-primary' : 'text-muted-foreground'}`}>
+            {type}
+          </span>
+          {active && <span className="px-3 py-1 text-xs font-bold text-background bg-primary rounded-full">MOST POPULAR</span>}
+        </div>
+
+        <h2 className="mb-4 text-5xl font-bold font-title text-foreground tracking-tight">
           {price}
-          <span className="text-base font-medium text-body-color esm:text-sm sm:text-base">
+          <span className="text-lg font-medium text-muted-foreground ml-2">
             / {subscription}
           </span>
         </h2>
-        <p className="mb-8 border-b border-stroke pb-8 text-base text-body-color esm:text-sm sm:text-base">
+
+        <p className="mb-8 text-muted-foreground text-sm leading-relaxed font-light border-b border-border/50 pb-8">
           {description}
         </p>
-        <div className="mb-9 flex flex-col gap-[10px] esm:gap-[8px] sm:gap-[12px] lg:gap-[14px]">
-          {children}
-        </div>
-        {/* <a
-          href="/#"
-          className={`${
-            active
-              ? "block w-full rounded-md border border-primary bg-primary p-3 text-center text-base font-medium text-white transition hover:bg-opacity-90 esm:text-sm sm:text-base"
-              : "block w-full rounded-md border border-stroke bg-transparent p-3 text-center text-base font-medium text-primary transition hover:border-primary hover:bg-primary hover:text-white esm:text-sm sm:text-base"
-          }`}
-        >
-          {buttonText}
-        </a> */}
+
+        <div className="mb-10 flex flex-col gap-4 flex-grow">{children}</div>
+
         <Button
-        onClick={handleClickChoosePlan}
-          className={`block font-bold w-full rounded-md border border-primary bg-white p-3 text-center text-base text-black transition hover:bg-black hover:text-white esm:text-sm sm:text-base ${
-            active ? "border-primary" : "border-stroke"
-          }`}
+          onClick={handleClickChoosePlan}
+          className={`w-full py-7 font-bold text-lg rounded-xl transition-all duration-300 mt-auto ${active
+            ? "bg-primary text-primary-foreground hover:bg-white hover:text-background shadow-lg hover:shadow-glow"
+            : "bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground"
+            }`}
         >
           {buttonText}
         </Button>
 
-        <div>
-          <span className="absolute right-0 top-7 z-[-1]">
-            <svg
-              width={77}
-              height={172}
-              viewBox="0 0 77 172"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx={86} cy={86} r={86} fill="url(#paint0_linear)" />
-              <defs>
-                <linearGradient
-                  id="paint0_linear"
-                  x1={86}
-                  y1={0}
-                  x2={86}
-                  y2={172}
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stopColor="#3056D3" stopOpacity="0.09" />
-                  <stop offset={1} stopColor="#C4C4C4" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-            </svg>
-          </span>
-          <span className="absolute right-4 top-4 z-[-1]">
-            <svg
-              width={41}
-              height={89}
-              viewBox="0 0 41 89"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle
-                cx="38.9138"
-                cy="87.4849"
-                r="1.42021"
-                transform="rotate(180 38.9138 87.4849)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="38.9138"
-                cy="74.9871"
-                r="1.42021"
-                transform="rotate(180 38.9138 74.9871)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="38.9138"
-                cy="62.4892"
-                r="1.42021"
-                transform="rotate(180 38.9138 62.4892)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="38.9138"
-                cy="38.3457"
-                r="1.42021"
-                transform="rotate(180 38.9138 38.3457)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="38.9138"
-                cy="13.634"
-                r="1.42021"
-                transform="rotate(180 38.9138 13.634)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="38.9138"
-                cy="50.2754"
-                r="1.42021"
-                transform="rotate(180 38.9138 50.2754)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="38.9138"
-                cy="26.1319"
-                r="1.42021"
-                transform="rotate(180 38.9138 26.1319)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="38.9138"
-                cy="1.42021"
-                r="1.42021"
-                transform="rotate(180 38.9138 1.42021)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="26.4157"
-                cy="87.4849"
-                r="1.42021"
-                transform="rotate(180 26.4157 87.4849)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="26.4157"
-                cy="74.9871"
-                r="1.42021"
-                transform="rotate(180 26.4157 74.9871)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="26.4157"
-                cy="62.4892"
-                r="1.42021"
-                transform="rotate(180 26.4157 62.4892)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="26.4157"
-                cy="38.3457"
-                r="1.42021"
-                transform="rotate(180 26.4157 38.3457)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="26.4157"
-                cy="13.634"
-                r="1.42021"
-                transform="rotate(180 26.4157 13.634)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="26.4157"
-                cy="50.2754"
-                r="1.42021"
-                transform="rotate(180 26.4157 50.2754)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="26.4157"
-                cy="26.1319"
-                r="1.42021"
-                transform="rotate(180 26.4157 26.1319)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="26.4157"
-                cy="1.4202"
-                r="1.42021"
-                transform="rotate(180 26.4157 1.4202)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="13.9177"
-                cy="87.4849"
-                r="1.42021"
-                transform="rotate(180 13.9177 87.4849)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="13.9177"
-                cy="74.9871"
-                r="1.42021"
-                transform="rotate(180 13.9177 74.9871)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="13.9177"
-                cy="62.4892"
-                r="1.42021"
-                transform="rotate(180 13.9177 62.4892)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="13.9177"
-                cy="38.3457"
-                r="1.42021"
-                transform="rotate(180 13.9177 38.3457)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="13.9177"
-                cy="13.634"
-                r="1.42021"
-                transform="rotate(180 13.9177 13.634)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="13.9177"
-                cy="50.2754"
-                r="1.42021"
-                transform="rotate(180 13.9177 50.2754)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="13.9177"
-                cy="26.1319"
-                r="1.42021"
-                transform="rotate(180 13.9177 26.1319)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="13.9177"
-                cy="1.42019"
-                r="1.42021"
-                transform="rotate(180 13.9177 1.42019)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="1.41963"
-                cy="87.4849"
-                r="1.42021"
-                transform="rotate(180 1.41963 87.4849)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="1.41963"
-                cy="74.9871"
-                r="1.42021"
-                transform="rotate(180 1.41963 74.9871)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="1.41963"
-                cy="62.4892"
-                r="1.42021"
-                transform="rotate(180 1.41963 62.4892)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="1.41963"
-                cy="38.3457"
-                r="1.42021"
-                transform="rotate(180 1.41963 38.3457)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="1.41963"
-                cy="13.634"
-                r="1.42021"
-                transform="rotate(180 1.41963 13.634)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="1.41963"
-                cy="50.2754"
-                r="1.42021"
-                transform="rotate(180 1.41963 50.2754)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="1.41963"
-                cy="26.1319"
-                r="1.42021"
-                transform="rotate(180 1.41963 26.1319)"
-                fill="#3056D3"
-              />
-              <circle
-                cx="1.41963"
-                cy="1.4202"
-                r="1.42021"
-                transform="rotate(180 1.41963 1.4202)"
-                fill="#3056D3"
-              />
-            </svg>
-          </span>
-        </div>
+        {/* Decorative background glow for active card */}
+        {active && (
+          <div className="absolute top-0 right-0 -z-10 w-64 h-64 bg-primary/10 blur-[100px] rounded-full pointer-events-none translate-x-1/2 -translate-y-1/2"></div>
+        )}
       </div>
     </div>
   );
 };
 
+// ... (keep List and handleClickChoosePlan components as is, but ensure List uses theme color)
+
+// List Component
 // Define props for List component
 interface ListProps {
   children: ReactNode;
@@ -372,45 +117,57 @@ interface ListProps {
 
 // List Component
 const List: React.FC<ListProps> = ({ children }) => {
-  return <p className="text-base text-body-color">{children}</p>;
+  return (
+    <div className="flex items-start text-foreground text-sm gap-3">
+      <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary/20 text-primary text-xs mt-0.5 shrink-0">
+        ✓
+      </span>
+      <span className="opacity-90">{children}</span>
+    </div>
+  );
 };
 
 // Main Pricing Component
 const Pricing: React.FC = () => {
   const router = useNavigate();
   return (
-    <section className="relative z-1 overflow-hidden bg-[#000814] pb-12 lg:pb-[90px] sm:pt-[20px] pt-[120px]">
-      <Button onClick={() => router(-1)} className=" mb-6 ml-6 sm:text-xs">
-        <IoArrowBackSharp />
-        Back
-      </Button>
-      <div className="container mx-auto">
-        <div className="-mx-4 flex flex-wrap">
-          <div className="w-full px-4">
-            <div className="mx-auto mb-[60px] max-w-[510px] text-center">
-              <span className="mb-2 block text-lg font-semibold text-primary">
-                Pricing Table
-              </span>
-              <h2 className="mb-3 text-3xl font-bold leading-[1.208] text-white sm:text-4xl md:text-[40px]">
-                Our Pricing Plan
-              </h2>
-              <p className="text-base text-body-color">
-                Streamline your attendance management with our comprehensive
-                plans. Generate individual student ID cards and take advantage
-                of QR-based attendance tracking for effortless monitoring.
-              </p>
-            </div>
-          </div>
+    <section className="relative z-1 overflow-hidden bg-background pt-32 pb-24">
+      {/* Background decoration */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 blur-3xl rounded-full -z-10 pointer-events-none"></div>
+
+      <div className="container mx-auto px-4">
+        <div className="mb-12">
+          <Button
+            variant="ghost"
+            onClick={() => router(-1)}
+            className="group flex items-center gap-2 text-muted-foreground hover:text-primary pl-0 transition-colors"
+          >
+            <IoArrowBackSharp className="transition-transform group-hover:-translate-x-1" />
+            Back to Home
+          </Button>
         </div>
 
-        <div className="-mx-4 flex flex-wrap justify-center">
+        <div className="mx-auto mb-20 max-w-[700px] text-center">
+          <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-widest uppercase mb-4 border border-primary/20">
+            Flexible Pricing
+          </span>
+          <h2 className="mb-6 text-4xl font-bold text-foreground sm:text-5xl md:text-6xl font-title text-gradient-gold">
+            Choose Your Plan
+          </h2>
+          <p className="text-lg text-muted-foreground font-light leading-relaxed">
+            Streamline your attendance management with our comprehensive plans.
+            Scale effortlessly as your organization grows.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap justify-center -mx-4">
           {/* Free Plan */}
           <PricingCard
             type="Free"
             price="₹0"
             subscription="7 months"
             description="Best for individuals who want to explore basic features."
-            buttonText="Choose Free"
+            buttonText="Get Started"
           >
             <List>5 Classes</List>
             <List>25 Students</List>
@@ -431,9 +188,9 @@ const Pricing: React.FC = () => {
             <List>50 Students</List>
             <List>1 Year Validation</List>
             <List>QR-based Attendance</List>
-            <List>First 5 User 50₹ OFF</List>
-            <List>6 Month 350₹ OFFER</List>
-            <List>12 Month 750₹ OFFER</List>
+            <List>First 5 Users ₹50 OFF</List>
+            <List>6 Months ₹350 OFFER</List>
+            <List>12 Months ₹750 OFFER</List>
           </PricingCard>
 
           {/* ₹159 Plan */}
@@ -442,16 +199,16 @@ const Pricing: React.FC = () => {
             price="₹159"
             subscription="month"
             description="Ideal for institutions with larger class needs and extra features."
-            buttonText="Choose Premium"
+            buttonText="Go Premium"
           >
             <List>20 Classes</List>
             <List>100 Students</List>
             <List>1 Year Validation</List>
             <List>Custom ID Card</List>
             <List>QR-based Attendance</List>
-            <List>First 5 User 100₹ OFF</List>
-            <List>6 Month 450₹ OFFER</List>
-            <List>12 Month 900₹ OFFER</List>
+            <List>First 5 Users ₹100 OFF</List>
+            <List>6 Months ₹450 OFFER</List>
+            <List>12 Months ₹900 OFFER</List>
           </PricingCard>
         </div>
       </div>
